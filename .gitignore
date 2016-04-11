@@ -1,0 +1,5 @@
+*.o
+*.ali
+client_main
+server_main
+*~

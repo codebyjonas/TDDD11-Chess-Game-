@@ -101,13 +101,5 @@ package body Chess_Game_Graphic is
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
    
-   procedure Graphic_Mark_Positions( Cordinates : in Cordinate_Array) is
-   begin
-      for I in Cordinate_Array'Length loop
-	 if Cordinates(I).X /= O and Cordinats(I).Y /= 0 then
-	    
-      end loop;
-   end Graphic_Mark_Positions;
-  
    
 end Chess_Game_Graphic;

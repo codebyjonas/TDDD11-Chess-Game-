@@ -1,3 +1,4 @@
+--Ada packages
 with Ada.Text_IO;		use Ada.Text_IO;
 with Ada.Integer_Text_IO;	use Ada.Integer_Text_IO;
 
@@ -15,6 +16,7 @@ with Chess_Game_Graphic;        use Chess_Game_Graphic;
 package Chess_Game_Handling is
    
    -- Datatyper
+
    type Cordinate_Array is private;
    type Cordinate_Type is private;
    
@@ -24,15 +26,19 @@ package Chess_Game_Handling is
 			   X,Y : in Integer); 
    procedure Get_From_Socket(Socket : in Socket_Type;
 			     X, Y   : out Integer);
+   
+   procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type;
+					    Possible_Move_Array: out Cordinate_Array);
 private
    
-   
+   	 
+
    type Cordinate_Type is
       record
 	 X, Y : Integer;
       end record;
    
    type Cordinate_Array is 
-     array 1..28 of Cordinates;
+     array (1..28) of Cordinate_Type;
    
 end Chess_Game_Handling;

@@ -16,8 +16,9 @@ package body Chess_Game_Handling is
    
    -- Samma ordning som i Ads
    procedure Choose_Active_Chessman(Active_Chessman : out Chessman_Type) is
-      Key  : Key_Type;
+      Key                  : Key_Type;
       Graphic_X, Graphic_Y : Integer := 6;
+      Black, White         : Character;
    begin
     -- Set_Buffer_Mode(Off);
      --Set_Echo_Mode(Off);

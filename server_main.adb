@@ -20,7 +20,18 @@ begin
    Wait_For_Connection(Listner, Socket_2);
    Put_Line("Klient 2 ansluten");
    
+   -- Tilldela Klient 1 Vit och 2 Svart
+   Put_Line(Socket_1, 'w');
+   Put_Line(Socket_2, 'b');
    
+   -- Set Actual_Game_Round_Case
+   --- 1. Schack Matt
+   --- 2. Schack
+   --- 3. Regular
+   --- 4. First Round 
+   Put_Line(Socket_1, 4);
+   Put_Line(Socket_2, 3); 
    
+   delay 1000000.0;
    
 end Server_Main;

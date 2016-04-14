@@ -92,10 +92,7 @@ package body Chess_Game_Graphic is
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
    
-   procedure Graphic_Mark_Positions( Cordinates : in Cordinate_Array) is
-   begin
-     null;
-   end Graphic_Mark_Positions;
+ 
   
    
 end Chess_Game_Graphic;

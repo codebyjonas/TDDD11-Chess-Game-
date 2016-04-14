@@ -10,6 +10,17 @@ with Chess_Game_Graphic;  use Chess_Game_Graphic;
 
 procedure Client_Main is
    
+    procedure Play_Round(Socket: in Socket_Type;
+			X, Y: in out Integer) is
+   
+   begin
+       Choose_Active_Chessman(X, Y);
+       Put_To_Socket(Socket, X, Y);
+       Get_From_Socket(Socket, X, Y);
+   
+   end Play_Round;
+   
+   
    Socket                 : Socket_Type;
    My_Color               : Character;
    Actual_Game_Round_Case,X,Y : Integer;

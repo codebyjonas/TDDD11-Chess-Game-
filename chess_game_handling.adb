@@ -66,14 +66,17 @@ package body Chess_Game_Handling is
       Get(Socket, Y);
    end Get_From_Socket;
    
-   procedure Play_Round(Socket: in Socket_Type;
-			X, Y: in out Integer) is
-   
+   procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type;					       				  			Possible_Move_Array: out Cordinate_Array) is
+      x, y : Integer;
    begin
-       Choose_Active_Chessman(X, Y);
-       Put_To_Socket(Socket, X, Y);
-       Get_From_Socket(Socket, X, Y);
+      for I in 1..28 loop 
+         Get_From_Socket(Socket, x, y);
+	 Possible_Move_Array(I).X := x;
+	 Possible_Move_Array(I).Y := y;
+      end loop;
+          
+   end Get_Possible_Moves_From_Socket;
    
-   end Play_Round;
+  
    
 end Chess_Game_Handling;

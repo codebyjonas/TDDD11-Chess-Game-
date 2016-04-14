@@ -26,8 +26,9 @@ package Chess_Game_Handling is
 			   X,Y : in Integer); 
    procedure Get_From_Socket(Socket : in Socket_Type;
 			     X, Y   : out Integer);
-   procedure Play_Round(Socket: in Socket_Type;
-			X, Y: in out Integer);
+   
+   procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type;
+					    Possible_Move_Array: out Cordinate_Array);
 private
    
    	 
@@ -38,6 +39,6 @@ private
       end record;
    
    type Cordinate_Array is 
-     array 1..28 of Cordinates;
+     array (1..28) of Cordinate_Type;
    
 end Chess_Game_Handling;

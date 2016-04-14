@@ -1,5 +1,6 @@
 with Ada.Command_Line;    use Ada.Command_Line;
 with Ada.Text_IO;         use Ada.Text_IO;
+with Ada.Integer_Text_IO;	use Ada.Integer_Text_IO;
 
 with TJa.Sockets;         use TJa.Sockets;
 
@@ -11,7 +12,7 @@ procedure Client_Main is
    
    Socket                 : Socket_Type;
    My_Color               : Character;
-   Actual_Game_Round_Case : Integer;
+   Actual_Game_Round_Case,X,Y : Integer;
    
 begin
   
@@ -35,7 +36,7 @@ begin
    
    -- Rita upp planen
    --- TODO: En snyggare plan  
-   Graphic_Draw_Complete_Game_Board; 
+   Draw_Complete_Game_Board; 
    
    loop
       -- Hämta Typ av runda:
@@ -57,12 +58,17 @@ begin
 	    -- TODO: Skapa Graphic_Display_Is_Check;
 	    --Graphic_Display_Is_Check; 
 	    --- TODO: Skapa Game_Play_A_Round;
-	    Game_Play_A_Round;
+	    Choose_Active_Chessman(X,Y);
+	    Put_To_Socket(Socket, X, Y);
 	 when 3 =>
-	    Game_Play_A_Round;
+	    null;
 	 when 4 => 
 	    Put("ååh det är första gången för dig...");
-	    Game_Play_A_Round; 
+	    Choose_Active_Chessman(X,Y);
+	    Put_To_Socket(Socket, X, Y);
+	    Get_From_Socket(Socket, X, Y);
+	    Put(X);
+	    Put(Y);
 	 when others =>
 	    Put("FÄN det är fEL");
 	    -- Raise Error 

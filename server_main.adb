@@ -1,5 +1,6 @@
 with Ada.Command_Line; use Ada.Command_Line;
 with Ada.Text_IO;      use Ada.Text_IO;
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 with TJa.Sockets;      use TJa.Sockets;
 
@@ -7,7 +8,7 @@ procedure Server_Main is
    
    Listner              : Listener_Type;
    Socket_1, Socket_2   : Socket_Type;
-   
+   X, Y                 : Integer;
    
 begin
    
@@ -31,6 +32,16 @@ begin
    --- 4. First Round 
    Put_Line(Socket_1, 4);
    Put_Line(Socket_2, 3); 
+   
+   --Hämta X,Y från klient
+   Get(Socket_1, X);
+   Get(Socket_1, Y);
+   Put(X);
+   Put(Y);
+   -- To do: Skapa en funktion som returnerar möjliga drag
+   -- Tmp 
+   Put_Line(Socket_1, 4);
+   Put_Line(Socket_1, 8);
    
    delay 1000000.0;
    

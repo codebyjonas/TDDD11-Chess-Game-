@@ -7,6 +7,7 @@ with TJa.Keyboard;              use TJa.Keyboard;
 with TJa.Keyboard.Keys;         use TJa.Keyboard.Keys;
 with TJa.Window.Graphic;        use TJa.Window.Graphic; 
 with TJa.Window.Text;           use TJa.Window.Text;
+with TJa.Sockets;               use TJa.Sockets;
 
 -- Chess Game Packages
 with Chess_Game_Graphic;        use Chess_Game_Graphic;
@@ -18,8 +19,10 @@ package Chess_Game_Handling is
    
    -- Procedurer och Funktioner
    procedure Choose_Active_Chessman(X,Y : out Integer);
-   procedure Put_To_Socket(X,Y : in Integer); 
-   procedure Get_From_Socket(Item : out Chessman_Type);
+   procedure Put_To_Socket(Socket : in Socket_Type;
+			   X,Y : in Integer); 
+   procedure Get_From_Socket(Socket : in Socket_Type;
+			     X, Y   : out Integer);
 private
    
    

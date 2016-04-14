@@ -2,6 +2,12 @@ package body Chess_Game_Graphic is
    
    -- INTERNA PROCEDURER och FUNKTIONER
    
+   procedure Cordinates_2_Position(X , Y : in out Integer) is
+   begin
+      X := X + 1;
+      Y := Y + 1;
+   end Cordinates_2_Position;
+   
    procedure Draw_Outlines_Game_Board(Size : in Integer) is 
    begin
       -- First Row
@@ -24,6 +30,9 @@ package body Chess_Game_Graphic is
       Put(Lower_Right_Corner);
       
    end Draw_Outlines_Game_Board;
+   
+
+   
    
    -- TODO: Color Game Board
    procedure Color_Game_Board(Size : in Integer) is
@@ -94,7 +103,10 @@ package body Chess_Game_Graphic is
    
    procedure Graphic_Mark_Positions( Cordinates : in Cordinate_Array) is
    begin
-     null;
+      for I in Cordinate_Array'Length loop
+	 if Cordinates(I).X /= O and Cordinats(I).Y /= 0 then
+	    
+      end loop;
    end Graphic_Mark_Positions;
   
    

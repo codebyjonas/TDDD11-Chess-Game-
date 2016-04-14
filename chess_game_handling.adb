@@ -7,10 +7,6 @@ package body Chess_Game_Handling is
       -- Gör till "Riktiga" Kordinater, simpelt nu
       X := X - 1;
       Y := Y - 1;
-      
-      Goto_XY(12, 2);
-      Put(X);
-      Put(Y);
    end Position_2_Cordinates;
    
    

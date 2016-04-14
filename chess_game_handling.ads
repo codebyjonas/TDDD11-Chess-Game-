@@ -16,6 +16,9 @@ with Chess_Game_Graphic;        use Chess_Game_Graphic;
 package Chess_Game_Handling is
    
    -- Datatyper
+
+   type Cordinate_Array is private;
+   type Cordinate_Type is private;
    
    -- Procedurer och Funktioner
    procedure Choose_Active_Chessman(X,Y : out Integer);
@@ -27,12 +30,14 @@ package Chess_Game_Handling is
 			X, Y: in out Integer);
 private
    
-   
-   -- Datatypen för spelpjäsen
-   -- X,Y : Positionn
-   -- Uniq_ID : Unikt IDx
-   -- Type_Of_Man : Typ av pjäs (bonde,..)
-   -- Associated_Team : Tillhör lag (svart,vit)
    	 
+
+   type Cordinate_Type is
+      record
+	 X, Y : Integer;
+      end record;
+   
+   type Cordinate_Array is 
+     array 1..28 of Cordinates;
    
 end Chess_Game_Handling;

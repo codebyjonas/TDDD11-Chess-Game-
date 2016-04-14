@@ -71,13 +71,7 @@ package body Chess_Game_Graphic is
       
    end Put_Chessmen_On_Board;
    
-   procedure Graphic_Mark_Position(X, Y : in Integer) is
-   begin
-      Goto_XY(X,Y);
-      Set_Background_Colour(Highlight_Colour);
-      Put(' ');
-      Set_Background_Colour(Background_Colour);
-   end Graphic_Mark_Position;
+  
    
    
    -- PUBLIKA PROCEDURER och FUNKTIONER
@@ -88,4 +82,20 @@ package body Chess_Game_Graphic is
       Draw_Outlines_Game_Board(Size);
       Put_Chessmen_On_Board(Size);
    end Draw_Complete_Game_Board;
+   
+    -- TODO: VETA vilken chessman vi skriver över 
+   procedure Graphic_Mark_Position(X, Y : in Integer) is
+   begin
+      Goto_XY(X,Y);
+      Set_Background_Colour(Highlight_Colour);
+      Put(' ');
+      Set_Background_Colour(Background_Colour);
+   end Graphic_Mark_Position;
+   
+   procedure Graphic_Mark_Positions( Cordinates : in Cordinate_Array) is
+   begin
+     null;
+   end Graphic_Mark_Positions;
+  
+   
 end Chess_Game_Graphic;

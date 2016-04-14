@@ -1,4 +1,4 @@
---Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) program.adb
+--Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) din_fil.adb
 
 
 with Ada.Command_Line; use Ada.Command_Line;
@@ -28,29 +28,48 @@ begin
    Put_Line(Socket_1, 'w');
    Put_Line(Socket_2, 'b');
    
-   -- Set Actual_Game_Round_Case
-   --- 1. Schack Matt
-   --- 2. Schack
-   --- 3. Regular
-   --- 4. First Round 
-   Put_Line(Socket_1, 4);
-   Put_Line(Socket_2, 3); 
+  -- loop 
+      -- ? Behöver kanske en variabeler som håller koll på om det är spelare 1 eller 2 som spelare, upp till er Joel och DJ BEAR
+      --- ELLER DET BEHÖVS! 
    
-   --Hämta X,Y från klient
-   Get(Socket_1, X);
-   Get(Socket_1, Y);
-   Put(X);
-   Put(Y);
-   -- To do: Skapa en funktion som returnerar möjliga drag
-   
-   -- Tmp 
-   Put_Line(Socket_1, 4);
-   Put_Line(Socket_1, 8);
-   
-   for I in 1..26 loop
-      Put_Line(Socket_1, 0);
-   end loop;
-   
-   delay 1000000.0;
+      -- TODO: Skapa en funktionen som väljer vilket "Case" rundan är och skickar med till klienten
+      -- Set Actual_Game_Round_Case
+      --- 1. Schack Matt
+      --- 2. Schack
+      --- 3. Regular
+      --- 4. First Round 
+      Put_Line(Socket_1, 4);
+      Put_Line(Socket_2, 3); 
+      
+      --Hämta X,Y från klient (Vilken position som Användaren valt)
+      Get(Socket_1, X);
+      Get(Socket_1, Y);
+      Put(X);
+      Put(Y);
+      
+      -- To do: Skapa en funktion som returnerar möjliga drag
+      -- TODO: Skapa en Put för Cordinates_Array? som består av de möjliga dragen, DEN MÅSTE se LIKADAN ut som den i chess_game_handling
+      
+      -- TEMPORÄR KOD, simulerar ett output av en Cordinate_Array, 
+      Put_Line(Socket_1, 4);
+      Put_Line(Socket_1, 8);
+      Put_Line(Socket_1, 1);
+      Put_Line(Socket_1, 1);
+      for I in 1..26 loop
+	 Put_Line(Socket_1, 0);
+	 Put_Line(Socket_1, 0);
+      end loop;
+      -- END TEMPORÄR KOD
+      
+      
+      -- Här hämtar vi draget som klienten skickar, kommer dock inte vara validerat i dagsläget
+      Get(Socket_1, X);
+      Get(Socket_1, Y);
+      Put(X, 2);
+      Put(Y, 2);
+      
+      
+      -- end loop;
+      delay 1000.0;
    
 end Server_Main;

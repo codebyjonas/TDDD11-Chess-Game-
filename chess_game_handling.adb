@@ -9,23 +9,23 @@ package body Chess_Game_Handling is
       Y := Y - 1;
    end Position_2_Cordinates;
    
-   
-   -- Samma ordning som i Ads
-
-   procedure Choose_Active_Chessman(X,Y : out Integer) is
-      Key                  : Key_Type;
-      Graphic_X, Graphic_Y : Integer := 6;
-      Black, White         : Character;
+   procedure Cordinates_2_Position(X , Y : in out Integer) is
    begin
-    -- Set_Buffer_Mode(Off);
-     --Set_Echo_Mode(Off);
-      
-      -- Positonera markören 
+      X := X + 1;
+      Y := Y + 1;
+   end Cordinates_2_Position;
+   
+   procedure Move_Around_On_Game_Board(X,Y : in out Integer) is
+      Key       : Key_Type;
+      Graphic_X : Integer := X; 
+      Graphic_Y : Integer := Y;
+   begin
       --- Tänk på Sizen sen
       -- TODO: När man går utanför spelplanen ska man hoppas in från andra sidan
-      Goto_XY(Graphic_X, Graphic_Y);
+     
       loop
 	 Get_Immediate(Key);
+	 
 	 if Is_Up_Arrow(Key) then
 	    Graphic_Y := Graphic_Y - 1;
 	 elsif Is_Down_Arrow(Key) then
@@ -35,15 +35,25 @@ package body Chess_Game_Handling is
 	 elsif Is_Left_Arrow(Key) then   
 	    Graphic_X := Graphic_X - 1;
 	 elsif Is_Return(Key) then
-	    Graphic_Mark_Position(Graphic_X, Graphic_Y);
-	    Position_2_Cordinates(Graphic_X, Graphic_Y);
 	    X := Graphic_X;
 	    Y := Graphic_Y;
-	    exit;
+	    return;
 	 end if;
 	 Goto_XY(Graphic_X, Graphic_Y);
-	 
       end loop;
+   end Move_Around_On_Game_Board;
+   
+   -- PUBLIKA Funktioner, Samma ordning som i Ads
+
+   procedure Choose_Active_Chessman(X,Y : out Integer) is
+   begin
+      -- Positonera markören 
+      X := 6;
+      Y := 6;
+      Move_Around_On_Game_Board(X, Y);
+      Graphic_Mark_Position(X, Y);
+      Position_2_Cordinates(X, Y);
+      
    end Choose_Active_Chessman;
    
    procedure Put_To_Socket(Socket : in Socket_Type;
@@ -63,16 +73,46 @@ package body Chess_Game_Handling is
    end Get_From_Socket;
    
    procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type; Possible_Move_Array: out Cordinate_Array) is
-      x, y : Integer;
+      X, Y : Integer;
    begin
-      for I in 1..28 loop 
-         Get_From_Socket(Socket, x, y);
-	 Possible_Move_Array(I).X := x;
-	 Possible_Move_Array(I).Y := y;
+      for I in Cordinate_Array'Range loop 
+         Get_From_Socket(Socket, X, Y);
+	 Possible_Move_Array(I).X := X;
+	 Possible_Move_Array(I).Y := Y;
       end loop;
-          
    end Get_Possible_Moves_From_Socket;
    
-  
+   procedure Mark_Positions( Cordinates : in Cordinate_Array) is
+      X , Y : Integer;
+   begin
+      for I in Cordinate_Array'Range loop
+	 if Cordinates(I).X /= 0 and Cordinates(I).Y /= 0 then
+	    X := Cordinates(I).X;
+	    Y := Cordinates(I).Y;
+	    Cordinates_2_Position(X,Y);
+	    Graphic_Mark_Position(X,Y);
+	 end if;
+      end loop;
+   end Mark_Positions;
+   
+   procedure Choose_Your_Play(X, Y : out Integer) is 
+   begin
+      -- Center on Game Field
+      X := 6;
+      Y := 6;
+      Move_Around_On_Game_Board(X, Y);
+      Position_2_Cordinates(X, Y);
+   end Choose_Your_Play;
+   
+   -- TMP och TEST funktioner
+   procedure Put( Item : in Cordinate_Array) is
+   begin
+      for I in 1..28 loop 
+	 Put(Item(I).X, 2);
+	 Put(Item(I).Y, 2);
+      end loop;
+   end Put;
+   
+   
    
 end Chess_Game_Handling;

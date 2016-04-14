@@ -6,6 +6,8 @@ with TJa.Window.Elementary;     use TJa.Window.Elementary;
 with TJa.Window.Graphic;        use TJa.Window.Graphic; 
 with TJa.Window.Text;           use TJa.Window.Text;
 
+-- Chess_Game
+
 package Chess_Game_Graphic is
    
    -- Variabler, stor del färger
@@ -15,7 +17,6 @@ package Chess_Game_Graphic is
    -- Procedurer och Funktioner
    procedure Draw_Complete_Game_Board(Size : in Integer := 10); --TMP! Med std value 
    procedure Graphic_Mark_Position(X, Y : in Integer);
-   --procedure Graphic_Mark_Positions( Cordinates : in Cordinate_Array); 
 private
    
 end Chess_Game_Graphic;

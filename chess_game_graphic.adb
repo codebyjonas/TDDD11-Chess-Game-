@@ -2,11 +2,6 @@ package body Chess_Game_Graphic is
    
    -- INTERNA PROCEDURER och FUNKTIONER
    
-   procedure Cordinates_2_Position(X , Y : in out Integer) is
-   begin
-      X := X + 1;
-      Y := Y + 1;
-   end Cordinates_2_Position;
    
    procedure Draw_Outlines_Game_Board(Size : in Integer) is 
    begin
@@ -73,7 +68,7 @@ package body Chess_Game_Graphic is
 	    if Y = 3 or Y = Size - 2 then
 	       if X > 1  and X /= Size then
 		  Put("♙");
-	       end if;
+ 	       end if;
 	    end if;
 	 end loop;
       end loop;
@@ -92,7 +87,8 @@ package body Chess_Game_Graphic is
       Put_Chessmen_On_Board(Size);
    end Draw_Complete_Game_Board;
    
-    -- TODO: VETA vilken chessman vi skriver över 
+   -- TODO: VETA vilken chessman vi skriver över 
+   
    procedure Graphic_Mark_Position(X, Y : in Integer) is
    begin
       Goto_XY(X,Y);

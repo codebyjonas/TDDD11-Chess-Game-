@@ -22,13 +22,15 @@ package Chess_Game_Handling is
    
    -- Procedurer och Funktioner
    procedure Choose_Active_Chessman(X,Y : out Integer);
-   procedure Put_To_Socket(Socket : in Socket_Type;
-			   X,Y : in Integer); 
-   procedure Get_From_Socket(Socket : in Socket_Type;
-			     X, Y   : out Integer);
+   procedure Put_To_Socket(Socket : in Socket_Type; X,Y : in Integer); 
+   procedure Get_From_Socket(Socket : in Socket_Type; X, Y   : out Integer);
+   procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type; Possible_Move_Array: out Cordinate_Array);
+   procedure Mark_Positions( Cordinates : in Cordinate_Array);
+   procedure Choose_Your_Play( X, Y : out Integer);
    
-   procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type;
-					    Possible_Move_Array: out Cordinate_Array);
+   -- TMP och TEST funktioner
+   procedure Put( Item : in Cordinate_Array);
+   
 private
    
    	 

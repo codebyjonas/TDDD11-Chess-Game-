@@ -10,20 +10,23 @@ with Chess_Game_Graphic;  use Chess_Game_Graphic;
 
 procedure Client_Main is
    
-    procedure Play_Round(Socket: in Socket_Type;
+   procedure Play_Round(Socket: in Socket_Type;
 			X, Y: in out Integer) is
-   
+      Possible_Moves : Cordinate_Array;
    begin
        Choose_Active_Chessman(X, Y);
        Put_To_Socket(Socket, X, Y);
-       Get_From_Socket(Socket, X, Y);
-   
+       Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
+       Mark_Positions(Possible_Moves);
+       Choose_Your_Play(X,Y);
+       Put_To_Socket(Socket, X, Y);
+       
    end Play_Round;
    
    
-   Socket                 : Socket_Type;
-   My_Color               : Character;
-   Actual_Game_Round_Case,X,Y : Integer;
+   Socket                       : Socket_Type;
+   My_Color                     : Character;
+   Actual_Game_Round_Case, X, Y : Integer;
    
 begin
   
@@ -71,12 +74,9 @@ begin
 	    Play_Round(Socket, X, Y);
 	 when 3 =>
 	    Play_Round(Socket, X, Y);
-	    null;
 	 when 4 => 
 	    Put("ååh det är första gången för dig...");
 	    Play_Round(Socket, X, Y);
-	    Put(X);
-	    Put(Y);
 	 when others =>
 	    Put("FÄN det är fEL");
 	    -- Raise Error 

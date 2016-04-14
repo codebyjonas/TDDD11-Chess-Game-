@@ -1,3 +1,6 @@
+--Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) program.adb
+
+
 with Ada.Command_Line; use Ada.Command_Line;
 with Ada.Text_IO;      use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
@@ -39,9 +42,14 @@ begin
    Put(X);
    Put(Y);
    -- To do: Skapa en funktion som returnerar möjliga drag
+   
    -- Tmp 
    Put_Line(Socket_1, 4);
    Put_Line(Socket_1, 8);
+   
+   for I in 1..26 loop
+      Put_Line(Socket_1, 0);
+   end loop;
    
    delay 1000000.0;
    

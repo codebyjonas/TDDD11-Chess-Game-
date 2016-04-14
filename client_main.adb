@@ -57,16 +57,13 @@ begin
 	    Put("Schack");
 	    -- TODO: Skapa Graphic_Display_Is_Check;
 	    --Graphic_Display_Is_Check; 
-	    --- TODO: Skapa Game_Play_A_Round;
-	    Choose_Active_Chessman(X,Y);
-	    Put_To_Socket(Socket, X, Y);
+	    Play_Round(Socket, X, Y);
 	 when 3 =>
+	    Play_Round(Socket, X, Y);
 	    null;
 	 when 4 => 
 	    Put("ååh det är första gången för dig...");
-	    Choose_Active_Chessman(X,Y);
-	    Put_To_Socket(Socket, X, Y);
-	    Get_From_Socket(Socket, X, Y);
+	    Play_Round(Socket, X, Y);
 	    Put(X);
 	    Put(Y);
 	 when others =>

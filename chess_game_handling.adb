@@ -66,4 +66,14 @@ package body Chess_Game_Handling is
       Get(Socket, Y);
    end Get_From_Socket;
    
+   procedure Play_Round(Socket: in Socket_Type;
+			X, Y: in out Integer) is
+   
+   begin
+       Choose_Active_Chessman(X, Y);
+       Put_To_Socket(Socket, X, Y);
+       Get_From_Socket(Socket, X, Y);
+   
+   end Play_Round;
+   
 end Chess_Game_Handling;

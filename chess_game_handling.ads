@@ -1,3 +1,4 @@
+--Ada packages
 with Ada.Text_IO;		use Ada.Text_IO;
 with Ada.Integer_Text_IO;	use Ada.Integer_Text_IO;
 
@@ -15,7 +16,6 @@ with Chess_Game_Graphic;        use Chess_Game_Graphic;
 package Chess_Game_Handling is
    
    -- Datatyper
-   type Chessman_Type is private;
    
    -- Procedurer och Funktioner
    procedure Choose_Active_Chessman(X,Y : out Integer);
@@ -23,6 +23,8 @@ package Chess_Game_Handling is
 			   X,Y : in Integer); 
    procedure Get_From_Socket(Socket : in Socket_Type;
 			     X, Y   : out Integer);
+   procedure Play_Round(Socket: in Socket_Type;
+			X, Y: in out Integer);
 private
    
    
@@ -31,11 +33,6 @@ private
    -- Uniq_ID : Unikt IDx
    -- Type_Of_Man : Typ av pjäs (bonde,..)
    -- Associated_Team : Tillhör lag (svart,vit)
-   type Chessman_Type is
-      record
-	 X,Y, Uniq_ID                 : Integer;
-	 Type_Of_Man, Associated_Team : Character;
-      end record;
-	 
+   	 
    
 end Chess_Game_Handling;

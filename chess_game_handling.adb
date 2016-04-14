@@ -15,7 +15,7 @@ package body Chess_Game_Handling is
    
    
    -- Samma ordning som i Ads
-   procedure Choose_Active_Chessman(Active_Chessman : out Chessman_Type) is
+   procedure Choose_Active_Chessman(X,Y : out Integer) is
       Key  : Key_Type;
       Graphic_X, Graphic_Y : Integer := 6;
    begin
@@ -39,12 +39,14 @@ package body Chess_Game_Handling is
 	 elsif Is_Return(Key) then
 	    Graphic_Mark_Position(Graphic_X, Graphic_Y);
 	    Position_2_Cordinates(Graphic_X, Graphic_Y);
+	    X := Graphic_X;
+	    Y := Graphic_Y;
 	 end if;
 	 Goto_XY(Graphic_X, Graphic_Y);
-      end loop;ls
+      end loop;
    end Choose_Active_Chessman;
    
-   procedure Put_To_Socket(Item : in Chessman_Type) is
+   procedure Put_To_Socket(X, Y : in Integer) is
    begin
       null;
    end;

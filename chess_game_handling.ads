@@ -17,8 +17,8 @@ package Chess_Game_Handling is
    type Chessman_Type is private;
    
    -- Procedurer och Funktioner
-   procedure Choose_Active_Chessman(Active_Chessman : out Chessman_Type);
-   procedure Put_To_Socket(Item : in Chessman_Type); 
+   procedure Choose_Active_Chessman(X,Y : out Integer);
+   procedure Put_To_Socket(X,Y : in Integer); 
    procedure Get_From_Socket(Item : out Chessman_Type);
 private
    

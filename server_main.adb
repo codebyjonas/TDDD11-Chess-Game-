@@ -40,8 +40,8 @@ begin
       --- 3. Regular
       --- 4. First Round 
 	 
-                 --Tillfällig funktion som håller koll på vems tur det är och skickar vilket game case det är till rätt socket.
-      --  if Player=1 then --Skapa variabel Player_1 som kan anta värdena 1 och 2, som anger vems tur det är
+                 --Tillfällig funktion som håller koll på vems tur det är och skickar vilket game case det är till rätt socket.//Filip
+      --  if Player=1 then 
       --  	 case Actual_Game_Round_Case is
       --            when 1=>
       --  	       Put_Line(Socket_1, 1);
@@ -50,7 +50,7 @@ begin
       --  	    when 3=>
       --  	        Put_Line(Socket_1, 3);
       --  	    when 4=>
-      --  	       Put_Line(Socket_1,4);
+      --  	       Put_Line(Socket_1, 4);
       --  	 end case;	
       --  	 Player=2; --Byter spelare till nästa loop
       --  else
@@ -80,17 +80,17 @@ begin
       -- To do: Skapa en funktion som returnerar möjliga drag
       -- TODO: Skapa en Put för Cordinates_Array? som består av de möjliga dragen, DEN MÅSTE se LIKADAN ut som den i chess_game_handling
       --Antar att det har skickats in en Cordinate_Array med möjliga drag och skickar dom till spelare 1 //Filip
+      --FÄRDIG KOD när possible_move_array är skapad.
       --  for I in 1..28 loop
       --  	 Put_Line(Socket_1, Cordinate_Array(I).X);
       --  	 Put_Line(Socket_1, Cordinate_Array(I).Y);
       --  end loop;
-	    
-      
+     	        
       -- TEMPORÄR KOD, simulerar ett output av en Cordinate_Array, 
       for I in 1..28 loop
 	 Put_Line(Socket_1, 1);
 	 Put_Line(Socket_1, 1);
-      end loop;
+      end loop;     
       -- END TEMPORÄR KOD
       
       

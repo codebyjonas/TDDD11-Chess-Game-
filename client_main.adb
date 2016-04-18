@@ -41,9 +41,9 @@ begin
   
    
    if My_Color = 'w' then 
-      Put("Vit");
+      Put("Du är vit");
    elsif My_Color = 'b' then
-      Put("Svart");
+      Put("Du är svart");
    else
       -- Raise Error 
       Put("Fel");

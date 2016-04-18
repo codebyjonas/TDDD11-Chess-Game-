@@ -35,8 +35,10 @@ begin
    -- Anslut till Server 
    Connect(Socket, Argument(1), Positive'Value(Argument(2))); 
    
-   -- Black or White 
+   -- Black or White ,Varför funkar ej detta? //Filip
    Get(Socket, My_Color);
+   
+  
    
    if My_Color = 'w' then 
       Put("Vit");
@@ -65,6 +67,7 @@ begin
       case Actual_Game_Round_Case is
 	 when 1 => 
 	    Put("Schack Matt");
+	    Put_Line(Socket, 1);
 	    -- TODO: Skapa Game_Over;
 	    -- Game_Over;
 	 when 2 =>

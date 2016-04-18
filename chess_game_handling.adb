@@ -82,7 +82,7 @@ package body Chess_Game_Handling is
       end loop;
    end Get_Possible_Moves_From_Socket;
    
-   procedure Mark_Positions( Cordinates : in Cordinate_Array) is
+   procedure Mark_Positions(Cordinates : in Cordinate_Array) is
       X , Y : Integer;
    begin
       for I in Cordinate_Array'Range loop

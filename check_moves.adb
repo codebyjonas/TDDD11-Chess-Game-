@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
-procedure Projekt_Analys is
+procedure Check_Moves is
    
    
    type Height_Type is
@@ -510,7 +510,7 @@ begin
    A := Possible_Moves(Coordinate_3, Board, Counter);
    Put_Array(A);
    
-   end Projekt_Analys;
+   end Check_Moves;
    
    
    

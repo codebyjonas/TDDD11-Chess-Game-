@@ -1,4 +1,4 @@
---Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) din_fil.adb
+--Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) Din_fil.adb
 
 
 With Ada.Command_Line; use Ada.Command_Line;
@@ -10,7 +10,7 @@ with TJa.Sockets;      use TJa.Sockets;
 procedure Server_Main is
    
    Listner              : Listener_Type;
-   Socket_1, Socket_2   : Socket_Type;
+   Socket_1, Socket_2, Actual_Socket   : Socket_Type;
    X, Y, Actual_Game_Round_Case, Player  : Integer;
    
 begin
@@ -40,35 +40,28 @@ begin
       --- 3. Regular
       --- 4. First Round 
 	 
-                 --Tillfällig funktion som håller koll på vems tur det är och skickar vilket game case det är till rätt socket.//Filip
-      --  if Player=1 then 
+                 --Tillfällig funktion som håller koll på vems tur det är och skickar vilket game case det är till rätt socket. Vi borde byta ut socket_nummer mot Actual_Socket//Filip
+   
+       --  if Player=1 then 
+       --     Actual_Socket := Socket_1;
+       --  else
+       --     Actual_Socket := Socket_2; 
+       --  end if;
+   
       --  	 case Actual_Game_Round_Case is
       --            when 1=>
-      --  	       Put_Line(Socket_1, 1);
+      --  	       Put_Line(Actual_Socket, 1);
       --  	    when 2=>
-      --  	       Put_Line(Socket_1, 2);
+      --  	       Put_Line(Actual_Socket, 2);
       --  	    when 3=>
-      --  	        Put_Line(Socket_1, 3);
+      --  	        Put_Line(Actual_Socket, 3);
       --  	    when 4=>
-      --  	       Put_Line(Socket_1, 4);
+      --  	       Put_Line(Actual_Socket, 4);
       --  	 end case;	
       --  	 Player=2; --Byter spelare till nästa loop
-      --  else
-      --  	 case Actual_Game_Round_Case is
-      --  	    when 1=>
-      --  	       Put_Line(Socket_2, 1);
-      --  	    when 2=>
-      --  	       Put_Line(Socket_2, 2);
-      --  	    when 3=>
-      --  	        Put_Line(Socket_2, 3);
-      --  	    when 4=>
-      --  	       Put_Line(Socket_2,4);
-      --  	 end case; 
-      --  	 Player=1;--Byter spelare till nästa loop
-      --  end if;
       
        Put_Line(Socket_1, 4);
-       Put_Line(Socket_2, 3);
+       
 	  
 	 
 	 --Hämta X,Y från klient (Vilken position som Användaren valt)

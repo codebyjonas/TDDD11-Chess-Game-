@@ -48,6 +48,7 @@ begin
       -- Raise Error 
       Put("Fel");
    end if;
+   delay 2.0;
    
    
    -- Rita upp planen

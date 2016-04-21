@@ -93,7 +93,6 @@ package body Chess_Game_Graphic is
    begin
       Goto_XY(X,Y);
       Set_Background_Colour(Highlight_Colour);
-      Put(' ');
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
    

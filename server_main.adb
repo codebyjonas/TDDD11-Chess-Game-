@@ -1,19 +1,24 @@
 --Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) Din_fil.adb
 
 
-With Ada.Command_Line; use Ada.Command_Line;
-with Ada.Text_IO;      use Ada.Text_IO;
+With Ada.Command_Line;    use Ada.Command_Line;
+with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
-with TJa.Sockets;      use TJa.Sockets;
+with TJa.Sockets;         use TJa.Sockets;
+
+with Server_Check_Moves;  use Server_Check_Moves;
 
 procedure Server_Main is
    
-   Listner                             : Listener_Type;
-   Socket_1, Socket_2, Actual_Socket   : Socket_Type;
-   X, Y, Actual_Game_Round_Case        : Integer;
-   Player                              : Integer := 1;
-   
+   Listner                               : Listener_Type;
+   Socket_1, Socket_2, Actual_Socket     : Socket_Type;
+   X, Y, Actual_Game_Round_Case          : Integer;
+   Active_Board                          : Board_Type;
+   Active_Coordinate                     : Coordinate_Type;
+   Active_Player                         : Boolean := True; -- True: Vit osv
+   Possible_Moves_Array                  : Possible_Moves_Type;
+   Player                                : Integer := 1;
 begin
    
    -- TODO: Skapa Error vid fel argument
@@ -66,24 +71,19 @@ begin
 	 --Hämta X,Y från klient (Vilken position som Användaren valt)
       Get(Socket_1, X);
       Get(Socket_1, Y);
-      Put(X);
-      Put(Y);
       
-      -- To do: Skapa en funktion som returnerar möjliga drag
-      -- TODO: Skapa en Put för Cordinates_Array? som består av de möjliga dragen, DEN MÅSTE se LIKADAN ut som den i chess_game_handling
-      --Antar att det har skickats in en Cordinate_Array med möjliga drag och skickar dom till spelare 1 //Filip
-      --FÄRDIG KOD när possible_move_array är skapad.
-      --  for I in 1..28 loop
-      --  	 Put_Line(Socket_1, Cordinate_Array(I).X);
-      --  	 Put_Line(Socket_1, Cordinate_Array(I).Y);
-      --  end loop;
-     	        
-      -- TEMPORÄR KOD, simulerar ett output av en Cordinate_Array, 
-      for I in 1..28 loop
-	 Put_Line(Socket_1, 1);
-	 Put_Line(Socket_1, 1);
-      end loop;     
-      -- END TEMPORÄR KOD
+      -- Gör till Kordinate
+      Active_Coordinate(1) := X;
+      Active_Coordinate(2) := Y;
+     
+      
+      Possible_Moves_Array := Possible_Moves(Active_Coordinate, Active_Board, Active_Player);
+      
+      -- GÖr till UNDERFUNKTION!!!!
+      for I in Possible_Moves_Type'Range loop
+	 Put_Line(Socket_1,  Possible_Moves_Array(I)(1));
+	 Put_Line(Socket_1,  Possible_Moves_Array(I)(2));
+      end loop;
       
       
       -- Här hämtar vi draget som klienten skickar, kommer dock inte vara validerat i dagsläget

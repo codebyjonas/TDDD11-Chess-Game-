@@ -25,7 +25,6 @@ package body Chess_Game_Handling is
      
       loop
 	 Get_Immediate(Key);
-	 
 	 if Is_Up_Arrow(Key) then
 	    Graphic_Y := Graphic_Y - 1;
 	 elsif Is_Down_Arrow(Key) then
@@ -112,7 +111,5 @@ package body Chess_Game_Handling is
 	 Put(Item(I).Y, 2);
       end loop;
    end Put;
-   
-   
    
 end Chess_Game_Handling;

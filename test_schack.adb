@@ -1,7 +1,20 @@
-package  body Server_Check_Moves is
+with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
    
    
+procedure Test_Schack is   
    
+      type Height_Type is
+     array(1..8) of Integer;
+   
+   type Board_Type is
+     array(1..8) of Height_Type;
+   
+   type Coordinate_Type is
+     array(1..2) of Integer;
+   
+   type Possible_Moves_Type is
+     array(1..28) of Coordinate_Type;
    
    procedure Zero_Procedure(Board: in out Board_Type) is
       
@@ -86,7 +99,72 @@ package  body Server_Check_Moves is
             Possible(I)(2) := 0;
 	 end loop;
 	 end Zero_Possible;
+	 
+	 
+	  
+      function Search_Player(Player : in Integer;
+			     Board : in Board_type) return Coordinate_Type is
+	 Coordinate : Coordinate_Type;
+      begin
+	 
+	 for X in 1..Board'Length loop
+	    for Y in 1..Board'Length loop
+	       if Board(X)(Y) = Player then
+		  Coordinate(1):=X;
+		  Coordinate(2):=Y;
+		  return Coordinate;
+	       else 
+		  Coordinate(1):= 0;
+		  Coordinate(2):=0;
+	       end if;
+	    end loop;
+	 end loop;
+	 return Coordinate;
+end Search_Player;
+
+
+function Search_Coordinates(Moves_Array : in Possible_Moves_Type;
+			    Coordinate : in Coordinate_Type)
+			   return Boolean is
    
+begin
+   
+   for I in 1..Moves_Array'Length loop
+      if Moves_Array(I) = Coordinate then
+	 return True;
+      end if;
+   end loop;
+   return False;
+   end Search_Coordinates;
+
+      
+    
+      
+	       
+      
+      
+      procedure Put_Array(A : in  Possible_Moves_Type) is
+      begin
+	 for I in  Possible_Moves_Type'Range loop
+	    Put(A(I)(1), 3);
+	    Put(A(I)(2), 3);
+	    New_Line;
+	 end loop;
+	 
+      end Put_Array;
+      
+      procedure Put_Player(Board : in out Board_Type;
+			  X, Y, Player : in Integer) is
+	 
+      begin
+	 
+	 Board(X)(Y) := Player;
+      end Put_Player;
+      
+      
+	 
+	 
+	 
    procedure Search_And_Destroy(Coordinate: in Coordinate_Type; Possible_Moves : in out Possible_Moves_Type) is
       
    begin
@@ -419,6 +497,7 @@ package  body Server_Check_Moves is
 	 
 	 Possible_Moves: Possible_Moves_Type;
 	 Turn : Integer;
+	 Test_Board : Board_Type;
 	
 
 	 
@@ -437,60 +516,35 @@ package  body Server_Check_Moves is
 	 if Board(Coordinate(1))(Coordinate(2)) = 0 then
 	    return Possible_Moves;                                           -- Ingen på plats
 	 elsif Board(Coordinate(1))(Coordinate(2)) = Turn * 1 then
-	    return Tower_Move(Coordinate, Board, Turn);
+	    Possible_Moves:= Tower_Move(Coordinate, Board, Turn);
 	  --  elsif Board(Coordinate(1))(Coordinate(2)) = Turn * 2 then
-	  --   return Knight_Move(Coordinate, Board, Turn);
+	  --   Possible_Moves:= Knight_Move(Coordinate, Board, Turn);
 	     elsif Board(Coordinate(1))(Coordinate(2)) = Turn *3 then
-	        return Bishop_Move(Coordinate, Board, Turn);
+	        Possible_Moves:= Bishop_Move(Coordinate, Board, Turn);
 	 elsif Board(Coordinate(1))(Coordinate(2)) = Turn *4 then
-	    return Queen_Move(Coordinate, Board, Turn);
+	    Possible_Moves := Queen_Move(Coordinate, Board, Turn);
 	    --  elsif Board(Coordinate(1))(Coordinate(2)) = Turn * 5 then
-	 --     return King_Move(Coordinate, Board, Turn);
+	 --     Possible_Move:= King_Move(Coordinate, Board, Turn);
 	 elsif Board(Coordinate(1))(Coordinate(2)) = Turn *6 then
-	    return Pawn_Move(Coordinate, Board, Turn);
+	    Possible_Moves:= Pawn_Move(Coordinate, Board, Turn);
 	 end if;
 	 
+	 -- Kolla nu om nåågon av dessa moves sätter dig i schack
+	 
+	 
+	 --  for I in 1..Possible_Moves'Length loop
+	 --     Test_Board:= Board;
+	 --     Move(Test_Board, Coordinate, Possible_Moves(I));
+	 --     if Schack(Test_Board, Tur) then
+	 --        Search_And_Destroy( Possible_Moves(I), Possible_Moves);
+	 --     end if;
+	 --  end loop;
+	 	 
 	 return Possible_Moves;
       end Possible_Moves;
       
-      
-      function Search_Player(Player : in Integer;
-			     Board : in Board_type) return Coordinate_Type is
-	 Coordinate : Coordinate_Type;
-      begin
-	 
-	 for X in 1..Board'Length loop
-	    for Y in 1..Board'Length loop
-	       if Board(X)(Y) = Player then
-		  Coordinate(1):=X;
-		  Coordinate(2):=Y;
-		  return Coordinate;
-	       else 
-		  Coordinate(1):= 0;
-		  Coordinate(2):=0;
-	       end if;
-	    end loop;
-	 end loop;
-	 return Coordinate;
-end Search_Player;
-
-
-function Search_Coordinates(Moves_Array : in Possible_Moves_Type;
-			    Coordinate : in Coordinate_Type)
-			   return Boolean is
-   
-begin
-   
-   for I in 1..Moves_Array'Length loop
-      if Moves_Array(I) = Coordinate then
-	 return True;
-      end if;
-   end loop;
-   return False;
-   end Search_Coordinates;
-
-      
-      function Schack(Board : in Board_Type; Tur : in Boolean) return Boolean is
+     
+	   function Schack(Board : in Board_Type; Tur : in Boolean) return Boolean is
 	 
 
 	 Not_Tur : Boolean;
@@ -523,77 +577,37 @@ begin
 	 end loop;
 	 return False;
       end Schack;
-      
-	       
-      
-      
-      procedure Put_Array(A : in  Possible_Moves_Type) is
-      begin
-	 for I in  Possible_Moves_Type'Range loop
-	    Put(A(I)(1), 3);
-	    Put(A(I)(2), 3);
-	    New_Line;
-	 end loop;
 	 
-      end Put_Array;
-      
-      procedure Put_Player(Board : in out Board_Type;
-			  X, Y, Player : in Integer) is
-	 
-      begin
-	 
-	 Board(X)(Y) := Player;
-      end Put_Player;
-      
-      
       
       
       Board : Board_Type;
       Counter: Boolean:=true;
-      Coordinate_1, Coordinate_2, Coordinate_3 : Coordinate_Type;
+      Coordinate : Coordinate_Type;
       A : Possible_Moves_Type;
 begin
    
- --    Reset(Board);
-   
-   
-   
-   
- --    Counter:= true;
-   
-   
- --    Coordinate_1(1):= 4;
- --    Coordinate_1(2) := 8;
-   
- --    Coordinate_2(1):= 5;
- --    Coordinate_2(2) := 5;
-   
- --    Coordinate_3(1) := 5;
- --    Coordinate_3(2) := 5;
-   
-
-   
- --  Move(Board, Coordinate_1, Coordinate_2);
-
-   
- --     Print_Board(Board);
-
- --    A := Possible_Moves(Coordinate_3, Board, Counter);
- --    Put_Array(A);
-   
-   
+ 
    -- Schack test
    
-   Zero_Procedure(Board);
-   Put_Player(Board, 3, 2, -5);
+   Counter := True;         -- vems tur , true = vit
+   
+   Zero_Procedure(Board);        -- Nollar brädet
+   Reset(Board);              -- ställer om brädet
+   Put_Player(Board, 5, 7, -5); -- säter ut spelare (x-kord, Y-kord, vilken spelar)
    Put_Player(Board, 3, 8 , 4);
+   
+   Coordinate(1) := 4;
+   Coordinate(2) := 5;
    
    Print_Board(Board);
    
+   Put_Array(Possible_Moves(Coordinate, Board, Counter));
    
-   end Server_Check_Moves;
+   if Schack(Board, Counter) then
+      Put("SCAKCKK!!!!!!!!!");
+   end if;
    
-   
+   end Test_schack;
    
    
    

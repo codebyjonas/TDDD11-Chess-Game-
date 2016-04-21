@@ -11,14 +11,17 @@ with Chess_Game_Graphic;  use Chess_Game_Graphic;
 procedure Client_Main is
    
    procedure Play_Round(Socket: in Socket_Type;
-			X, Y: in out Integer) is
+			X,  Y : in out Integer) is
       Possible_Moves : Cordinate_Array;
    begin
+      --Här borde vi  ha två x- och y-koordinater. Ett par för vald pjäs och ett par för valt drag.
        Choose_Active_Chessman(X, Y);
        Put_To_Socket(Socket, X, Y);
        Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
        Mark_Positions(Possible_Moves);
-       Choose_Your_Play(X,Y);
+       Choose_Your_Play(X, Y);
+       --Lägg till funktion Check_If_Move_Ok eller liknande
+       Move_Chess_Piece(X, Y);
        Put_To_Socket(Socket, X, Y);
        
    end Play_Round;
@@ -35,7 +38,6 @@ begin
    -- Anslut till Server 
    Connect(Socket, Argument(1), Positive'Value(Argument(2))); 
    
-   -- Black or White ,Varför funkar ej detta? //Filip
    Get(Socket, My_Color);
    
   

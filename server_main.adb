@@ -9,9 +9,10 @@ with TJa.Sockets;      use TJa.Sockets;
 
 procedure Server_Main is
    
-   Listner              : Listener_Type;
+   Listner                             : Listener_Type;
    Socket_1, Socket_2, Actual_Socket   : Socket_Type;
-   X, Y, Actual_Game_Round_Case, Player  : Integer;
+   X, Y, Actual_Game_Round_Case        : Integer;
+   Player                              : Integer := 1;
    
 begin
    
@@ -32,6 +33,11 @@ begin
   -- loop 
       -- ? Behöver kanske en variabeler som håller koll på om det är spelare 1 eller 2 som spelare, upp till er Joel och DJ BEAR
       --- ELLER DET BEHÖVS! 
+   if Player = 1 then
+      Actual_Socket := Socket_1;
+   else
+      Actual_Socket := Socket_2;
+   end if;
    
       -- TODO: Skapa en funktionen som väljer vilket "Case" rundan är och skickar med till klienten
       -- Set Actual_Game_Round_Case
@@ -39,14 +45,7 @@ begin
       --- 2. Schack
       --- 3. Regular
       --- 4. First Round 
-	 
-                 --Tillfällig funktion som håller koll på vems tur det är och skickar vilket game case det är till rätt socket. Vi borde byta ut socket_nummer mot Actual_Socket//Filip
-   
-       --  if Player=1 then 
-       --     Actual_Socket := Socket_1;
-       --  else
-       --     Actual_Socket := Socket_2; 
-       --  end if;
+	     
    
       --  	 case Actual_Game_Round_Case is
       --            when 1=>
@@ -58,7 +57,7 @@ begin
       --  	    when 4=>
       --  	       Put_Line(Actual_Socket, 4);
       --  	 end case;	
-      --  	 Player=2; --Byter spelare till nästa loop
+     
       
        Put_Line(Socket_1, 4);
        
@@ -93,6 +92,12 @@ begin
       Put(X, 2);
       Put(Y, 2);
       
+      --  --Byter spelare till nästa loop
+      -- if Player = 1 then
+      --    Player = 2;
+      -- else
+      --    Player = 1;
+      -- end if;
       
       -- end loop;
       delay 1000.0;

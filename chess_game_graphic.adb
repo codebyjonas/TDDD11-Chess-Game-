@@ -97,5 +97,14 @@ package body Chess_Game_Graphic is
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
    
+   procedure Move_Chess_Piece(X, Y: in Integer) is
+      
+   begin
+      --Cordinates_2_Position(X, Y); //Funkar ej ty dubbelpaketreferens
+      Goto_XY(X+1, Y+1);
+      Put("♙");
+       
+   end Move_Chess_Piece;
+   
    
 end Chess_Game_Graphic;

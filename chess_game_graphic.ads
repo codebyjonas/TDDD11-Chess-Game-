@@ -17,6 +17,7 @@ package Chess_Game_Graphic is
    -- Procedurer och Funktioner
    procedure Draw_Complete_Game_Board(Size : in Integer := 10); --TMP! Med std value 
    procedure Graphic_Mark_Position(X, Y : in Integer);
+   procedure Move_Chess_Piece(X, Y: in Integer);
 private
    
 end Chess_Game_Graphic;

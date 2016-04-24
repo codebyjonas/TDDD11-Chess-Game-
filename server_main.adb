@@ -1,8 +1,8 @@
---Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) din_fil.adb
+--Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) Din_fil.adb
 
 
-With Ada.Command_Line; use Ada.Command_Line;
-with Ada.Text_IO;      use Ada.Text_IO;
+With Ada.Command_Line;    use Ada.Command_Line;
+with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Chess_Analysis_Package; use Chess_Analysis_Package;
 with TJa.Sockets;      use TJa.Sockets;
@@ -29,7 +29,7 @@ procedure Server_Main is
     Counter: Boolean;
     Coordinate_1, Coordinate_2: Coordinate_Type;
     Possible_Array : Possible_Moves_Type;
-   
+
 begin
    
    Reset(Board);
@@ -78,33 +78,18 @@ begin
       --- 2. Schack
       --- 3. Regular
       --- 4. First Round 
-	 
-                 --Tillfällig funktion som håller koll på vems tur det är och skickar vilket game case det är till rätt socket.//Filip
-      --  if Player=1 then 
+	     
+   
       --  	 case Actual_Game_Round_Case is
       --            when 1=>
-      --  	       Put_Line(Socket_1, 1);
+      --  	       Put_Line(Actual_Socket, 1);
       --  	    when 2=>
-      --  	       Put_Line(Socket_1, 2);
+      --  	       Put_Line(Actual_Socket, 2);
       --  	    when 3=>
-      --  	        Put_Line(Socket_1, 3);
+      --  	        Put_Line(Actual_Socket, 3);
       --  	    when 4=>
-      --  	       Put_Line(Socket_1, 4);
-      --  	 end case;	
-      --  	 Player=2; --Byter spelare till nästa loop
-      --  else
-      --  	 case Actual_Game_Round_Case is
-      --  	    when 1=>
-      --  	       Put_Line(Socket_2, 1);
-      --  	    when 2=>
-      --  	       Put_Line(Socket_2, 2);
-      --  	    when 3=>
-      --  	        Put_Line(Socket_2, 3);
-      --  	    when 4=>
-      --  	       Put_Line(Socket_2,4);
-      --  	 end case; 
-      --  	 Player=1;--Byter spelare till nästa loop
-      --  end if;
+      --  	       Put_Line(Actual_Socket, 4);
+      --  	 end case;  
 	  
 	 
 	 --Hämta X,Y från klient (Vilken position som Användaren valt)
@@ -115,6 +100,7 @@ begin
       
       -- Flyttar vald pjäs från först vald position (Coord.1) till ny position som finns med i listan över möjliga drag (Coord. 2)
       Move(Board, Coordinate_1, Coordinate_2);
+
       
       if Counter then
 	 Counter := False;
@@ -123,9 +109,7 @@ begin
       end if;
       
  -- end loop;
-      
-      
-      -- end loop;
+
       delay 1000.0;
    
 end Server_Main;

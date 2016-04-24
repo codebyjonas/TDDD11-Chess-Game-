@@ -1,11 +1,10 @@
---Gnatmake för hela bibloteket: gnatmake $(~TDDD11/TJa-lib/bin/tja_config) Din_fil.adb
 
 
-With Ada.Command_Line;    use Ada.Command_Line;
-with Ada.Text_IO;         use Ada.Text_IO;
-with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
+With Ada.Command_Line;       use Ada.Command_Line;
+with Ada.Text_IO;            use Ada.Text_IO;
+with Ada.Integer_Text_IO;    use Ada.Integer_Text_IO;
 with Chess_Analysis_Package; use Chess_Analysis_Package;
-with TJa.Sockets;      use TJa.Sockets;
+with TJa.Sockets;            use TJa.Sockets;
 
 procedure Server_Main is
    

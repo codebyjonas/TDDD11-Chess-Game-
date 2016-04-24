@@ -39,7 +39,6 @@ begin
    Connect(Socket, Argument(1), Positive'Value(Argument(2))); 
    
    Get(Socket, My_Color);
-   
   
    
    if My_Color = 'w' then 
@@ -50,7 +49,6 @@ begin
       -- Raise Error 
       Put("Fel");
    end if;
-   delay 2.0;
    
    
    -- Rita upp planen

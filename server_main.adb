@@ -21,20 +21,26 @@ procedure Server_Main is
       end loop;
       
       end Put;
-   
-   Listner              : Listener_Type;
-   Socket_1, Socket_2, Socket_3   : Socket_Type;
-   X, Y, Actual_Game_Round_Case, Player  : Integer;
-   Board : Board_Type;
-    Counter: Boolean;
-    Coordinate_1, Coordinate_2: Coordinate_Type;
-    Possible_Array : Possible_Moves_Type;
+      
+      
+      -- #####
+      --Våra Underbar Variabler
+      -- ####
+      Listner                               : Listener_Type;
+      Socket_1, Socket_2, Active_Socket     : Socket_Type;
+      X, Y, Actual_Game_Round_Case, Player  : Integer;
+      Active_Board                          : Board_Type;
+      Active_Player                         : Boolean; -- True for White
+      Coordinate_1, Coordinate_2            : Coordinate_Type;
+      Possible_Array                        : Possible_Moves_Type; -- Borde heta Possible_Moves_Array, är ingen Data Typ
 
 begin
+   -- #####
+   -- Start UP and Resets
+   -- #####
+   Reset(Active_Board);
+   Active_Player := true; 
    
-   Reset(Board);
-   
-   Counter:= true; 
    
    -- TODO: Skapa Error vid fel argument
    -- Start Server with two sockets
@@ -51,26 +57,29 @@ begin
    
    Put_Line(Socket_1, 4); -- Skickar info till klient om att det är första rundan.
    
+   -- #####
+   -- Main Loop
+   -- #####
+   
+   
   -- loop
-      if Counter then 
-	 Socket_3 := Socket_1;
-	 elsif not Counter then
-	    Socket_3 := Socket_2;
+      if Active_Player then 
+	 Active_Socket := Socket_1;
+	 elsif not Active_Player then
+	    Active_Socket := Socket_2;
       end if;
       
-      Get(Socket_3, X); -- Get_Line? 
-      Get(Socket_3,Y);
+      Get(Active_Socket, X); 
+      Get(Active_Socket, Y);
       
       Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för. 
       Coordinate_1(2) := Y;
       
-      Possible_Array := Possible_Moves(Coordinate_1, Board, Counter);
+      Possible_Array := Possible_Moves(Coordinate_1, Active_Board, Active_Player);
       
-      Put(Socket_3, Possible_Array); 
+      Put(Active_Socket, Possible_Array); 
    
   -- loop 
-      -- ? Behöver kanske en variabeler som håller koll på om det är spelare 1 eller 2 som spelare, upp till er Joel och DJ BEAR
-      --- ELLER DET BEHÖVS! 
    
       -- TODO: Skapa en funktionen som väljer vilket "Case" rundan är och skickar med till klienten
       -- Set Actual_Game_Round_Case
@@ -86,26 +95,26 @@ begin
       --  	    when 2=>
       --  	       Put_Line(Actual_Socket, 2);
       --  	    when 3=>
-      --  	        Put_Line(Actual_Socket, 3);
+      --  	        Put_Line(Actual_Active_Socket);
       --  	    when 4=>
       --  	       Put_Line(Actual_Socket, 4);
       --  	 end case;  
 	  
 	 
 	 --Hämta X,Y från klient (Vilken position som Användaren valt)
-      Get(Socket_3, X);
-      Get(Socket_3, Y);
+      Get(Active_Socket, X);
+      Get(Active_Socket, Y);
       Coordinate_2(1) := X;
       Coordinate_2(2) := Y;
       
       -- Flyttar vald pjäs från först vald position (Coord.1) till ny position som finns med i listan över möjliga drag (Coord. 2)
-      Move(Board, Coordinate_1, Coordinate_2);
+      Move(Active_Board, Coordinate_1, Coordinate_2);
 
       
-      if Counter then
-	 Counter := False;
-      elsif not Counter then
-	 Counter := True; 
+      if Active_Player then
+	 Active_Player := False;
+      elsif not Active_Player then
+	 Active_Player := True; 
       end if;
       
  -- end loop;

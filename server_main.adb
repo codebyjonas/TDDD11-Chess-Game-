@@ -4,16 +4,37 @@
 With Ada.Command_Line; use Ada.Command_Line;
 with Ada.Text_IO;      use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-
+with Chess_Analysis_Package; use Chess_Analysis_Package;
 with TJa.Sockets;      use TJa.Sockets;
 
 procedure Server_Main is
    
+     procedure Put(Socket: in Socket_Type; Possible_Array: in Possible_Moves_Type) is
+      
+   begin
+      
+      for I in Possible_Array'Range loop
+	 Put_Line(Socket, Possible_Array(I)(1));  -- Funkar det att använda Put_Line så här? 
+	 Put_Line(Socket, Possible_Array(I)(2));
+	 if Possible_Array(I)(1) = 0 and Possible_Array(I)(2) = 0 then exit;   --Om två nollor skickas finns inga fler möjliga drag. 
+	 end if;
+      end loop;
+      
+      end Put;
+   
    Listner              : Listener_Type;
-   Socket_1, Socket_2   : Socket_Type;
+   Socket_1, Socket_2, Socket_3   : Socket_Type;
    X, Y, Actual_Game_Round_Case, Player  : Integer;
+   Board : Board_Type;
+    Counter: Boolean;
+    Coordinate_1, Coordinate_2: Coordinate_Type;
+    Possible_Array : Possible_Moves_Type;
    
 begin
+   
+   Reset(Board);
+   
+   Counter:= true; 
    
    -- TODO: Skapa Error vid fel argument
    -- Start Server with two sockets
@@ -27,7 +48,25 @@ begin
    -- Tilldela Klient 1 Vit och 2 Svart
    Put_Line(Socket_1, 'w');
    Put_Line(Socket_2, 'b');
-  
+   
+   Put_Line(Socket_1, 4); -- Skickar info till klient om att det är första rundan.
+   
+  -- loop
+      if Counter then 
+	 Socket_3 := Socket_1;
+	 elsif not Counter then
+	    Socket_3 := Socket_2;
+      end if;
+      
+      Get(Socket_3, X); -- Get_Line? 
+      Get(Socket_3,Y);
+      
+      Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för. 
+      Coordinate_1(2) := Y;
+      
+      Possible_Array := Possible_Moves(Coordinate_1, Board, Counter);
+      
+      Put(Socket_3, Possible_Array); 
    
   -- loop 
       -- ? Behöver kanske en variabeler som håller koll på om det är spelare 1 eller 2 som spelare, upp till er Joel och DJ BEAR
@@ -66,39 +105,24 @@ begin
       --  	 end case; 
       --  	 Player=1;--Byter spelare till nästa loop
       --  end if;
-      
-       Put_Line(Socket_1, 4);
-       Put_Line(Socket_2, 3);
 	  
 	 
 	 --Hämta X,Y från klient (Vilken position som Användaren valt)
-      Get(Socket_1, X);
-      Get(Socket_1, Y);
-      Put(X);
-      Put(Y);
+      Get(Socket_3, X);
+      Get(Socket_3, Y);
+      Coordinate_2(1) := X;
+      Coordinate_2(2) := Y;
       
-      -- To do: Skapa en funktion som returnerar möjliga drag
-      -- TODO: Skapa en Put för Cordinates_Array? som består av de möjliga dragen, DEN MÅSTE se LIKADAN ut som den i chess_game_handling
-      --Antar att det har skickats in en Cordinate_Array med möjliga drag och skickar dom till spelare 1 //Filip
-      --FÄRDIG KOD när possible_move_array är skapad.
-      --  for I in 1..28 loop
-      --  	 Put_Line(Socket_1, Cordinate_Array(I).X);
-      --  	 Put_Line(Socket_1, Cordinate_Array(I).Y);
-      --  end loop;
-     	        
-      -- TEMPORÄR KOD, simulerar ett output av en Cordinate_Array, 
-      for I in 1..28 loop
-	 Put_Line(Socket_1, 1);
-	 Put_Line(Socket_1, 1);
-      end loop;     
-      -- END TEMPORÄR KOD
+      -- Flyttar vald pjäs från först vald position (Coord.1) till ny position som finns med i listan över möjliga drag (Coord. 2)
+      Move(Board, Coordinate_1, Coordinate_2);
       
+      if Counter then
+	 Counter := False;
+      elsif not Counter then
+	 Counter := True; 
+      end if;
       
-      -- Här hämtar vi draget som klienten skickar, kommer dock inte vara validerat i dagsläget
-      Get(Socket_1, X);
-      Get(Socket_1, Y);
-      Put(X, 2);
-      Put(Y, 2);
+ -- end loop;
       
       
       -- end loop;

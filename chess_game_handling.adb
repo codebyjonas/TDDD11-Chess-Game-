@@ -61,23 +61,24 @@ package body Chess_Game_Handling is
    begin
       Put_Line(Socket, X);
       Put_Line(Socket, Y);
-      
    end Put_To_Socket;
    
    procedure Get_From_Socket(Socket : in Socket_Type;
-			     X, Y   : out Integer) is
+			     X, Y, Chess_Type   : out Integer) is
    begin
       Get(Socket, X);
       Get(Socket, Y);
+     -- Get(Socket, Chess_Type);
    end Get_From_Socket;
    
    procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type; Possible_Move_Array: out Cordinate_Array) is
-      X, Y : Integer;
+      X, Y, Chess_Type : Integer;
    begin
       for I in Cordinate_Array'Range loop 
-         Get_From_Socket(Socket, X, Y);
+         Get_From_Socket(Socket, X, Y, Chess_Type);
 	 Possible_Move_Array(I).X := X;
 	 Possible_Move_Array(I).Y := Y;
+	-- Possible_Move_Array(I).Chess_Type := Chess_Type;
       end loop;
    end Get_Possible_Moves_From_Socket;
    
@@ -94,13 +95,43 @@ package body Chess_Game_Handling is
       end loop;
    end Mark_Positions;
    
-   procedure Choose_Your_Play(X, Y : out Integer) is 
+   procedure Unmark_Position(X, Y : in out Integer) is
+      
+   begin
+      Cordinates_2_Position(X,Y);
+      Goto_XY(X, Y);
+      Put(' ');
+      
+   end Unmark_Position;
+   
+   function Move_Okey(X, Y : in Integer;
+		       Possible_Moves : in Cordinate_Array) return boolean is
+      
+   begin
+      for I in Possible_Moves'Range loop
+	 
+	 if X = Possible_Moves(I).X and Y = Possible_Moves(I).Y then
+	    return True;
+	 end if;
+      end loop;
+      
+      return False;
+      
+   end Move_Okey;
+       
+   
+   procedure Choose_Your_Play(X, Y : out Integer;
+                              Possible_Moves : in Cordinate_Array) is 
    begin
       -- Center on Game Field
       X := 6;
       Y := 6;
       Move_Around_On_Game_Board(X, Y);
       Position_2_Cordinates(X, Y);
+      if Move_Okey(X, Y, Possible_Moves) = False then
+	 Choose_Your_Play(X, Y, Possible_Moves);
+      end if;
+      
    end Choose_Your_Play;
    
    -- TMP och TEST funktioner

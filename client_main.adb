@@ -10,26 +10,41 @@ with Chess_Game_Graphic;  use Chess_Game_Graphic;
 
 procedure Client_Main is
    
-   procedure Play_Round(Socket: in Socket_Type;
-			X,  Y : in out Integer) is
-      Possible_Moves : Cordinate_Array;
+   procedure Put_Array(Possible_Array: in Cordinate_Array) is
+      
    begin
-      --Här borde vi  ha två x- och y-koordinater. Ett par för vald pjäs och ett par för valt drag.
-       Choose_Active_Chessman(X, Y);
-       Put_To_Socket(Socket, X, Y);
+      
+      for I in 1..28 loop
+	 Put(Possible_Array(I).X); 
+	 Put(Possible_Array(I).Y);
+      end loop;
+      
+      end Put_Array;
+   
+   procedure Play_Round(Socket: in Socket_Type;
+			X1, Y1 : in out  Integer) is
+		 
+      Possible_Moves : Cordinate_Array;
+      X2, Y2         : Integer;
+   begin
+      
+       Choose_Active_Chessman(X1, Y1);
+       Put_To_Socket(Socket, X1, Y1);
        Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
+       --Put_Array(Possible_Moves);
        Mark_Positions(Possible_Moves);
-       Choose_Your_Play(X, Y);
-       --Lägg till funktion Check_If_Move_Ok eller liknande
-       Move_Chess_Piece(X, Y);
-       Put_To_Socket(Socket, X, Y);
+       Choose_Your_Play(X2, Y2, Possible_Moves);
+       Unmark_Position(X1, Y1);
+       Remove_Chess_Piece(X1, Y1);
+       Move_Chess_Piece(X2, Y2);
+       Put_To_Socket(Socket, X2, Y2);
        
    end Play_Round;
    
    
    Socket                       : Socket_Type;
    My_Color                     : Character;
-   Actual_Game_Round_Case, X, Y : Integer;
+   Actual_Game_Round_Case, X1, Y1, Chess_Type : Integer;
    
 begin
   
@@ -75,12 +90,12 @@ begin
 	    Put("Schack");
 	    -- TODO: Skapa Graphic_Display_Is_Check;
 	    --Graphic_Display_Is_Check; 
-	    Play_Round(Socket, X, Y);
+	    Play_Round(Socket, X1, Y1);
 	 when 3 =>
-	    Play_Round(Socket, X, Y);
+	    Play_Round(Socket, X1, Y1);
 	 when 4 => 
 	    Put("ååh det är första gången för dig...");
-	    Play_Round(Socket, X, Y);
+	    Play_Round(Socket, X1, Y1);
 	 when others =>
 	    Put("FÄN det är fEL");
 	    -- Raise Error 

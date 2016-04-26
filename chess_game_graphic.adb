@@ -59,6 +59,7 @@ package body Chess_Game_Graphic is
 	       if X = 5 then 
 		  Put("♕");
 	       end if;
+	       
 	       if X = 6 then
 		  Put("♔");
 	       end if;
@@ -93,8 +94,16 @@ package body Chess_Game_Graphic is
    begin
       Goto_XY(X,Y);
       Set_Background_Colour(Highlight_Colour);
+      Put(' ');
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
+   
+   procedure Graphic_Unmark_Position(X, Y : in Integer) is
+      
+   begin
+      null;
+      
+   end Graphic_Unmark_Position;
    
    procedure Move_Chess_Piece(X, Y: in Integer) is
       
@@ -104,6 +113,14 @@ package body Chess_Game_Graphic is
       Put("♙");
        
    end Move_Chess_Piece;
+   
+   procedure Remove_Chess_Piece(X, Y : in Integer) is
+      
+   begin
+      Goto_XY(X, Y);
+      Put(' ');
+      
+   end Remove_Chess_Piece;
    
    
 end Chess_Game_Graphic;

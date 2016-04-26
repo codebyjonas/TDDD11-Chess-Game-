@@ -15,6 +15,7 @@ procedure Server_Main is
       for I in Possible_Array'Range loop
 	 Put_Line(Socket, Possible_Array(I)(1));  -- Funkar det att använda Put_Line så här? 
 	 Put_Line(Socket, Possible_Array(I)(2));
+	
       end loop;
       
       end Put;
@@ -76,8 +77,7 @@ begin
       
       Put(Active_Socket, Possible_Array); 
    
-  -- loop 
-   
+      
       -- TODO: Skapa en funktionen som väljer vilket "Case" rundan är och skickar med till klienten
       -- Set Actual_Game_Round_Case
       --- 1. Schack Matt
@@ -110,7 +110,7 @@ begin
 	 Active_Player := True; 
       end if;
       
- -- end loop;
+      end loop;
 
       delay 1000.0;
    

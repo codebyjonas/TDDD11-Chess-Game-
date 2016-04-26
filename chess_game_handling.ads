@@ -17,30 +17,36 @@ package Chess_Game_Handling is
    
    -- Datatyper
 
-   type Cordinate_Array is private;
-   type Cordinate_Type is private;
+   --  type Cordinate_Array is private;
+   --  type Cordinate_Type is private;
    
-   -- Procedurer och Funktioner
-   procedure Choose_Active_Chessman(X,Y : out Integer);
-   procedure Put_To_Socket(Socket : in Socket_Type; X,Y : in Integer); 
-   procedure Get_From_Socket(Socket : in Socket_Type; X, Y   : out Integer);
-   procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type; Possible_Move_Array: out Cordinate_Array);
-   procedure Mark_Positions( Cordinates : in Cordinate_Array);
-   procedure Choose_Your_Play( X, Y : out Integer);
-   
-   -- TMP och TEST funktioner
-   procedure Put( Item : in Cordinate_Array);
-   
-private
-   
-   	 
-
-   type Cordinate_Type is
+    type Cordinate_Type is
       record
-	 X, Y : Integer;
+	 X, Y, Chess_Type : Integer;
       end record;
    
    type Cordinate_Array is 
      array (1..28) of Cordinate_Type;
+   
+   -- Procedurer och Funktioner
+   procedure Choose_Active_Chessman(X,Y : out Integer);
+   procedure Put_To_Socket(Socket : in Socket_Type; X,Y : in Integer); 
+   procedure Get_From_Socket(Socket : in Socket_Type; X, Y, Chess_Type : out Integer);
+   procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type; Possible_Move_Array: out Cordinate_Array);
+   procedure Mark_Positions( Cordinates : in Cordinate_Array);
+   procedure Unmark_Position(X, Y : in out Integer);
+   procedure Choose_Your_Play( X, Y : out Integer;
+			       Possible_Moves: in Cordinate_Array);
+   function Move_Okey (X, Y : in Integer;
+		       Possible_Moves : in Cordinate_Array) return Boolean;
+   
+   -- TMP och TEST funktioner
+   procedure Put( Item : in Cordinate_Array);
+   
+   
+   	 
+
+  
+private   
    
 end Chess_Game_Handling;

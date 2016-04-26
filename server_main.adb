@@ -8,13 +8,14 @@ with TJa.Sockets;            use TJa.Sockets;
 
 procedure Server_Main is
    
-     procedure Put(Socket: in Socket_Type; Possible_Array: in Possible_Moves_Type) is
+     procedure Put(Socket: in Socket_Type; Possible_Array: in Return_Type) is
       
    begin
       
       for I in Possible_Array'Range loop
 	 Put_Line(Socket, Possible_Array(I)(1));  -- Funkar det att använda Put_Line så här? 
 	 Put_Line(Socket, Possible_Array(I)(2));
+	 Put_Line(Socket, Possible_Array(I)(3));
       end loop;
       
       end Put;
@@ -52,32 +53,32 @@ begin
    Put_Line(Socket_1, 'w');
    Put_Line(Socket_2, 'b');
    
-   Put_Line(Socket_1, 4); -- Skickar info till klient om att det är första rundan.
+   
+   -- Skickar info till klient om att det är första rundan.
    
    -- #####
    -- Main Loop
    -- #####
    
    
-  -- loop
+   -- loop
+   
+  
+   
+   
+   -- Kolla Efter Schack Schack matt
+   
       if Active_Player then 
 	 Active_Socket := Socket_1;
 	 elsif not Active_Player then
 	    Active_Socket := Socket_2;
       end if;
       
-      Get(Active_Socket, X); 
-      Get(Active_Socket, Y);
       
-      Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för. 
-      Coordinate_1(2) := Y;
-      
-      Possible_Array := Possible_Moves(Coordinate_1, Active_Board, Active_Player);
-      
-      Put(Active_Socket, Possible_Array); 
-   
-  -- loop 
-   
+     Actual_Game_Round_Case := Check_Case(Active_Board, Active_Player);
+    
+      Put(Actual_Game_Round_Case);
+	 
       -- TODO: Skapa en funktionen som väljer vilket "Case" rundan är och skickar med till klienten
       -- Set Actual_Game_Round_Case
       --- 1. Schack Matt
@@ -93,6 +94,23 @@ begin
       --  	    when 3=>
       --  	        Put_Line(Actual_Active_Socket);
 	  
+      
+      Put_Line(Active_Socket, Actual_Game_Round_Case);
+
+      
+      Get(Active_Socket, X); 
+      Get(Active_Socket, Y);
+      
+      Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för. 
+      Coordinate_1(2) := Y;
+      
+      Possible_Array :=Final_Possible_Moves(Coordinate_1, Active_Board, Active_Player);
+      
+      --Skickar möjliga drag tillsammans med pjäs till Filip och Co:--
+ 
+      Put(Active_Socket, Till_Filip(Possible_Array, Active_Board)); 
+      
+ 
 	 
 	 --Hämta X,Y från klient (Vilken position som Användaren valt)
       Get(Active_Socket, X);

@@ -15,8 +15,6 @@ procedure Server_Main is
       for I in Possible_Array'Range loop
 	 Put_Line(Socket, Possible_Array(I)(1));  -- Funkar det att använda Put_Line så här? 
 	 Put_Line(Socket, Possible_Array(I)(2));
-	 if Possible_Array(I)(1) = 0 and Possible_Array(I)(2) = 0 then exit;   --Om två nollor skickas finns inga fler möjliga drag. 
-	 end if;
       end loop;
       
       end Put;
@@ -85,7 +83,6 @@ begin
       --- 1. Schack Matt
       --- 2. Schack
       --- 3. Regular
-      --- 4. First Round 
 	     
    
       --  	 case Actual_Game_Round_Case is
@@ -95,9 +92,6 @@ begin
       --  	       Put_Line(Actual_Socket, 2);
       --  	    when 3=>
       --  	        Put_Line(Actual_Active_Socket);
-      --  	    when 4=>
-      --  	       Put_Line(Actual_Socket, 4);
-      --  	 end case;  
 	  
 	 
 	 --Hämta X,Y från klient (Vilken position som Användaren valt)

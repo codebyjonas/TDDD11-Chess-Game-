@@ -41,10 +41,18 @@ procedure Client_Main is
        
    end Play_Round;
    
+   procedure Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2 : in Integer) is
+      
+   begin
+      Remove_Chess_Piece(Other_Player_X1+1, Other_Player_Y1+1);
+      Move_Chess_Piece(Other_Player_X2, Other_Player_Y2);
+      
+   end Other_Player_Moves;
+   
    
    Socket                       : Socket_Type;
    My_Color                     : Character;
-   Actual_Game_Round_Case, X1, Y1, Chess_Type : Integer;
+   Actual_Game_Round_Case, X1, Y1, Chess_Type, Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2 : Integer;
    
 begin
   
@@ -77,7 +85,13 @@ begin
       --- 3. Regular
       --- 4. First Round 
       Get(Socket, Actual_Game_Round_Case);
-      
+      if Actual_Game_Round_Case /= 4 then
+	 Get(Socket, Other_Player_X1);
+	 Get(Socket, Other_Player_Y1);
+	 Get(Socket, Other_Player_X2);
+	 Get(Socket, Other_Player_Y2);
+	 Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2);
+      end if;
       
       -- Avgör vilket fall som ska köra 
       case Actual_Game_Round_Case is

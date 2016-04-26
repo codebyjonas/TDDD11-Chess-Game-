@@ -68,7 +68,7 @@ package body Chess_Game_Handling is
    begin
       Get(Socket, X);
       Get(Socket, Y);
-     -- Get(Socket, Chess_Type);
+      Get(Socket, Chess_Type);
    end Get_From_Socket;
    
    procedure Get_Possible_Moves_From_Socket(Socket: in Socket_Type; Possible_Move_Array: out Cordinate_Array) is
@@ -78,7 +78,7 @@ package body Chess_Game_Handling is
          Get_From_Socket(Socket, X, Y, Chess_Type);
 	 Possible_Move_Array(I).X := X;
 	 Possible_Move_Array(I).Y := Y;
-	-- Possible_Move_Array(I).Chess_Type := Chess_Type;
+	 Possible_Move_Array(I).Chess_Type := Chess_Type;
       end loop;
    end Get_Possible_Moves_From_Socket;
    

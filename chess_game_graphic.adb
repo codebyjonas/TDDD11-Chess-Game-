@@ -105,12 +105,41 @@ package body Chess_Game_Graphic is
       
    end Graphic_Unmark_Position;
    
-   procedure Move_Chess_Piece(X, Y: in Integer) is
+   procedure Move_Chess_Piece(X, Y, Choosen_Chess_Piece: in Integer) is
       
    begin
       --Cordinates_2_Position(X, Y); //Funkar ej ty dubbelpaketreferens
       Goto_XY(X+1, Y+1);
-      Put("♙");
+      case Choosen_Chess_Piece is
+	 when 1=> 
+	   Put("♖");
+	 when 2=>
+	    Put("♘");
+	 when 3=>
+	    Put("♗");
+	 when 4=>
+	    Put("♕");
+	 when 5=>
+	    Put("♔");
+	 when 6=>
+	    Put("♙");
+	 when -1=> 
+	   Put("♖");
+	 when -2=>
+	    Put("♘");
+	 when -3=>
+	    Put("♗");
+	 when -4=>
+	    Put("♕");
+	 when -5=>
+	    Put("♔");
+	 when -6=>
+	    Put("♙");
+	 when others =>
+	    Put(" ");
+	 end case;
+      
+      
        
    end Move_Chess_Piece;
    

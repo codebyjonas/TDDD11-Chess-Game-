@@ -89,18 +89,28 @@ package body Chess_Game_Handling is
 	 if Cordinates(I).X /= 0 and Cordinates(I).Y /= 0 then
 	    X := Cordinates(I).X;
 	    Y := Cordinates(I).Y;
-	    Cordinates_2_Position(X,Y);
+	    Cordinates_2_Position(X,Y);	    
 	    Graphic_Mark_Position(X,Y);
 	 end if;
       end loop;
    end Mark_Positions;
    
-   procedure Unmark_Position(X, Y : in out Integer) is
+   procedure Unmark_Position(X, Y : in out Integer;
+                             Cordinates : in Cordinate_Array) Is
       
    begin
+ 
       Cordinates_2_Position(X,Y);
       Goto_XY(X, Y);
       Put(' ');
+      
+      for I in Cordinates'Range loop
+	 if Cordinates(I).X/=0 then
+	    Move_Chess_Piece(Cordinates(I).X, Cordinates(I).Y, Cordinates(I).Chess_Type);
+	 end if;
+      end loop;
+	 
+      
       
    end Unmark_Position;
    
@@ -133,6 +143,48 @@ package body Chess_Game_Handling is
       end if;
       
    end Choose_Your_Play;
+   
+   --- Försök till att inte kunna välja en pjäs utan möjliga drag. 
+   --  procedure Any_Possible_Moves(Active_Socket : in Socket_Type;
+   --  				Possible_Moves : in Cordinate_Array) is
+      
+   --     X1, Y1 : Integer;
+   --  begin
+      
+   --     for I in Possible_Moves'Range loop
+   --  	 if Possible_Moves(I).X /= 0 then
+   --  	    exit;
+   --  	 elsif Possible_Moves(Possible_Moves'Length).X = 0 then
+   --  	    Play_Round(Active_Socket, X1, Y1);
+   --  	 end if;
+	 
+   --     end loop;
+      
+   --  end Any_Possible_Moves;
+   
+   procedure Play_Round(Socket: in Socket_Type;
+   			X1, Y1 : out  Integer) is
+      
+      Possible_Moves : Cordinate_Array;
+      X2, Y2, Choosen_Chess_Piece         : Integer;
+   begin
+      
+      Choose_Active_Chessman(X1, Y1);
+      Put_To_Socket(Socket, X1, Y1);
+      
+      Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
+      Any_Possible_Moves(Socket, Possible_Moves);
+      --Put_Array(Possible_Moves);
+      Mark_Positions(Possible_Moves);
+      Get(Socket, Choosen_Chess_Piece);
+      Choose_Your_Play(X2, Y2, Possible_Moves);
+      Unmark_Position(X1, Y1, Possible_Moves);
+      Remove_Chess_Piece(X1, Y1);
+      Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
+      Put_To_Socket(Socket, X2, Y2);
+      
+   end Play_Round;
+   
    
    -- TMP och TEST funktioner
    procedure Put( Item : in Cordinate_Array) is

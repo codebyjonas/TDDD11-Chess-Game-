@@ -1,7 +1,12 @@
+-- This package contains the following F (Functions) and P ( procedures)
+-- P, Zero_Procedure - all 
+
+
 
 package body Chess_Analysis_Package is
    
-  
+   
+   
    procedure Zero_Procedure(Board: in out Board_Type) is
       
    begin
@@ -1293,6 +1298,17 @@ begin
 	    return  3;
 	 end if;
       end Check_Case;
+      
+      
+       function Get_Choosen_Chess_Piece(In_Coordinate : in Coordinate_Type; 
+			        Board : in Board_Type) return Integer is
+	 
+       begin
+	  
+	  return Board(In_Coordinate(1))(In_Coordinate(2));
+       end Get_Choosen_Chess_Piece;
+       
+	 
       
 end Chess_Analysis_Package;
 

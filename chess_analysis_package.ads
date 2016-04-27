@@ -42,6 +42,9 @@ package Chess_Analysis_Package is
    -- Till Fillip o Jonas;
    
     function Till_Filip(Moves: in Possible_Moves_Type; Board: in Board_Type) return Return_Type;
-   function Check_Case(Active_Board: in Board_Type; Active_Player: in Boolean) return Integer;
+    function Check_Case(Active_Board: in Board_Type; Active_Player: in Boolean) return Integer;
+    
+    function Get_Choosen_Chess_Piece(In_Coordinate : in Coordinate_Type; 
+				     Board : in Board_Type) return Integer;
    
    end Chess_Analysis_Package;

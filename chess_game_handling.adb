@@ -2,18 +2,39 @@
 package body Chess_Game_Handling is
    
    --INTERNA funktioner
-   procedure Position_2_Cordinates( X, Y : in out Integer) is
+   procedure Position_2_Coordinates( X, Y : in out Integer) is
    begin      
-      -- Gör till "Riktiga" Kordinater, simpelt nu
-      X := X - 1;
-      Y := Y - 1;
-   end Position_2_Cordinates;
+      if X = 1 and Y = 1 then
+	 X := X;
+	 Y := X; 
+      elsif X = 1 then 
+	 X := X;
+	 Y := (Y - 1) / 5 + 1;
+      elsif Y = 1 then
+	 X := (X - 1) / 10 + 1 ;
+	 Y := Y;
+      else
+	 X := (X - 1) / 10 + 1;
+	 Y := (Y - 1) / 5 + 1;
+       end if;
+   end Position_2_Coordinates;
    
-   procedure Cordinates_2_Position(X , Y : in out Integer) is
+   procedure Coordinates_2_Position(X , Y : in out Integer) is
    begin
-      X := X + 1;
-      Y := Y + 1;
-   end Cordinates_2_Position;
+      if X = 1 and Y = 1 then
+	 X := X;
+	 Y := X; 
+      elsif X = 1 then 
+	 X := X;
+	 Y := (Y - 1) * 5 + 1;
+      elsif Y = 1 then
+	 X := (X - 1) * 10 + 1 ;
+	 Y := Y;
+      else
+	 X := (X - 1) * 10 + 1;
+	 Y := (Y - 1) * 5 + 1;
+       end if;
+   end Coordinates_2_Position;
    
    procedure Move_Around_On_Game_Board(X,Y : in out Integer) is
       Key       : Key_Type;
@@ -38,7 +59,9 @@ package body Chess_Game_Handling is
 	    Y := Graphic_Y;
 	    return;
 	 end if;
+	 Coordinates_2_Position(Graphic_X, Graphic_Y);
 	 Goto_XY(Graphic_X, Graphic_Y);
+	 Position_2_Coordinates(Graphic_X, Graphic_Y);
       end loop;
    end Move_Around_On_Game_Board;
    
@@ -51,7 +74,7 @@ package body Chess_Game_Handling is
       Y := 6;
       Move_Around_On_Game_Board(X, Y);
       Graphic_Mark_Position(X, Y);
-      Position_2_Cordinates(X, Y);
+      Position_2_Coordinates(X, Y);
       
    end Choose_Active_Chessman;
    
@@ -88,7 +111,7 @@ package body Chess_Game_Handling is
 	 if Cordinates(I).X /= 0 and Cordinates(I).Y /= 0 then
 	    X := Cordinates(I).X;
 	    Y := Cordinates(I).Y;
-	    Cordinates_2_Position(X,Y);
+	    Coordinates_2_Position(X,Y);
 	    Graphic_Mark_Position(X,Y);
 	 end if;
       end loop;
@@ -100,7 +123,7 @@ package body Chess_Game_Handling is
       X := 6;
       Y := 6;
       Move_Around_On_Game_Board(X, Y);
-      Position_2_Cordinates(X, Y);
+      Position_2_Coordinates(X, Y);
    end Choose_Your_Play;
    
    -- TMP och TEST funktioner

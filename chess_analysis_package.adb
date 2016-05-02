@@ -1265,7 +1265,7 @@ begin
 	 return true;
       end Check_Mate;
       
-      function Till_Filip(Moves: in Possible_Moves_Type; Board: in Board_Type) return Return_Type is
+      function Create_Array_With_Chessman_And_Position(Moves: in Possible_Moves_Type; Board: in Board_Type) return Return_Type is
 	 
 	 Return_Array : Return_Type;
 	 
@@ -1284,7 +1284,7 @@ begin
 	 
 	 return Return_Array;
 	 
-      end Till_Filip;
+      end Create_Array_With_Chessman_And_Position;
       
       function Check_Case(Active_Board: in Board_Type; Active_Player: in Boolean) return Integer is
 	 

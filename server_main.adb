@@ -1,5 +1,6 @@
 
 
+
 With Ada.Command_Line;       use Ada.Command_Line;
 with Ada.Text_IO;            use Ada.Text_IO;
 with Ada.Integer_Text_IO;    use Ada.Integer_Text_IO;
@@ -103,7 +104,7 @@ begin
       
       --Skickar möjliga drag tillsammans med pjäs till Filip och Co:--
  
-      Put(Active_Socket, Till_Filip(Possible_Array, Active_Board));
+      Put(Active_Socket, Create_Array_With_Chessman_And_Position(Possible_Array, Active_Board));
       
       --Tar reda på vilken typ av pjäs spelaren har valt och skickar till socket
        Choosen_Chess_Piece := Get_Choosen_Chess_Piece(Coordinate_1, Active_Board); 

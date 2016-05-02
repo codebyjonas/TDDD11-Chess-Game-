@@ -20,7 +20,10 @@ package Chess_Game_Graphic is
    -- Procedurer och Funktioner
    procedure Draw_Complete_Game_Board; 
    procedure Graphic_Mark_Position(X, Y : in Integer; Colour : in Colour_Type := Highlight_Colour);
-   procedure Move_Chess_Piece(X, Y: in Integer);
+   procedure Graphic_Unmark_Position(X, Y : in Integer);
+   procedure Graphic_Move_Chess_Piece(X, Y, Choosen_Chess_Piece: in Integer);
+   procedure Remove_Chess_Piece(X, Y : in Integer);
+   
 private
    
 end Chess_Game_Graphic;

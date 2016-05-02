@@ -8,13 +8,15 @@ with TJa.Sockets;            use TJa.Sockets;
 
 procedure Server_Main is
    
-     procedure Put(Socket: in Socket_Type; Possible_Array: in Possible_Moves_Type) is
+     procedure Put(Socket: in Socket_Type; Possible_Array: in Return_Type) is
       
    begin
       
       for I in Possible_Array'Range loop
 	 Put_Line(Socket, Possible_Array(I)(1));  -- Funkar det att använda Put_Line så här? 
 	 Put_Line(Socket, Possible_Array(I)(2));
+	 Put_Line(Socket, Possible_Array(I)(3));
+
       end loop;
       
       end Put;
@@ -25,7 +27,7 @@ procedure Server_Main is
       -- ####
       Listner                               : Listener_Type;
       Socket_1, Socket_2, Active_Socket     : Socket_Type;
-      X, Y, Actual_Game_Round_Case, Player  : Integer;
+      X, Y, Actual_Game_Round_Case, Player, Choosen_Chess_Piece  : Integer;
       Active_Board                          : Board_Type;
       Active_Player                         : Boolean; -- True for White
       Coordinate_1, Coordinate_2            : Coordinate_Type;
@@ -52,47 +54,62 @@ begin
    Put_Line(Socket_1, 'w');
    Put_Line(Socket_2, 'b');
    
-   Put_Line(Socket_1, 4); -- Skickar info till klient om att det är första rundan.
+   
+   -- Skickar info till klient om att det är första rundan.
    
    -- #####
    -- Main Loop
    -- #####
    
+   Actual_Game_Round_Case := 4;
+   loop
    
-  -- loop
+  
+   
+ 
+   -- Kolla Efter Schack Schack matt
+   
       if Active_Player then 
 	 Active_Socket := Socket_1;
 	 elsif not Active_Player then
 	    Active_Socket := Socket_2;
       end if;
       
+      -- Gör draget som tidigare spelare gjorde
+      if Actual_Game_Round_Case /= 4 then
+	 Put_Line(Active_Socket, Actual_Game_Round_Case);
+         Put_Line(Active_Socket, Coordinate_1(1));
+	 Put_Line(Active_Socket, Coordinate_1(2));
+	 Put_Line(Active_Socket, Coordinate_2(1));
+	 Put_Line(Active_Socket, Coordinate_2(2));
+	 Put_Line(Active_Socket, Choosen_Chess_Piece);
+      else
+         Put_Line(Active_Socket, Actual_Game_Round_Case);
+      end if;
+     
+
+      -- Väntar på val av pjäs
       Get(Active_Socket, X); 
       Get(Active_Socket, Y);
       
       Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för. 
       Coordinate_1(2) := Y;
       
-      Possible_Array := Possible_Moves(Coordinate_1, Active_Board, Active_Player);
+     
       
-      Put(Active_Socket, Possible_Array); 
-   
-  -- loop 
-   
-      -- TODO: Skapa en funktionen som väljer vilket "Case" rundan är och skickar med till klienten
-      -- Set Actual_Game_Round_Case
-      --- 1. Schack Matt
-      --- 2. Schack
-      --- 3. Regular
-	     
-   
-      --  	 case Actual_Game_Round_Case is
-      --            when 1=>
-      --  	       Put_Line(Actual_Socket, 1);
-      --  	    when 2=>
-      --  	       Put_Line(Actual_Socket, 2);
-      --  	    when 3=>
-      --  	        Put_Line(Actual_Active_Socket);
-	  
+      Possible_Array :=Final_Possible_Moves(Coordinate_1, Active_Board, Active_Player);
+      
+     
+      
+      --Skickar möjliga drag tillsammans med pjäs till Filip och Co:--
+ 
+      Put(Active_Socket, Till_Filip(Possible_Array, Active_Board));
+      
+      --Tar reda på vilken typ av pjäs spelaren har valt och skickar till socket
+       Choosen_Chess_Piece := Get_Choosen_Chess_Piece(Coordinate_1, Active_Board); 
+       Put_Line(Active_Socket, Choosen_Chess_Piece);
+      
+ 
 	 
 	 --Hämta X,Y från klient (Vilken position som Användaren valt)
       Get(Active_Socket, X);
@@ -109,8 +126,8 @@ begin
       elsif not Active_Player then
 	 Active_Player := True; 
       end if;
-      
- -- end loop;
+      Actual_Game_Round_Case := Check_Case(Active_Board, Active_Player);
+     end loop;
 
       delay 1000.0;
    

@@ -1,18 +1,28 @@
 package body Chess_Game_Graphic is
    
    -- INTERNA PROCEDURER och FUNKTIONER
-   procedure Position_2_Cordinates( X, Y : in out Integer) is
+   procedure Position_2_Coordinates( X, Y : in out Integer) is
    begin      
-      -- Gör till "Riktiga" Kordinater, simpelt nu
-      X := X - 1;
-      Y := Y - 1;
-   end Position_2_Cordinates;
+      if X = 1 and Y = 1 then
+	 X := X;
+	 Y := Y; 
+      elsif X = 1 then 
+	 X := X;
+	 Y := (Y - 1) / 5 + 1;
+      elsif Y = 1 then
+	 X := (X - 1) / 10 + 1 ;
+	 Y := Y;
+      else
+	 X := (X - 1) / 10 + 1;
+	 Y := (Y - 1) / 5 + 1;
+       end if;
+   end Position_2_Coordinates;
    
    procedure Coordinates_2_Position(X , Y : in out Integer) is
    begin
       if X = 1 and Y = 1 then
 	 X := X;
-	 Y := X; 
+	 Y := Y; 
       elsif X = 1 then 
 	 X := X;
 	 Y := (Y - 1) * 5 + 1;
@@ -281,15 +291,56 @@ package body Chess_Game_Graphic is
       G_Y:= G_Y + 1;
       Goto_XY(G_X,G_Y);
       Put("          ");
+      Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
    
-   procedure Move_Chess_Piece(X, Y: in Integer) is
+   procedure Graphic_Unmark_Position(X, Y : in Integer) is
       
    begin
-      Goto_XY(X+1, Y+1);
-      Put("♙");
+      null;
+      
+   end Graphic_Unmark_Position;
+   
+   procedure Graphic_Move_Chess_Piece(X, Y, Choosen_Chess_Piece: in Integer) is
+      X_G : Integer := X;
+      Y_G : Integer := Y;
+   begin
+      Coordinates_2_Position(X_G,Y_G);
+      
+      if Choosen_Chess_Piece < 0 then
+	 Set_Foreground_Colour(White_Chessman);
+      else
+	 Set_Foreground_Colour(Black_Chessman);
+      end if;
+	 
+      case Choosen_Chess_Piece is
+	 when abs(1) => 
+	   Put_Chessman('R', X_G, Y_G);
+	 when abs(2) =>
+	    Put_Chessman('k', X_G, Y_G);
+	 when abs(3) =>
+	    Put_Chessman('B', X_G, Y_G);
+	 when abs(4) =>
+	    Put_Chessman('K', X_G, Y_G);
+	 when abs(5) =>
+	    Put_Chessman('Q', X_G, Y_G);
+	 when abs(6) =>
+	    Put_Chessman('P', X_G, Y_G);
+	 when others =>
+	    Put("Error");
+	 end case;
+      
+      
        
-   end Move_Chess_Piece;
+   end Graphic_Move_Chess_Piece;
+   
+   procedure Remove_Chess_Piece(X, Y : in Integer) is
+      
+   begin
+      Goto_XY(X, Y);
+      Put(' ');
+      
+   end Remove_Chess_Piece;
    
    
 end Chess_Game_Graphic;

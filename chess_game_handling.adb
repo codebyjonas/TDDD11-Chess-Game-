@@ -119,7 +119,8 @@ package body Chess_Game_Handling is
    procedure Unmark_Positions(X, Y       : in out Integer;
                              Cordinates : in Cordinate_Array) Is
    begin
-     
+      
+      
       for I in Cordinates'Range loop
 	 if Cordinates(I).X/=0 then
 	     Coordinates_2_Position(X,Y);
@@ -203,7 +204,7 @@ package body Chess_Game_Handling is
       Get(Socket, Choosen_Chess_Piece);
       Choose_Your_Play(X2, Y2, Possible_Moves);
       Unmark_Positions(X1, Y1, Possible_Moves);
-      --Remove_Chess_Piece(X1, Y1);
+      Unmark_Position(X1, Y1);
       Graphic_Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
       Put_To_Socket(Socket, X2, Y2);
       

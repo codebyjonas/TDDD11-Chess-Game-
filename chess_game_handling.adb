@@ -116,31 +116,31 @@ package body Chess_Game_Handling is
       end loop;
    end Mark_Positions;
    
-   procedure Unmark_Position(X, Y       : in out Integer;
+   procedure Unmark_Positions(X, Y       : in out Integer;
                              Cordinates : in Cordinate_Array) Is
    begin
-      Coordinates_2_Position(X,Y);
-      Goto_XY(X, Y);
-      Put("          ");
-      Y := Y + 1;
-      Goto_XY(X, Y);
-      Put("          ");
-      Y := Y + 1;
-      Goto_XY(X, Y);
-      Put("          ");
-      Y := Y + 1;
-      Goto_XY(X, Y);
-      Put("          ");
-      Y := Y + 1;
-      Goto_XY(X, Y);
-      Put("          ");
-      Position_2_Coordinates(X,Y);
+     
       for I in Cordinates'Range loop
 	 if Cordinates(I).X/=0 then
-	    Graphic_Move_Chess_Piece(Cordinates(I).X, Cordinates(I).Y, Cordinates(I).Chess_Type);
+	     Coordinates_2_Position(X,Y);
+      Goto_XY(X, Y);
+      Put("          ");
+      Y := Y + 1;
+      Goto_XY(X, Y);
+      Put("          ");
+      Y := Y + 1;
+      Goto_XY(X, Y);
+      Put("          ");
+      Y := Y + 1;
+      Goto_XY(X, Y);
+      Put("          ");
+      Y := Y + 1;
+      Goto_XY(X, Y);
+      Put("          ");
+           Position_2_Coordinates(X,Y);
 	 end if;
       end loop;
-   end Unmark_Position;
+   end Unmark_Positions;
    
    function Move_Okey(X, Y            : in Integer;
 		       Possible_Moves : in Cordinate_Array) return boolean is
@@ -202,8 +202,8 @@ package body Chess_Game_Handling is
       
       Get(Socket, Choosen_Chess_Piece);
       Choose_Your_Play(X2, Y2, Possible_Moves);
-      Unmark_Position(X1, Y1, Possible_Moves);
-      Remove_Chess_Piece(X1, Y1);
+      Unmark_Positions(X1, Y1, Possible_Moves);
+      --Remove_Chess_Piece(X1, Y1);
       Graphic_Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
       Put_To_Socket(Socket, X2, Y2);
       

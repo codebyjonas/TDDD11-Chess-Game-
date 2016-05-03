@@ -73,7 +73,7 @@ package body Chess_Game_Handling is
       X := 6;
       Y := 6;
       Move_Around_On_Game_Board(X, Y);
-      Graphic_Mark_Position(X, Y);
+     
    end Choose_Active_Chessman;
    
    procedure Put_To_Socket(Socket : in Socket_Type;
@@ -154,38 +154,45 @@ package body Chess_Game_Handling is
    end Choose_Your_Play;
    
    --- Försök till att inte kunna välja en pjäs utan möjliga drag. 
-   --  procedure Any_Possible_Moves(Active_Socket : in Socket_Type;
-   --  				Possible_Moves : in Cordinate_Array) is
+   function Check_If_Any_Possible_Moves(Active_Socket : in Socket_Type;
+   					          Possible_Moves : in Cordinate_Array) return boolean is
       
-   --     X1, Y1 : Integer;
-   --  begin
+   begin
       
-   --     for I in Possible_Moves'Range loop
-   --  	 if Possible_Moves(I).X /= 0 then
-   --  	    exit;
-   --  	 elsif Possible_Moves(Possible_Moves'Length).X = 0 then
-   --  	    Play_Round(Active_Socket, X1, Y1);
-   --  	 end if;
-	 
-   --     end loop;
+      for I in Possible_Moves'Range loop
+   	 if Possible_Moves(I).X /= 0 then
+   	    return True; 	 
+   	 end if;	 
+      end loop;
       
-   --  end Any_Possible_Moves;
+      return False;
+      
+   end Check_If_Any_Possible_Moves;
    
    procedure Play_Round(Socket: in Socket_Type;
    			X1, Y1 : out  Integer) is
       
       Possible_Moves                      : Cordinate_Array;
       X2, Y2, Choosen_Chess_Piece         : Integer;
+     
    begin
-      Choose_Active_Chessman(X1, Y1);
-      Put_To_Socket(Socket, X1, Y1);
       
-      Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
-      -- Dåligt namn På Any Possible Moves 
-      --- Any_Possible_Moves(Socket, Possible_Moves);
+      loop
+         Choose_Active_Chessman(X1, Y1);
+	 Put_To_Socket(Socket, X1, Y1);
+         Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
+	 if Check_If_Any_Possible_Moves(Socket, Possible_Moves) = True then
+	    Put_Line(Socket, 1);
+	    exit;
+	 end if;
+	 Put_Line(Socket, 0);
+	 --Lägg tillbaka markerad pjäs efter avmarkering
+	 --Graphic_Unmark_Position(X1, Y1);
+      end loop;
+         
       -- Put_Array(Possible_Moves);
+       Graphic_Mark_Position(X1, Y1);
       Mark_Positions(Possible_Moves);
-      
       Get(Socket, Choosen_Chess_Piece);
       Choose_Your_Play(X2, Y2, Possible_Moves);
       Unmark_Positions(X1, Y1, Possible_Moves);

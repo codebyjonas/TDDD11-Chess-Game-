@@ -104,13 +104,14 @@ package body Chess_Game_Handling is
    end Get_Possible_Moves_From_Socket;
    
    procedure Mark_Positions(Cordinates : in Cordinate_Array) is
-      X , Y : Integer;
+      X , Y, C : Integer;
    begin
       for I in Cordinate_Array'Range loop
 	 if Cordinates(I).X /= 0 and Cordinates(I).Y /= 0 then
 	    X := Cordinates(I).X;
 	    Y := Cordinates(I).Y;
-	    Graphic_Mark_Position(X,Y);
+	    C := Cordinates(I).Chess_Type;
+	    Graphic_Mark_Position(X,Y,C);
 	    Position_2_Coordinates(X,Y);
 	 end if;
       end loop;
@@ -188,7 +189,6 @@ package body Chess_Game_Handling is
       Get(Socket, Choosen_Chess_Piece);
       Choose_Your_Play(X2, Y2, Possible_Moves);
       Unmark_Positions(X1, Y1, Possible_Moves);
-      Unmark_Position(X1, Y1);
       Graphic_Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
       Put_To_Socket(Socket, X2, Y2);
       

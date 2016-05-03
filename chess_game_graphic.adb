@@ -35,7 +35,37 @@ package body Chess_Game_Graphic is
       end if;
    end Coordinates_2_Position;
    
+   function Black_Or_White_Square(X, Y : in Integer) return Character is 
+   begin
+     if (X+Y) mod 2 = 0 then
+	return 'w';
+     else
+	return 'b';
+     end if;
+   end Black_Or_White_Square;
    
+   function Chessman_Number_2_Character( Item : in Integer) return Character is
+   begin
+      case abs(Item) is
+	 when 1 => 
+	    return 'R';
+	 when 2 =>
+	    return 'k'; 
+	 when 3 =>
+	    return 'B';
+	 when 4 =>
+	    return 'K'; 
+	 when 5 =>
+	    return 'Q'; 
+	 when 6 =>
+	    return 'P'; 
+	 when 0 =>
+	    return '0';
+	 when others =>
+	    Put("Error Chessman_Numbe_2Characere");
+	    return '!';
+      end case;
+   end Chessman_Number_2_Character;
    
    -- Alla pjäser Put 
    procedure Put_Chessman( Chessman : in Character; 
@@ -139,8 +169,23 @@ package body Chess_Game_Graphic is
 	    Y := Y + 1;
 	    Goto_XY(X,Y);
 	    Put("          ");
+	 when '0' =>
+	    Goto_XY(X,Y);
+	    Put("          ");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("          ");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("          ");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("          ");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("          ");
 	 when others =>
-	    Put("Error");
+	    Put("Error Put Chessman");
       end case;
    end Put_Chessman;
    
@@ -178,11 +223,10 @@ package body Chess_Game_Graphic is
       for X in 1..Size loop
 	 for Y in 1..Size loop
 	    if (X + Y) mod 2 = 0 then
-	       Graphic_Mark_Position(X, Y, Foreground_Colour);
+	       Graphic_Mark_Position(X, Y, 0, Foreground_Colour);
 	    else
-	       Graphic_Mark_Position(X, Y, Background_Colour);
+	       Graphic_Mark_Position(X, Y, 0, Background_Colour);
 	    end if;
-	    
 	 end loop;
       end loop;
    end Colour_Game_Board;
@@ -270,60 +314,38 @@ package body Chess_Game_Graphic is
    
    -- TODO: VETA vilken chessman vi skriver över 
    
-   procedure Graphic_Mark_Position(X, Y : in Integer; Colour : in Colour_Type := Highlight_Colour) is
+   procedure Graphic_Mark_Position(X, Y     : in Integer; 
+				   Chessman : in Integer := 0; 
+				   Colour   : in Colour_Type := Highlight_Colour) is
       G_X : Integer := X;
       G_Y : Integer := Y;
    begin
       Coordinates_2_Position(G_X,G_Y);
-      Goto_XY(G_X,G_Y);
       Set_Background_Colour(Colour);
-      Goto_XY(G_X,G_Y);
-      Put("          ");
-      G_Y := G_Y + 1;
-      Goto_XY(G_X,G_Y);
-      Put("          ");
-      G_Y:= G_Y + 1;
-      Goto_XY(G_X,G_Y);
-      Put("          ");
-      G_Y:= G_Y + 1;
-      Goto_XY(G_X,G_Y);
-      Put("          ");
-      G_Y:= G_Y + 1;
-      Goto_XY(G_X,G_Y);
-      Put("          ");
+      Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
    
    
-   procedure Graphic_Move_Chess_Piece(X, Y, Choosen_Chess_Piece: in Integer) is
+   procedure Graphic_Move_Chess_Piece(X, Y, Choosen_Chess_Piece : in Integer) is
       X_G : Integer := X;
       Y_G : Integer := Y;
    begin
+      if Black_Or_White_Square(X, Y) = 'w' then
+	 Set_Background_Colour(Foreground_Colour);
+      else
+	 Set_Background_Colour(Background_Colour);
+      end if;
+      
       Coordinates_2_Position(X_G,Y_G);
       
-      if Choosen_Chess_Piece < 0 then
+      if Choosen_Chess_Piece > 0 then
 	 Set_Foreground_Colour(White_Chessman);
       else
 	 Set_Foreground_Colour(Black_Chessman);
       end if;
       
-	    
-      case abs(Choosen_Chess_Piece) is
-	 when 1 => 
-	    Put_Chessman('R', X_G, Y_G);
-	 when 2 =>
-	    Put_Chessman('k', X_G, Y_G);
-	 when 3 =>
-	    Put_Chessman('B', X_G, Y_G);
-	 when 4 =>
-	    Put_Chessman('K', X_G, Y_G);
-	 when 5 =>
-	    Put_Chessman('Q', X_G, Y_G);
-	 when 6 =>
-	    Put_Chessman('P', X_G, Y_G);
-	 when others =>
-	    Put("Error Choosen_Chess_Piece");
-      end case;
+      Put_Chessman(Chessman_Number_2_Character(Choosen_Chess_Piece), X_G, Y_G);
 	   
       
        
@@ -332,21 +354,13 @@ package body Chess_Game_Graphic is
    procedure Graphic_Unmark_Position(X, Y : in out Integer) is
       
    begin
+      if Black_Or_White_Square(X, Y) = 'w' then
+	 Set_Background_Colour(Foreground_Colour);
+      else
+	 Set_Background_Colour(Background_Colour);
+      end if;
       Coordinates_2_Position(X,Y);
-      Goto_XY(X, Y);
-      Put("          ");
-      Y := Y + 1;
-      Goto_XY(X, Y);
-      Put("          ");
-      Y := Y + 1;
-      Goto_XY(X, Y);
-      Put("          ");
-      Y := Y + 1;
-      Goto_XY(X, Y);
-      Put("          ");
-      Y := Y + 1;
-      Goto_XY(X, Y);
-      Put("          ");
+      Put_Chessman('0', X, Y);
       Position_2_Coordinates(X,Y);
    end Graphic_Unmark_Position;
       

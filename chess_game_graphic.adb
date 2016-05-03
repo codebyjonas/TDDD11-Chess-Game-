@@ -294,12 +294,6 @@ package body Chess_Game_Graphic is
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
    
-   procedure Graphic_Unmark_Position(X, Y : in Integer) is
-      
-   begin
-      null;
-      
-   end Graphic_Unmark_Position;
    
    procedure Graphic_Move_Chess_Piece(X, Y, Choosen_Chess_Piece: in Integer) is
       X_G : Integer := X;
@@ -312,10 +306,12 @@ package body Chess_Game_Graphic is
       else
 	 Set_Foreground_Colour(Black_Chessman);
       end if;
-	 
+      
+      Put(Choosen_Chess_Piece);
+      
       case Choosen_Chess_Piece is
 	 when abs(1) => 
-	   Put_Chessman('R', X_G, Y_G);
+	    Put_Chessman('R', X_G, Y_G);
 	 when abs(2) =>
 	    Put_Chessman('k', X_G, Y_G);
 	 when abs(3) =>
@@ -327,20 +323,32 @@ package body Chess_Game_Graphic is
 	 when abs(6) =>
 	    Put_Chessman('P', X_G, Y_G);
 	 when others =>
-	    Put("Error");
-	 end case;
+	    Put("Error Choosen_Chess_Piece");
+      end case;
       
       
        
    end Graphic_Move_Chess_Piece;
    
-   procedure Remove_Chess_Piece(X, Y : in Integer) is
+   procedure Graphic_Unmark_Position(X, Y : in out Integer) is
       
    begin
+      Coordinates_2_Position(X,Y);
+      Put("          ");
+      Y := Y + 1;
       Goto_XY(X, Y);
-      Put(' ');
-      
-   end Remove_Chess_Piece;
+      Put("          ");
+      Y := Y + 1;
+      Goto_XY(X, Y);
+      Put("          ");
+      Y := Y + 1;
+      Goto_XY(X, Y);
+      Put("          ");
+      Y := Y + 1;
+      Goto_XY(X, Y);
+      Put("          ");
+      Position_2_Coordinates(X,Y);
+   end Graphic_Unmark_Position;
    
    
 end Chess_Game_Graphic;

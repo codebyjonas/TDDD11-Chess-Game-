@@ -19,35 +19,14 @@ procedure Client_Main is
 	 Put(Possible_Array(I).Y);
       end loop;
       
-      end Put_Array;
+   end Put_Array;
    
-   --  procedure Play_Round(Socket: in Socket_Type;
-   --  			X1, Y1 : out  Integer) is
-		 
-   --     Possible_Moves : Cordinate_Array;
-   --     X2, Y2, Choosen_Chess_Piece         : Integer;
-   --  begin
-      
-   --      Choose_Active_Chessman(X1, Y1);
-   --      Put_To_Socket(Socket, X1, Y1);
-       
-   --      Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
-   --      Any_Possible_Moves(Socket, Possible_Moves);
-   --      --Put_Array(Possible_Moves);
-   --      Mark_Positions(Possible_Moves);
-   --      Get(Socket, Choosen_Chess_Piece);
-   --      Choose_Your_Play(X2, Y2, Possible_Moves);
-   --      Unmark_Position(X1, Y1, Possible_Moves);
-   --      Remove_Chess_Piece(X1, Y1);
-   --      Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
-   --      Put_To_Socket(Socket, X2, Y2);
-       
-   --  end Play_Round;
+   
    
    procedure Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece : in Integer) is
       
    begin
-      Remove_Chess_Piece(Other_Player_X1+1, Other_Player_Y1+1);
+      Remove_Chess_Piece(Other_Player_X1, Other_Player_Y1);
       Graphic_Move_Chess_Piece(Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece);
       
       

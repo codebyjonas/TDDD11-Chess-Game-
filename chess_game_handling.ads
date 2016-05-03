@@ -37,8 +37,8 @@ package Chess_Game_Handling is
    procedure Get_Possible_Moves_From_Socket(Socket              : in Socket_Type; 
 					    Possible_Move_Array : out Cordinate_Array);
    procedure Mark_Positions( Cordinates : in Cordinate_Array);
-   procedure Unmark_Position(X, Y       :in out Integer;
-			     Cordinates : in Cordinate_Array);
+   procedure Unmark_Positions(X, Y       :in out Integer;
+			     Coordinates : in out Cordinate_Array);
    procedure Choose_Your_Play( X, Y           : out Integer;
 			       Possible_Moves : in Cordinate_Array);
    function Move_Okey (X, Y           : in Integer;

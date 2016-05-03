@@ -307,25 +307,24 @@ package body Chess_Game_Graphic is
 	 Set_Foreground_Colour(Black_Chessman);
       end if;
       
-      Put(Choosen_Chess_Piece);
-      
-      case Choosen_Chess_Piece is
-	 when abs(1) => 
+	    
+      case abs(Choosen_Chess_Piece) is
+	 when 1 => 
 	    Put_Chessman('R', X_G, Y_G);
-	 when abs(2) =>
+	 when 2 =>
 	    Put_Chessman('k', X_G, Y_G);
-	 when abs(3) =>
+	 when 3 =>
 	    Put_Chessman('B', X_G, Y_G);
-	 when abs(4) =>
+	 when 4 =>
 	    Put_Chessman('K', X_G, Y_G);
-	 when abs(5) =>
+	 when 5 =>
 	    Put_Chessman('Q', X_G, Y_G);
-	 when abs(6) =>
+	 when 6 =>
 	    Put_Chessman('P', X_G, Y_G);
 	 when others =>
 	    Put("Error Choosen_Chess_Piece");
       end case;
-      
+	   
       
        
    end Graphic_Move_Chess_Piece;
@@ -334,6 +333,7 @@ package body Chess_Game_Graphic is
       
    begin
       Coordinates_2_Position(X,Y);
+      Goto_XY(X, Y);
       Put("          ");
       Y := Y + 1;
       Goto_XY(X, Y);
@@ -349,6 +349,7 @@ package body Chess_Game_Graphic is
       Put("          ");
       Position_2_Coordinates(X,Y);
    end Graphic_Unmark_Position;
+      
    
    
 end Chess_Game_Graphic;

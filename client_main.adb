@@ -23,10 +23,11 @@ procedure Client_Main is
    
    
    
-   procedure Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece : in Integer) is
+   procedure Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece : in out Integer) is
       
    begin
-      Remove_Chess_Piece(Other_Player_X1, Other_Player_Y1);
+      
+      Graphic_Unmark_Position(Other_Player_X1, Other_Player_Y1);
       Graphic_Move_Chess_Piece(Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece);
       
       

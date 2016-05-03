@@ -28,7 +28,7 @@ procedure Server_Main is
       -- ####
       Listner                               : Listener_Type;
       Socket_1, Socket_2, Active_Socket     : Socket_Type;
-      X, Y, Actual_Game_Round_Case, Player, Choosen_Chess_Piece  : Integer;
+      X, Y, Actual_Game_Round_Case, Player, Choosen_Chess_Piece, Possible_Move_Indicator  : Integer;
       Active_Board                          : Board_Type;
       Active_Player                         : Boolean; -- True for White
       Coordinate_1, Coordinate_2            : Coordinate_Type;
@@ -90,21 +90,25 @@ begin
      
 
       -- Väntar på val av pjäs
-      Get(Active_Socket, X); 
-      Get(Active_Socket, Y);
-      
-      Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för. 
-      Coordinate_1(2) := Y;
-      
-     
-      
-      Possible_Array :=Final_Possible_Moves(Coordinate_1, Active_Board, Active_Player);
-      
-     
-      
-      --Skickar möjliga drag tillsammans med pjäs till Filip och Co:--
+      Possible_Move_Indicator := 0;
+      loop
+        Get(Active_Socket, X); 
+        Get(Active_Socket, Y);
+	Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för
+        Coordinate_1(2) := Y;
+	Possible_Array :=Final_Possible_Moves(Coordinate_1, Active_Board, Active_Player);
+	 --Skickar möjliga drag tillsammans med pjäs till Filip och Co:--
  
-      Put(Active_Socket, Create_Array_With_Chessman_And_Position(Possible_Array, Active_Board));
+	Put(Active_Socket, Create_Array_With_Chessman_And_Position(Possible_Array, Active_Board));
+	Get(Active_Socket, Possible_Move_Indicator);
+       if Possible_Move_Indicator = 1  then
+	  exit;
+	end if;
+	
+      end loop;
+      Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för. 
+      Coordinate_1(2) := Y;    
+     
       
       --Tar reda på vilken typ av pjäs spelaren har valt och skickar till socket
        Choosen_Chess_Piece := Get_Choosen_Chess_Piece(Coordinate_1, Active_Board); 

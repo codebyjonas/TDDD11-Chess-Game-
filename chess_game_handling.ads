@@ -15,6 +15,10 @@ with Chess_Game_Graphic;        use Chess_Game_Graphic;
 
 package Chess_Game_Handling is
    
+   -- Grafiska konstanter
+   Offset_X          : constant Integer := 10;
+   Offset_Y          : constant Integer := 5;
+   
    -- Datatyper
 
    --  type Cordinate_Array is private;

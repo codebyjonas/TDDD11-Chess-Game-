@@ -17,6 +17,10 @@ package Chess_Game_Graphic is
    Foreground_Colour : Colour_Type := White;
    Background_Colour : Colour_Type := Dark_Grey;
    
+   Offset_X          : constant Integer := 10;
+   Offset_Y          : constant Integer := 5;
+
+   
    -- Procedurer och Funktioner
    procedure Draw_Complete_Game_Board; 
    procedure Graphic_Mark_Position(X, Y : in Integer; Chessman : in Integer := 0; Colour : in Colour_Type := Highlight_Colour);

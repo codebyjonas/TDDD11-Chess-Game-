@@ -9,7 +9,8 @@ with Chess_Game_Handling; use Chess_Game_Handling;
 with Chess_Game_Graphic;  use Chess_Game_Graphic;
 
 procedure Client_Main is
-   
+
+   -- TMP 
    procedure Put_Array(Possible_Array: in Cordinate_Array) is
       
    begin

@@ -1,38 +1,37 @@
 package body Chess_Game_Graphic is
    
-   -- INTERNA PROCEDURER och FUNKTIONER
    procedure Position_2_Coordinates( X, Y : in out Integer) is
    begin      
-      if X = 1 and Y = 1 then
-	 X := X;
-	 Y := Y; 
-      elsif X = 1 then 
-	 X := X;
-	 Y := (Y - 1) / 5 + 1;
-      elsif Y = 1 then
-	 X := (X - 1) / 10 + 1 ;
-	 Y := Y;
+      if X = Offset_X and Y = Offset_Y then
+	 X := X - Offset_X;
+	 Y := Y - Offset_Y; 
+      elsif X = Offset_X then 
+	 X := X - Offset_X;
+	 Y := (Y - 1 - Offset_X) / 5 + 1;
+      elsif Y = Offset_Y then
+	 X := (X - 1 - Offset_X) / 10 + 1;
+	 Y := Y + Offset_X;
       else
-	 X := (X - 1) / 10 + 1;
-	 Y := (Y - 1) / 5 + 1;
-       end if;
+	 X := (X - 1 - Offset_X) / 10 + 1;
+	 Y := (Y - 1 - Offset_Y) / 5 + 1;
+      end if;
    end Position_2_Coordinates;
    
    procedure Coordinates_2_Position(X , Y : in out Integer) is
    begin
       if X = 1 and Y = 1 then
-	 X := X;
-	 Y := Y; 
+	 X := X + Offset_X;
+	 Y := Y + Offset_Y; 
       elsif X = 1 then 
-	 X := X;
-	 Y := (Y - 1) * 5 + 1;
+	 X := X + Offset_X;
+	 Y := (Y - 1) * 5 + 1 + Offset_Y;
       elsif Y = 1 then
-	 X := (X - 1) * 10 + 1 ;
-	 Y := Y;
+	 X := (X - 1) * 10 + 1  + Offset_X;
+	 Y := Y + Offset_Y;
       else
-	 X := (X - 1) * 10 + 1;
-	 Y := (Y - 1) * 5 + 1;
-      end if;
+	 X := (X - 1) * 10 + 1 + Offset_X;
+	 Y := (Y - 1) * 5 + 1 + Offset_Y;
+       end if;
    end Coordinates_2_Position;
    
    function Black_Or_White_Square(X, Y : in Integer) return Character is 
@@ -190,30 +189,6 @@ package body Chess_Game_Graphic is
    end Put_Chessman;
    
    
-   
-   procedure Draw_Outlines_Game_Board(V_Size, H_Size : in Natural) is 
-   begin
-      -- First Row
-      Put(Upper_Left_Corner);
-      Put(Horisontal_Line, V_Size - 2);
-      Put(Upper_Right_Corner);
-      
-      -- Left and Right  borders
-      for I in 1..H_Size - 1 loop
-	 Goto_XY(1, I + 1);
-	 Put(Vertical_Line);
-	 Goto_XY(V_Size, I + 1);
-	 Put(Vertical_Line);
-      end loop;
-      
-      -- Last Row
-      Goto_XY(1, H_Size);
-      Put(Lower_Left_Corner);
-      Put(Horisontal_Line, V_Size - 2);
-      Put(Lower_Right_Corner);
-      
-   end Draw_Outlines_Game_Board;
-   
 
    
    
@@ -307,7 +282,6 @@ package body Chess_Game_Graphic is
       H_Size : Natural := 40;
    begin
       Clear_Window;
-      Draw_Outlines_Game_Board(V_Size, H_Size);
       Colour_Game_Board;
       Put_Chessmen_On_Board;
    end Draw_Complete_Game_Board;

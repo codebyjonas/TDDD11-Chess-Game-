@@ -197,11 +197,7 @@ package body Chess_Game_Graphic is
    begin
       for X in 1..Size loop
 	 for Y in 1..Size loop
-	    if (X + Y) mod 2 = 0 then
-	       Graphic_Mark_Position(X, Y, 0, Foreground_Colour);
-	    else
-	       Graphic_Mark_Position(X, Y, 0, Background_Colour);
-	    end if;
+	       Graphic_Mark_Position(X, Y, 0, Foreground_Colour, Background_Colour);
 	 end loop;
       end loop;
    end Colour_Game_Board;
@@ -288,14 +284,19 @@ package body Chess_Game_Graphic is
    
    -- TODO: VETA vilken chessman vi skriver över 
    
-   procedure Graphic_Mark_Position(X, Y     : in Integer; 
-				   Chessman : in Integer := 0; 
-				   Colour   : in Colour_Type := Highlight_Colour) is
+   procedure Graphic_Mark_Position(X, Y            : in Integer; 
+				   Chessman        : in Integer     := 0; 
+				   Colour          : in Colour_Type := Highlight_Colour;
+				   Colour_Contrast : in Colour_Type := Highlight_Colour_Contrast) is
       G_X : Integer := X;
       G_Y : Integer := Y;
    begin
+      if Black_Or_White_Square(X, Y) = 'w' then
+	 Set_Background_Colour(Colour);
+      else
+	 Set_Background_Colour(Colour_Contrast);
+      end if;
       Coordinates_2_Position(G_X,G_Y);
-      Set_Background_Colour(Colour);
       Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
@@ -320,11 +321,11 @@ package body Chess_Game_Graphic is
       end if;
       
       Put_Chessman(Chessman_Number_2_Character(Choosen_Chess_Piece), X_G, Y_G);
-	   
-      
        
    end Graphic_Move_Chess_Piece;
    
+   
+   -- SJUKT onödig funktion, samma som Mark position fast lite annorlunda
    procedure Graphic_Unmark_Position(X, Y : in out Integer) is
       
    begin

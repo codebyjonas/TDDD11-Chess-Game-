@@ -186,20 +186,20 @@ package body Chess_Game_Handling is
 	    exit;
 	 end if;
 	 Put_Line(Socket, 0);
-	 --Lägg tillbaka markerad pjäs efter avmarkering
-	 --Graphic_Unmark_Position(X1, Y1);
       end loop;
          
       -- Put_Array(Possible_Moves);
-       Graphic_Mark_Position(X1, Y1);
+      Graphic_Mark_Position(X1, Y1);   
       Mark_Positions(Possible_Moves);
       Get(Socket, Choosen_Chess_Piece);
+      -- Put_Chessman(Chessman_Number_2_Character(Choosen_Chess_Piece), X1, Y1); 
       Choose_Your_Play(X2, Y2, Possible_Moves);
       Unmark_Positions(X1, Y1, Possible_Moves);
       Graphic_Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
       Put_To_Socket(Socket, X2, Y2);
       
    end Play_Round;
+   
    
    
    -- TMP och TEST funktioner

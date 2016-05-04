@@ -87,7 +87,8 @@ begin
       else
          Put_Line(Active_Socket, Actual_Game_Round_Case);
       end if;
-     
+      
+      
 
       -- Väntar på val av pjäs
       Possible_Move_Indicator := 0;

@@ -70,7 +70,7 @@ begin
       --- 3. Regular
       --- 4. First Round 
       Get(Socket, Actual_Game_Round_Case);
-      if Actual_Game_Round_Case /= 4 then
+      if Actual_Game_Round_Case < 4 then
 	 Get(Socket, Other_Player_X1);
 	 Get(Socket, Other_Player_Y1);
 	 Get(Socket, Other_Player_X2);
@@ -96,6 +96,10 @@ begin
 	 when 4 => 
 	    Put("ååh det är första gången för dig...");
 	    Play_Round(Socket, X1, Y1);
+	 when 5 =>
+	    --Lås skärmen för den som inte spelar och fixa ett nice meddelande
+	    Put("Hallå där, motståndaren gör sitt drag");
+	    
 	 when others =>
 	    Put("FÄN det är fEL");
 	    -- Raise Error 

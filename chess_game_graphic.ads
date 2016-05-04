@@ -31,6 +31,8 @@ package Chess_Game_Graphic is
    procedure Graphic_Unmark_Position(X, Y : in out Integer);
    procedure Graphic_Move_Chess_Piece(X, Y, Choosen_Chess_Piece: in Integer);
    
+   
+   
 private
    
 end Chess_Game_Graphic;

@@ -40,7 +40,9 @@ procedure Client_Main is
    Actual_Game_Round_Case, X1, Y1, Chess_Type, Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece : Integer;
    
 begin
-  
+   
+   Hide_Cursor;
+     
    Initiate(Socket);
    
    -- Anslut till Server 

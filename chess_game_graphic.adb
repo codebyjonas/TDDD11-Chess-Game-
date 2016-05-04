@@ -10,7 +10,7 @@ package body Chess_Game_Graphic is
 	 Y := (Y - 1 - Offset_X) / 5 + 1;
       elsif Y = Offset_Y then
 	 X := (X - 1 - Offset_X) / 10 + 1;
-	 Y := Y + Offset_X;
+	 Y := Y - Offset_Y;
       else
 	 X := (X - 1 - Offset_X) / 10 + 1;
 	 Y := (Y - 1 - Offset_Y) / 5 + 1;
@@ -65,6 +65,8 @@ package body Chess_Game_Graphic is
 	    return '!';
       end case;
    end Chessman_Number_2_Character;
+   
+   
    
    -- Alla pjäser Put 
    procedure Put_Chessman( Chessman : in Character; 

@@ -53,6 +53,7 @@ package Chess_Game_Handling is
    procedure Play_Round(Socket : in Socket_Type;
    			X1, Y1 : out  Integer);
    
+   procedure Hide_Cursor;
    -- TMP och TEST funktioner
    procedure Put( Item : in Cordinate_Array);
    

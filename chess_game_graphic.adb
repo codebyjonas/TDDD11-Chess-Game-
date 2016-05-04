@@ -1,38 +1,37 @@
 package body Chess_Game_Graphic is
    
-   -- INTERNA PROCEDURER och FUNKTIONER
    procedure Position_2_Coordinates( X, Y : in out Integer) is
    begin      
-      if X = 1 and Y = 1 then
-	 X := X;
-	 Y := Y; 
-      elsif X = 1 then 
-	 X := X;
-	 Y := (Y - 1) / 5 + 1;
-      elsif Y = 1 then
-	 X := (X - 1) / 10 + 1 ;
-	 Y := Y;
+      if X = Offset_X and Y = Offset_Y then
+	 X := X - Offset_X;
+	 Y := Y - Offset_Y; 
+      elsif X = Offset_X then 
+	 X := X - Offset_X;
+	 Y := (Y - 1 - Offset_X) / 5 + 1;
+      elsif Y = Offset_Y then
+	 X := (X - 1 - Offset_X) / 10 + 1;
+	 Y := Y + Offset_X;
       else
-	 X := (X - 1) / 10 + 1;
-	 Y := (Y - 1) / 5 + 1;
-       end if;
+	 X := (X - 1 - Offset_X) / 10 + 1;
+	 Y := (Y - 1 - Offset_Y) / 5 + 1;
+      end if;
    end Position_2_Coordinates;
    
    procedure Coordinates_2_Position(X , Y : in out Integer) is
    begin
       if X = 1 and Y = 1 then
-	 X := X;
-	 Y := Y; 
+	 X := X + Offset_X;
+	 Y := Y + Offset_Y; 
       elsif X = 1 then 
-	 X := X;
-	 Y := (Y - 1) * 5 + 1;
+	 X := X + Offset_X;
+	 Y := (Y - 1) * 5 + 1 + Offset_Y;
       elsif Y = 1 then
-	 X := (X - 1) * 10 + 1 ;
-	 Y := Y;
+	 X := (X - 1) * 10 + 1  + Offset_X;
+	 Y := Y + Offset_Y;
       else
-	 X := (X - 1) * 10 + 1;
-	 Y := (Y - 1) * 5 + 1;
-      end if;
+	 X := (X - 1) * 10 + 1 + Offset_X;
+	 Y := (Y - 1) * 5 + 1 + Offset_Y;
+       end if;
    end Coordinates_2_Position;
    
    function Black_Or_White_Square(X, Y : in Integer) return Character is 
@@ -190,30 +189,6 @@ package body Chess_Game_Graphic is
    end Put_Chessman;
    
    
-   
-   procedure Draw_Outlines_Game_Board(V_Size, H_Size : in Natural) is 
-   begin
-      -- First Row
-      Put(Upper_Left_Corner);
-      Put(Horisontal_Line, V_Size - 2);
-      Put(Upper_Right_Corner);
-      
-      -- Left and Right  borders
-      for I in 1..H_Size - 1 loop
-	 Goto_XY(1, I + 1);
-	 Put(Vertical_Line);
-	 Goto_XY(V_Size, I + 1);
-	 Put(Vertical_Line);
-      end loop;
-      
-      -- Last Row
-      Goto_XY(1, H_Size);
-      Put(Lower_Left_Corner);
-      Put(Horisontal_Line, V_Size - 2);
-      Put(Lower_Right_Corner);
-      
-   end Draw_Outlines_Game_Board;
-   
 
    
    
@@ -222,11 +197,7 @@ package body Chess_Game_Graphic is
    begin
       for X in 1..Size loop
 	 for Y in 1..Size loop
-	    if (X + Y) mod 2 = 0 then
-	       Graphic_Mark_Position(X, Y, 0, Foreground_Colour);
-	    else
-	       Graphic_Mark_Position(X, Y, 0, Background_Colour);
-	    end if;
+	       Graphic_Mark_Position(X, Y, 0, Foreground_Colour, Background_Colour);
 	 end loop;
       end loop;
    end Colour_Game_Board;
@@ -307,21 +278,25 @@ package body Chess_Game_Graphic is
       H_Size : Natural := 40;
    begin
       Clear_Window;
-      Draw_Outlines_Game_Board(V_Size, H_Size);
       Colour_Game_Board;
       Put_Chessmen_On_Board;
    end Draw_Complete_Game_Board;
    
    -- TODO: VETA vilken chessman vi skriver över 
    
-   procedure Graphic_Mark_Position(X, Y     : in Integer; 
-				   Chessman : in Integer := 0; 
-				   Colour   : in Colour_Type := Highlight_Colour) is
+   procedure Graphic_Mark_Position(X, Y            : in Integer; 
+				   Chessman        : in Integer     := 0; 
+				   Colour          : in Colour_Type := Highlight_Colour;
+				   Colour_Contrast : in Colour_Type := Highlight_Colour_Contrast) is
       G_X : Integer := X;
       G_Y : Integer := Y;
    begin
+      if Black_Or_White_Square(X, Y) = 'w' then
+	 Set_Background_Colour(Colour);
+      else
+	 Set_Background_Colour(Colour_Contrast);
+      end if;
       Coordinates_2_Position(G_X,G_Y);
-      Set_Background_Colour(Colour);
       Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
       Set_Background_Colour(Background_Colour);
    end Graphic_Mark_Position;
@@ -346,11 +321,11 @@ package body Chess_Game_Graphic is
       end if;
       
       Put_Chessman(Chessman_Number_2_Character(Choosen_Chess_Piece), X_G, Y_G);
-	   
-      
        
    end Graphic_Move_Chess_Piece;
    
+   
+   -- SJUKT onödig funktion, samma som Mark position fast lite annorlunda
    procedure Graphic_Unmark_Position(X, Y : in out Integer) is
       
    begin

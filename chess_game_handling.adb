@@ -2,37 +2,38 @@
 package body Chess_Game_Handling is
    
    --INTERNA funktioner
+ 
    procedure Position_2_Coordinates( X, Y : in out Integer) is
    begin      
-      if X = 1 and Y = 1 then
-	 X := X;
-	 Y := Y; 
-      elsif X = 1 then 
-	 X := X;
-	 Y := (Y - 1) / 5 + 1;
-      elsif Y = 1 then
-	 X := (X - 1) / 10 + 1 ;
-	 Y := Y;
+      if X = Offset_X + 1 and Y = Offset_Y + 1 then
+	 X := X - Offset_X;
+	 Y := Y - Offset_Y; 
+      elsif X = Offset_X + 1 then 
+	 X := X - Offset_X;
+	 Y := (Y - 1 - Offset_X) / 5 + 1;
+      elsif Y = Offset_Y + 1 then
+	 X := (X - 1 - Offset_X) / 10 + 1;
+	 Y := Y + Offset_X;
       else
-	 X := (X - 1) / 10 + 1;
-	 Y := (Y - 1) / 5 + 1;
-       end if;
+	 X := (X - 1 - Offset_X) / 10 + 1;
+	 Y := (Y - 1 - Offset_Y) / 5 + 1;
+      end if;
    end Position_2_Coordinates;
    
    procedure Coordinates_2_Position(X , Y : in out Integer) is
    begin
       if X = 1 and Y = 1 then
-	 X := X;
-	 Y := X; 
+	 X := X + Offset_X;
+	 Y := Y + Offset_Y; 
       elsif X = 1 then 
-	 X := X;
-	 Y := (Y - 1) * 5 + 1;
+	 X := X + Offset_X;
+	 Y := (Y - 1) * 5 + 1 + Offset_Y;
       elsif Y = 1 then
-	 X := (X - 1) * 10 + 1 ;
-	 Y := Y;
+	 X := (X - 1) * 10 + 1  + Offset_X;
+	 Y := Y + Offset_Y;
       else
-	 X := (X - 1) * 10 + 1;
-	 Y := (Y - 1) * 5 + 1;
+	 X := (X - 1) * 10 + 1 + Offset_X;
+	 Y := (Y - 1) * 5 + 1 + Offset_Y;
        end if;
    end Coordinates_2_Position;
    

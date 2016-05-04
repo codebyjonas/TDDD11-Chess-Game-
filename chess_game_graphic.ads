@@ -30,6 +30,11 @@ package Chess_Game_Graphic is
 				   Colour_Contrast : in Colour_Type := Highlight_Colour_Contrast);
    procedure Graphic_Unmark_Position(X, Y : in out Integer);
    procedure Graphic_Move_Chess_Piece(X, Y, Choosen_Chess_Piece: in Integer);
+   procedure Put_Chessman( Chessman : in Character; 
+			   X, Y     : in out Integer; 
+			   F_Colour : in Colour_Type := Foreground_Colour; 
+			   B_Colour : in Colour_Type := Background_Colour);
+   function Chessman_Number_2_Character( Item : in Integer) return Character;
    
    
    

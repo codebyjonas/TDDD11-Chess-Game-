@@ -72,8 +72,10 @@ begin
    
       if Active_Player then 
 	 Active_Socket := Socket_1;
-	 elsif not Active_Player then
-	    Active_Socket := Socket_2;
+	 Put_Line(Socket_2, 5);
+      elsif not Active_Player then
+	 Active_Socket := Socket_2;
+	 Put_Line(Socket_1, 5);	    
       end if;
       
       -- Gör draget som tidigare spelare gjorde
@@ -87,7 +89,8 @@ begin
       else
          Put_Line(Active_Socket, Actual_Game_Round_Case);
       end if;
-     
+      
+      
 
       -- Väntar på val av pjäs
       Possible_Move_Indicator := 0;

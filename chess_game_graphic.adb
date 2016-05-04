@@ -2,13 +2,13 @@ package body Chess_Game_Graphic is
    
    procedure Position_2_Coordinates( X, Y : in out Integer) is
    begin      
-      if X = Offset_X and Y = Offset_Y then
+      if X = Offset_X + 1 and Y = Offset_Y + 1 then
 	 X := X - Offset_X;
 	 Y := Y - Offset_Y; 
-      elsif X = Offset_X then 
+      elsif X = Offset_X + 1 then 
 	 X := X - Offset_X;
-	 Y := (Y - 1 - Offset_X) / 5 + 1;
-      elsif Y = Offset_Y then
+	 Y := (Y - 1 - Offset_Y) / 5 + 1;
+      elsif Y = Offset_Y + 1 then
 	 X := (X - 1 - Offset_X) / 10 + 1;
 	 Y := Y - Offset_Y;
       else
@@ -301,6 +301,7 @@ package body Chess_Game_Graphic is
       Coordinates_2_Position(G_X,G_Y);
       Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
       Set_Background_Colour(Background_Colour);
+      
    end Graphic_Mark_Position;
    
    

@@ -10,7 +10,7 @@ package body Chess_Game_Handling is
 	 Y := Y - Offset_Y; 
       elsif X = Offset_X + 1 then 
 	 X := X - Offset_X;
-	 Y := (Y - 1 - Offset_X) / 5 + 1;
+	 Y := (Y - 1 - Offset_Y) / 5 + 1;
       elsif Y = Offset_Y + 1 then
 	 X := (X - 1 - Offset_X) / 10 + 1;
 	 Y := Y - Offset_Y;
@@ -67,15 +67,27 @@ package body Chess_Game_Handling is
 	 if Is_Up_Arrow(Key) then
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
 	    Graphic_Y := Graphic_Y - 1;
+	    if Graphic_Y < 1 then
+	       Graphic_Y := 8;
+	    end if;
 	 elsif Is_Down_Arrow(Key) then
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
 	    Graphic_Y := Graphic_Y + 1;
+	    if Graphic_Y > 8 then
+	       Graphic_Y := 1;
+	    end if;
 	 elsif Is_Right_Arrow(Key) then
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
 	    Graphic_X := Graphic_X + 1;
+	    if Graphic_X > 8 then
+	       Graphic_X := 1;
+	    end if;
 	 elsif Is_Left_Arrow(Key) then   
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
 	    Graphic_X := Graphic_X - 1;
+	    if Graphic_X < 1 then
+	       Graphic_X := 8;
+	    end if;
 	 elsif Is_Return(Key) then
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
 	    X := Graphic_X;
@@ -209,14 +221,15 @@ package body Chess_Game_Handling is
 	    exit;
 	 end if;
 	 Put_Line(Socket, 0);
-	 --Lägg tillbaka markerad pjäs efter avmarkering
-	 --Graphic_Unmark_Position(X1, Y1);
       end loop;
          
       -- Put_Array(Possible_Moves);
-       Graphic_Mark_Position(X1, Y1);
-      Mark_Positions(Possible_Moves);
+        
+     
       Get(Socket, Choosen_Chess_Piece);
+      Graphic_Mark_Position(X1, Y1, Choosen_Chess_Piece);
+      Mark_Positions(Possible_Moves);
+      -- Put_Chessman(Chessman_Number_2_Character(Choosen_Chess_Piece), X1, Y1); 
       Choose_Your_Play(X2, Y2, Possible_Moves);
       Unmark_Positions(X1, Y1, Possible_Moves);
       Graphic_Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
@@ -228,6 +241,7 @@ package body Chess_Game_Handling is
    begin
       Cursor_Invisible;
    end Hide_Cursor;
+   
    
    
    -- TMP och TEST funktioner

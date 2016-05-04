@@ -172,6 +172,7 @@ package body Chess_Game_Handling is
 	    return True;
 	 end if;
       end loop;
+      Beep;
       return False;
    end Move_Okey;
        
@@ -237,10 +238,11 @@ package body Chess_Game_Handling is
       
    end Play_Round;
    
-   procedure Hide_Cursor is
+   procedure Settings is
    begin
+      Set_Default_Text_Modes(Off, Off, On);
       Cursor_Invisible;
-   end Hide_Cursor;
+   end Settings;
    
    
    

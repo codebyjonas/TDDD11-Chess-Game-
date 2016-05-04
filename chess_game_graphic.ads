@@ -35,8 +35,12 @@ package Chess_Game_Graphic is
 			   F_Colour : in Colour_Type := Foreground_Colour; 
 			   B_Colour : in Colour_Type := Background_Colour);
    function Chessman_Number_2_Character( Item : in Integer) return Character;
-   
-   
+   procedure Draw_Box(X, Y, H_Size, V_Size : in Integer; 
+		      Foreground_Colour    : in Colour_Type := White;
+		      Background_Colour    : in Colour_Type := Blue);
+   procedure Draw_Complete_Info_Box;
+   procedure Put_To_Info_Box( Text : in String; Row : in Integer);
+   procedure Draw_Outer_Box;
    
 private
    

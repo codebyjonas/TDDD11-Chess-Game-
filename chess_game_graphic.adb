@@ -194,7 +194,6 @@ package body Chess_Game_Graphic is
 
    
    
-   -- TODO: Color Game Board
    procedure Colour_Game_Board(Size : in Integer := 8) is
    begin
       for X in 1..Size loop
@@ -270,7 +269,90 @@ package body Chess_Game_Graphic is
       
    end Put_Chessmen_On_Board;
    
-  
+   procedure Game_Board_Border_And_Shadow is
+      H_Size : Integer := 80;
+      V_Size : Integer := 40;
+      X      : Integer := Offset_X;
+      Y      : Integer := Offset_Y;
+   begin
+      -- Border
+      Set_Background_Colour(Background_Colour);
+      Set_Foreground_Colour(Foreground_Colour);
+      Goto_XY(X - 1, Y);
+      -- Horizontal 
+      for I in 1..H_Size + 4 loop
+	 case I is
+	    when 7 => 
+	       Put('A');
+	    when 17 =>
+	       Put('B');
+	    when 27 => 
+	       Put('C');
+	    when 37 =>
+	       Put('D');
+     	    when 47 => 
+	       Put('E');
+	    when 57 =>
+	       Put('F');
+     	    when 67 => 
+	       Put('G');
+	    when 77 =>
+	       Put('H');
+	    when others =>
+	       Put(' ');
+	 end case;
+      end loop;
+      
+            
+      Goto_XY(X - 1, Y + V_Size + 1);
+      for I in 1..H_Size + 4 loop
+	 Put(' ');
+      end loop;
+      
+      
+      
+      -- Vertical Border
+      for I in 1..V_Size loop
+	 Goto_XY(X - 1,Y + I);
+	 Put(' ');
+	 case I is
+	    when 3 => 
+	      Put('1');
+	    when 8 =>
+	       Put('2');
+	    when 13 =>
+	       Put('3');
+	    when 18 =>
+	       Put('4');
+	    when 23 =>
+	       Put('5');
+	    when 28 =>
+	       Put('6');
+	    when 33 =>
+	       Put('7');
+	    when 38 =>
+	       Put('8');
+	    when others =>
+	       Put(' ');
+	 end case;
+	 Goto_XY(X + H_Size + 1, Y + I);
+	 Put("  ");
+	 Put(Vertical_Line);
+      end loop;
+      
+      -- Shadow
+      Set_Background_Colour(Black);
+      for I in 0..V_Size loop
+	 Goto_XY(X + H_Size + 3, Y + I + 1);
+	 Put("  ");
+      end loop;
+      Goto_XY(X + 1, Y + V_Size + 2);
+      for I in 1..H_Size + 4 loop
+	 Put(' ');
+      end loop;
+      
+   end Game_Board_Border_And_Shadow;
+   
    
    
    -- PUBLIKA PROCEDURER och FUNKTIONER
@@ -279,9 +361,9 @@ package body Chess_Game_Graphic is
       V_Size : Natural := 80;
       H_Size : Natural := 40;
    begin
-      Clear_Window;
       Colour_Game_Board;
       Put_Chessmen_On_Board;
+      Game_Board_Border_And_Shadow;
    end Draw_Complete_Game_Board;
    
    -- TODO: VETA vilken chessman vi skriver över 
@@ -342,7 +424,97 @@ package body Chess_Game_Graphic is
       Put_Chessman(Chessman_Number_2_Character(Chessman), X, Y);
       Position_2_Coordinates(X,Y);
    end Graphic_Unmark_Position;
+   
+   
+   ----- INFO Box -----
+   procedure Draw_Box(X, Y, H_Size, V_Size : in Integer; 
+		      Foreground_Colour    : in Colour_Type := White;
+		      Background_Colour    : in Colour_Type := Blue) is
+   begin
+      Set_Foreground_Colour(Foreground_Colour);
+      Set_Background_Colour(Background_Colour);
       
+      -- Box
+      Goto_XY(X,Y);
+      for I in 1..V_Size loop
+	 for J in 1..H_Size loop
+	    Put(' ');
+	 end loop;
+	 Goto_XY(X, I+Y);
+      end loop;
+      
+      -- Shadow
+      Set_Background_Colour(Black);
+      for I in 1..V_Size loop
+	 Goto_XY(X + H_Size, Y + I);
+	 Put("  ");
+      end loop;
+      Goto_XY(X + 1, Y + V_Size);
+      for I in 1..H_Size loop
+	 Put(' ');
+      end loop;
+      
+      
+      -- Inner Border
+      Set_Background_Colour(Background_Colour);
+      Set_Foreground_Colour(Foreground_Colour);
+      Goto_XY(X,Y);
+      Put(Upper_Left_Corner);
+      Put(Horisontal_Line, H_Size - 2);
+      Put(Upper_Right_Corner);
+      
+      for I in 1..V_Size - 1 loop
+	 Goto_XY(X,Y + I);
+	 Put(Vertical_Line);
+	 Goto_XY(X + H_Size - 1, Y + I);
+	 Put(Vertical_Line);
+      end loop;
+      
+      Goto_XY(X, Y + V_Size - 1);
+      Put(Lower_Left_Corner);
+      Put(Horisontal_Line, H_Size - 2);
+      Put(Lower_Right_Corner);
+   end Draw_Box;
+   
+   procedure Draw_Complete_Info_Box is
+      X      : Integer := 100;
+      Y      : Integer := 5;
+      H_Size : Integer := 40;
+      V_Size : Integer := 20;
+   begin
+      Draw_Box(X, Y, H_Size, V_Size);
+      X := X + 1;
+      Y := Y + 1;
+      Goto_XY(X, Y);
+      Put("######################################");
+      Y := Y + 1;
+      Goto_XY(X,Y);
+      Put("########## ADA Chess Game ###########");
+   end Draw_Complete_Info_Box;
+   
+   procedure Put_To_Info_Box( Text : in String; Row : in Integer) is 
+      X : Integer := 102;
+      Y : Integer := 7;
+   begin
+      Set_Background_Colour(Blue);
+      Set_Foreground_Colour(White);
+      Y := Y + Row;
+      Goto_XY(X, Y);
+      Put(Text);
+   end Put_To_Info_Box;
+      
+   
+   -- Outer Box
+   procedure Draw_Outer_Box is
+      X      : Integer := 3;
+      Y      : Integer := 2;
+      H_Size : Integer := 144;
+      V_Size : Integer := 49;
+   begin
+      Clear_Window;
+      Draw_Box(X, Y, H_Size, V_Size, White, Cyan);
+      
+   end Draw_Outer_Box;
    
    
 end Chess_Game_Graphic;

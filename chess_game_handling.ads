@@ -9,6 +9,7 @@ with TJa.Keyboard.Keys;         use TJa.Keyboard.Keys;
 with TJa.Window.Graphic;        use TJa.Window.Graphic; 
 with TJa.Window.Text;           use TJa.Window.Text;
 with TJa.Sockets;               use TJa.Sockets;
+with TJa.Misc;                  use TJa.Misc;
 
 -- Chess Game Packages
 with Chess_Game_Graphic;        use Chess_Game_Graphic;
@@ -58,6 +59,8 @@ package Chess_Game_Handling is
    
    procedure Hide_Cursor;
    procedure Other_Player_Locked(Socket : in Socket_Type);
+   procedure Settings;
+
    -- TMP och TEST funktioner
    procedure Put( Item : in Cordinate_Array);
    

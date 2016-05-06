@@ -329,7 +329,8 @@ package body Chess_Game_Graphic is
    
    
    -- SJUKT onödig funktion, samma som Mark position fast lite annorlunda
-   procedure Graphic_Unmark_Position(X, Y : in out Integer) is
+   procedure Graphic_Unmark_Position(X, Y : in out Integer;
+                                     Chessman : in Integer := 0) is
       
    begin
       if Black_Or_White_Square(X, Y) = 'w' then
@@ -338,7 +339,7 @@ package body Chess_Game_Graphic is
 	 Set_Background_Colour(Background_Colour);
       end if;
       Coordinates_2_Position(X,Y);
-      Put_Chessman('0', X, Y);
+      Put_Chessman(Chessman_Number_2_Character(Chessman), X, Y);
       Position_2_Coordinates(X,Y);
    end Graphic_Unmark_Position;
       

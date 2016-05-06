@@ -34,7 +34,8 @@ package Chess_Game_Handling is
    
    -- Procedurer och Funktioner
     procedure Choose_Active_Chessman(Socket : in out Socket_Type;
-				     X,Y : out Integer);
+				     X,Y : out Integer;
+				     Possible_Moves : in Cordinate_Array);
    procedure Put_To_Socket(Socket : in Socket_Type; 
 			   X,Y    : in Integer); 
    procedure Get_From_Socket(Socket           : in Socket_Type; 
@@ -56,6 +57,7 @@ package Chess_Game_Handling is
    			X1, Y1 : out  Integer);
    
    procedure Hide_Cursor;
+   procedure Other_Player_Locked(Socket : in Socket_Type);
    -- TMP och TEST funktioner
    procedure Put( Item : in Cordinate_Array);
    

@@ -96,21 +96,23 @@ begin
       Possible_Move_Indicator := 0;
       loop
 	 
-	 --  loop 
-	 --     Get(Active_Socket, Still_Moving_Indicator);
-	 --     Put(Still_Moving_Indicator);
-	 --     if Still_Moving_Indicator = 0 then
-	 --        exit;
-	 --     end if;
-	 --     Get(Active_Socket, Moving_X);
-	 --     Put(Moving_X);
-	 --     Get(Active_Socket, Moving_Y);
-	 --     Put(Moving_Y);
-	 --     Coordinate_1(1) := Moving_X;
-	 --     Coordinate_1(2) := Moving_Y;
-	 --     Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
-	 --     Put( Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
-	 --  end loop;
+	 loop 
+	    Get(Active_Socket, Still_Moving_Indicator);
+	    Put(Still_Moving_Indicator);
+	    if Still_Moving_Indicator = 0 then
+	       exit;
+	    end if;
+	    Get(Active_Socket, Moving_X);
+	    Put(Moving_X);
+	    Put("H");
+	    Get(Active_Socket, Moving_Y);
+	    Put("G");
+	    Put(Moving_Y);
+	    Coordinate_1(1) := Moving_X;
+	    Coordinate_1(2) := Moving_Y;
+	    Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
+	    Put( Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
+	 end loop;
 	 
 	 
 	 Get(Active_Socket, X); 
@@ -137,19 +139,40 @@ begin
       
  
 	 
-	 --Hämta X,Y från klient (Vilken position som Användaren valt)
-      Get(Active_Socket, X);
-      Get(Active_Socket, Y);
-      Coordinate_2(1) := X;
-      Coordinate_2(2) := Y;
+       --Hämta X,Y från klient (Vilken position som Användaren valt)
+       
+      loop 
+	    Get(Active_Socket, Still_Moving_Indicator);
+	    Put(Still_Moving_Indicator);
+	    if Still_Moving_Indicator = 0 then
+	       exit;
+	    end if;
+	    Get(Active_Socket, Moving_X);
+	    Put(Moving_X);
+	    Put("H");
+	    Get(Active_Socket, Moving_Y);
+	    Put("G");
+	    Put(Moving_Y);
+	    Coordinate_2(1) := Moving_X;
+	    Coordinate_2(2) := Moving_Y;
+	    Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_2, Active_Board));
+	    Put( Get_Choosen_Chess_Piece(Coordinate_2, Active_Board));
+	 end loop;  
+       
+     Get(Active_Socket, X);
+     Get(Active_Socket, Y);
+     Coordinate_2(1) := X;
+     Coordinate_2(2) := Y;
       
       -- Flyttar vald pjäs från först vald position (Coord.1) till ny position som finns med i listan över möjliga drag (Coord. 2)
       Move(Active_Board, Coordinate_1, Coordinate_2);
 
       
       if Active_Player then
+
 	 Active_Player := False;
       elsif not Active_Player then
+	 
 	 Active_Player := True; 
       end if;
       Actual_Game_Round_Case := Check_Case(Active_Board, Active_Player);

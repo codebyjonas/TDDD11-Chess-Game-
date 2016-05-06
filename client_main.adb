@@ -35,6 +35,8 @@ procedure Client_Main is
    end Other_Player_Moves;
    
    
+   
+   
    Socket                       : Socket_Type;
    My_Color                     : Character;
    Actual_Game_Round_Case, X1, Y1, Chess_Type, Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece : Integer;
@@ -99,9 +101,8 @@ begin
 	    Put("ååh det är första gången för dig...");
 	    Play_Round(Socket, X1, Y1);
 	 when 5 =>
-	    --Lås skärmen för den som inte spelar och fixa ett nice meddelande
-	    Put("Hallå där, motståndaren gör sitt drag");
-	    
+	    --Lås skärmen för den som inte spelar och fixa ett nice meddelande          
+	    Other_Player_Locked(Socket);
 	 when others =>
 	    Put("FÄN det är fEL");
 	    -- Raise Error 

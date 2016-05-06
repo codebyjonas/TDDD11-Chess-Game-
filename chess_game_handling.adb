@@ -53,7 +53,8 @@ package body Chess_Game_Handling is
    --  end Big_Cursor;
    
    procedure Move_Around_On_Game_Board(Socket : in out Socket_Type;
-				       X,Y : in out Integer) is
+				       X,Y : in out Integer;
+                                       Possible_Moves : in Cordinate_Array) is
                                                     
       Key       : Key_Type;
       Graphic_X : Integer := X; 
@@ -61,61 +62,75 @@ package body Chess_Game_Handling is
       Chess_Piece_On_Cursor : Integer;
    begin
       --- Tänk på Sizen sen
-      -- TODO: När man går utanför spelplanen ska man hoppas in från andra sidan
-     
+      
+      Put_Line(Socket, 1);
+      Put_Line(Socket, Graphic_X);
+      Put_Line(Socket, Graphic_Y);
+      Get(Socket, Chess_Piece_On_Cursor);
+      Coordinates_2_Position(Graphic_X, Graphic_Y);	 
+      Goto_XY(Graphic_X, Graphic_Y);
+      Position_2_Coordinates(Graphic_X, Graphic_Y);
+      Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
       loop
-
-	 Graphic_Mark_Position(Graphic_X, Graphic_Y);
+	
 	 Get_Immediate(Key);
 	 if Is_Up_Arrow(Key) then
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
+	     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  
+	   
 	    Graphic_Y := Graphic_Y - 1;
 	    if Graphic_Y < 1 then
 	       Graphic_Y := 8;
 	    end if;
-	 elsif Is_Down_Arrow(Key) then
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
+      elsif Is_Down_Arrow(Key) then
+	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 	    Graphic_Y := Graphic_Y + 1;
 	    if Graphic_Y > 8 then
 	       Graphic_Y := 1;
 	    end if;
 	 elsif Is_Right_Arrow(Key) then
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
+	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 	    Graphic_X := Graphic_X + 1;
 	    if Graphic_X > 8 then
 	       Graphic_X := 1;
 	    end if;
 	 elsif Is_Left_Arrow(Key) then   
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
+	     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 	    Graphic_X := Graphic_X - 1;
 	    if Graphic_X < 1 then
 	       Graphic_X := 8;
 	    end if;
 	 elsif Is_Return(Key) then
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
+	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 	    X := Graphic_X;
 	    Y := Graphic_Y;
-	    
+	    Put(Socket, 0);
 	    return;
 	 end if;
-	 
-	 Coordinates_2_Position(Graphic_X, Graphic_Y);
-	 Goto_XY(Graphic_X, Graphic_Y);
-	 Position_2_Coordinates(Graphic_X, Graphic_Y);
-	 
+	 	 
+	 Put_Line(Socket, 1);
+	 Put_Line(Socket, Graphic_X);
+	 Put_Line(Socket, Graphic_Y);
+	 Get(Socket, Chess_Piece_On_Cursor);
+	   Coordinates_2_Position(Graphic_X, Graphic_Y);	 
+	   Goto_XY(Graphic_X, Graphic_Y);
+	   Position_2_Coordinates(Graphic_X, Graphic_Y);
+	 Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
       end loop;
    end Move_Around_On_Game_Board;
+   
    
    -- PUBLIKA Funktioner, Samma ordning som i Ads
 
    procedure Choose_Active_Chessman(Socket : in out Socket_Type;
-				    X,Y : out Integer) is
+				    X,Y : out Integer;
+                                    Possible_Moves : in Cordinate_Array) is
                                     
    begin
       -- Positonera markören 
       X := 6;
       Y := 6;
-      Move_Around_On_Game_Board(Socket, X, Y);
+      Move_Around_On_Game_Board(Socket, X, Y, Possible_Moves);
      
    end Choose_Active_Chessman;
    
@@ -182,16 +197,15 @@ package body Chess_Game_Handling is
       end loop;
       return False;
    end Move_Okey;
-       
+   			 			 
    
-   procedure Choose_Your_Play(Socket         : in out Socket_Type;
-			      X, Y           : out Integer;
-                              Possible_Moves : in Cordinate_Array) is 
+   procedure Choose_Your_Play(Socket         : in out Socket_Type;	   	  			  X, Y           : out Integer;					              Possible_Moves : in Cordinate_Array) is 
    begin
       -- Center on Game Field
       X := 6;
       Y := 6;
-      Move_Around_On_Game_Board(Socket, X, Y);
+      Move_Around_On_Game_Board(Socket, X, Y, Possible_Moves);
+      
       if Move_Okey(X, Y, Possible_Moves) = False then
 	 Choose_Your_Play(Socket, X, Y, Possible_Moves);
       end if;
@@ -220,9 +234,13 @@ package body Chess_Game_Handling is
       X2, Y2, Choosen_Chess_Piece         : Integer;
      
    begin
-      
+      for I in Possible_Moves'Range loop
+	 Possible_Moves(I).X := 0;
+	 Possible_Moves(I).Y := 0;
+	 Possible_Moves(I).Chess_Type := 0;
+      end loop;
       loop
-         Choose_Active_Chessman(Socket, X1, Y1);
+         Choose_Active_Chessman(Socket, X1, Y1, Possible_Moves);
 	 Put_To_Socket(Socket, X1, Y1);
          Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
 	 if Check_If_Any_Possible_Moves(Socket, Possible_Moves) = True then
@@ -239,6 +257,7 @@ package body Chess_Game_Handling is
       Graphic_Mark_Position(X1, Y1, Choosen_Chess_Piece);
       Mark_Positions(Possible_Moves);
       -- Put_Chessman(Chessman_Number_2_Character(Choosen_Chess_Piece), X1, Y1); 
+    
       Choose_Your_Play(Socket, X2, Y2, Possible_Moves);
       Unmark_Positions(X1, Y1, Possible_Moves);
       Graphic_Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
@@ -250,6 +269,23 @@ package body Chess_Game_Handling is
    begin
       Cursor_Invisible;
    end Hide_Cursor;
+   
+   procedure Other_Player_Locked(Socket : in Socket_Type) is
+      
+      Key: Key_Type;	
+      
+   begin
+      Goto_XY(10,2);
+      Put("Hallå där, Det är motspelarerna tur. Tryck enter efter motspelaren har gjort sitt drag.");
+      loop
+	 Get_Immediate(Key);
+	 
+	 if Is_Return(Key) then
+	    exit;
+	 end if;
+      end loop;
+  
+   end Other_Player_Locked;
    
    
    

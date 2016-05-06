@@ -105,12 +105,57 @@ procedure Client_Main is
    begin
       Get(Socket, My_Colour);
       if My_Colour = 'w' then
-	 Put_To_Info_Box("You play as white! Good luck!         ", 1);
-	 Put_To_Info_Box("Ps. White starts                      ", 2);
+	 Put_To_Info_Box("You play as white! Good luck!        ", 1);
+	 Put_To_Info_Box("Ps. White starts                     ", 2);
       else
-	 Put_To_Info_Box("You play as black! Good luck!         ", 1);
+	 Put_To_Info_Box("You play as black! Good luck!        ", 1);
       end if;
    end Message_Black_Or_White;
+   
+   -- Alerts
+   procedure Alert_Your_Turn( On : in Boolean) is
+      Active_Colour : Colour_Type;
+      X             : Integer    := 100;
+      Y             : Integer    := 27;
+   begin
+      if On then
+	 Active_Colour := Bright_Green;
+      else
+	 Active_Colour := Green;
+      end if;
+      Draw_Box(X, Y, 40, 5, White, Active_Colour);
+      X := X + 1;
+      Y := Y + 2;
+      Goto_XY(X,Y);
+      if On then
+	 Put("        Your turn, Good luck!        ");
+      else
+	 Put("       Waiting for opponent...       ");
+      end if;
+   end Alert_Your_Turn;
+   
+   procedure Alert_Check( On : in Boolean) is
+      Active_Colour : Colour_Type;
+      Text_Colour   : Colour_Type := White;
+      X             : Integer     := 100;
+      Y             : Integer     := 34;
+   begin
+      if On then
+	 Active_Colour := Bright_Yellow;
+	 Text_Colour   := Black;
+      else
+	 Active_Colour := Yellow;
+      end if;
+      Draw_Box(X, Y, 40, 5, Text_Colour, Active_Colour);
+      X := X + 1;
+      Y := Y + 2;
+      Goto_XY(X,Y);
+      if On then
+	 Put("           Warning, check!           ");
+      else
+	 Put("             No check...             ");
+      end if;
+   end Alert_Check;
    
    -- TATA43 - analys
    Socket                       : Socket_Type;
@@ -155,21 +200,28 @@ begin
       -- Avgör vilket fall som ska köra 
       case Actual_Game_Round_Case is
 	 when 1 => 
+	    Alert_Check(False);
 	    Put("Schack Matt");
 	    Put_Line(Socket, 1);
 	    -- TODO: Skapa Game_Over;
 	    -- Game_Over;
 	 when 2 =>
-	    Put("Schack");
+	    Alert_Your_Turn(False);
+	    Alert_Check(True);
 	    -- TODO: Skapa Graphic_Display_Is_Check;
 	    --Graphic_Display_Is_Check; 
 	    Play_Round(Socket, X1, Y1);
 	 when 3 =>
 	    Put_To_Info_Box("Your turn                            ", 2);
+	    Alert_Your_Turn(False);
 	    Play_Round(Socket, X1, Y1);
 	 when 4 => 
+	    Alert_Your_Turn(True);
+	    Alert_Check(False);
 	    Play_Round(Socket, X1, Y1);
 	 when 5 =>
+	    Alert_Your_Turn(False);
+	    Alert_Check(False);
 	    --Lås skärmen för den som inte spelar och fixa ett nice meddelande
 	    Put_To_Info_Box("Waiting for opponent                 ", 2);
 	 when others =>

@@ -28,7 +28,7 @@ procedure Server_Main is
       -- ####
       Listner                               : Listener_Type;
       Socket_1, Socket_2, Active_Socket     : Socket_Type;
-      X, Y, Actual_Game_Round_Case, Player, Choosen_Chess_Piece, Possible_Move_Indicator  : Integer;
+      X, Y, Actual_Game_Round_Case, Player, Choosen_Chess_Piece, Possible_Move_Indicator, Still_Moving_Indicator, Moving_X, Moving_Y  : Integer;
       Active_Board                          : Board_Type;
       Active_Player                         : Boolean; -- True for White
       Coordinate_1, Coordinate_2            : Coordinate_Type;
@@ -95,9 +95,27 @@ begin
       -- Väntar på val av pjäs
       Possible_Move_Indicator := 0;
       loop
-        Get(Active_Socket, X); 
-        Get(Active_Socket, Y);
-	Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för
+	 
+	 --  loop 
+	 --     Get(Active_Socket, Still_Moving_Indicator);
+	 --     Put(Still_Moving_Indicator);
+	 --     if Still_Moving_Indicator = 0 then
+	 --        exit;
+	 --     end if;
+	 --     Get(Active_Socket, Moving_X);
+	 --     Put(Moving_X);
+	 --     Get(Active_Socket, Moving_Y);
+	 --     Put(Moving_Y);
+	 --     Coordinate_1(1) := Moving_X;
+	 --     Coordinate_1(2) := Moving_Y;
+	 --     Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
+	 --     Put( Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
+	 --  end loop;
+	 
+	 
+	 Get(Active_Socket, X); 
+	 Get(Active_Socket, Y);
+	 Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för
         Coordinate_1(2) := Y;
 	Possible_Array :=Final_Possible_Moves(Coordinate_1, Active_Board, Active_Player);
 	 --Skickar möjliga drag tillsammans med pjäs till Filip och Co:--

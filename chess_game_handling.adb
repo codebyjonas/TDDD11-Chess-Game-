@@ -52,10 +52,13 @@ package body Chess_Game_Handling is
    --     end loop;
    --  end Big_Cursor;
    
-   procedure Move_Around_On_Game_Board(X,Y : in out Integer) is
+   procedure Move_Around_On_Game_Board(Socket : in out Socket_Type;
+				       X,Y : in out Integer) is
+                                                    
       Key       : Key_Type;
       Graphic_X : Integer := X; 
       Graphic_Y : Integer := Y;
+      Chess_Piece_On_Cursor : Integer;
    begin
       --- Tänk på Sizen sen
       -- TODO: När man går utanför spelplanen ska man hoppas in från andra sidan
@@ -92,22 +95,27 @@ package body Chess_Game_Handling is
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y);
 	    X := Graphic_X;
 	    Y := Graphic_Y;
+	    
 	    return;
 	 end if;
+	 
 	 Coordinates_2_Position(Graphic_X, Graphic_Y);
 	 Goto_XY(Graphic_X, Graphic_Y);
 	 Position_2_Coordinates(Graphic_X, Graphic_Y);
+	 
       end loop;
    end Move_Around_On_Game_Board;
    
    -- PUBLIKA Funktioner, Samma ordning som i Ads
 
-   procedure Choose_Active_Chessman(X,Y : out Integer) is
+   procedure Choose_Active_Chessman(Socket : in out Socket_Type;
+				    X,Y : out Integer) is
+                                    
    begin
       -- Positonera markören 
       X := 6;
       Y := 6;
-      Move_Around_On_Game_Board(X, Y);
+      Move_Around_On_Game_Board(Socket, X, Y);
      
    end Choose_Active_Chessman;
    
@@ -176,15 +184,16 @@ package body Chess_Game_Handling is
    end Move_Okey;
        
    
-   procedure Choose_Your_Play(X, Y           : out Integer;
+   procedure Choose_Your_Play(Socket         : in out Socket_Type;
+			      X, Y           : out Integer;
                               Possible_Moves : in Cordinate_Array) is 
    begin
       -- Center on Game Field
       X := 6;
       Y := 6;
-      Move_Around_On_Game_Board(X, Y);
+      Move_Around_On_Game_Board(Socket, X, Y);
       if Move_Okey(X, Y, Possible_Moves) = False then
-	 Choose_Your_Play(X, Y, Possible_Moves);
+	 Choose_Your_Play(Socket, X, Y, Possible_Moves);
       end if;
    end Choose_Your_Play;
    
@@ -204,7 +213,7 @@ package body Chess_Game_Handling is
       
    end Check_If_Any_Possible_Moves;
    
-   procedure Play_Round(Socket: in Socket_Type;
+   procedure Play_Round(Socket: in out Socket_Type;
    			X1, Y1 : out  Integer) is
       
       Possible_Moves                      : Cordinate_Array;
@@ -213,7 +222,7 @@ package body Chess_Game_Handling is
    begin
       
       loop
-         Choose_Active_Chessman(X1, Y1);
+         Choose_Active_Chessman(Socket, X1, Y1);
 	 Put_To_Socket(Socket, X1, Y1);
          Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
 	 if Check_If_Any_Possible_Moves(Socket, Possible_Moves) = True then
@@ -230,7 +239,7 @@ package body Chess_Game_Handling is
       Graphic_Mark_Position(X1, Y1, Choosen_Chess_Piece);
       Mark_Positions(Possible_Moves);
       -- Put_Chessman(Chessman_Number_2_Character(Choosen_Chess_Piece), X1, Y1); 
-      Choose_Your_Play(X2, Y2, Possible_Moves);
+      Choose_Your_Play(Socket, X2, Y2, Possible_Moves);
       Unmark_Positions(X1, Y1, Possible_Moves);
       Graphic_Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
       Put_To_Socket(Socket, X2, Y2);

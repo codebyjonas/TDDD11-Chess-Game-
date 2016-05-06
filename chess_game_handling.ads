@@ -33,7 +33,8 @@ package Chess_Game_Handling is
       array (1..28) of Cordinate_Type;
    
    -- Procedurer och Funktioner
-   procedure Choose_Active_Chessman(X,Y : out Integer);
+    procedure Choose_Active_Chessman(Socket : in out Socket_Type;
+				     X,Y : out Integer);
    procedure Put_To_Socket(Socket : in Socket_Type; 
 			   X,Y    : in Integer); 
    procedure Get_From_Socket(Socket           : in Socket_Type; 
@@ -43,14 +44,15 @@ package Chess_Game_Handling is
    procedure Mark_Positions( Cordinates : in Cordinate_Array);
    procedure Unmark_Positions(X, Y       :in out Integer;
 			     Coordinates : in out Cordinate_Array);
-   procedure Choose_Your_Play( X, Y           : out Integer;
+   procedure Choose_Your_Play( Socket         : in out Socket_Type;
+			       X, Y           : out Integer;
 			       Possible_Moves : in Cordinate_Array);
    function Move_Okey (X, Y           : in Integer;
 		       Possible_Moves : in Cordinate_Array) return Boolean;
    -- procedure Any_Possible_Moves(Active_Socket  : in Socket_Type;
    -- Possible_Moves : in Cordinate_Array);
    
-   procedure Play_Round(Socket : in Socket_Type;
+   procedure Play_Round(Socket : in out Socket_Type;
    			X1, Y1 : out  Integer);
    
    procedure Hide_Cursor;

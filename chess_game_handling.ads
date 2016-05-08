@@ -57,7 +57,7 @@ package Chess_Game_Handling is
    procedure Play_Round(Socket : in out Socket_Type;
    			X1, Y1 : out  Integer);
    
-   procedure Hide_Cursor;
+   --procedure Hide_Cursor;
    procedure Other_Player_Locked(Socket : in Socket_Type);
    procedure Settings;
 

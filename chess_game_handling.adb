@@ -72,7 +72,7 @@ package body Chess_Game_Handling is
       Position_2_Coordinates(Graphic_X, Graphic_Y);
       Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
       loop
-	
+	 
 	 Get_Immediate(Key);
 	 if Is_Up_Arrow(Key) then
 	     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
@@ -95,7 +95,7 @@ package body Chess_Game_Handling is
 	       Graphic_X := 1;
 	    end if;
 	 elsif Is_Left_Arrow(Key) then   
-	     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 	    Graphic_X := Graphic_X - 1;
 	    if Graphic_X < 1 then
 	       Graphic_X := 8;
@@ -112,9 +112,9 @@ package body Chess_Game_Handling is
 	 Put_Line(Socket, Graphic_X);
 	 Put_Line(Socket, Graphic_Y);
 	 Get(Socket, Chess_Piece_On_Cursor);
-	   Coordinates_2_Position(Graphic_X, Graphic_Y);	 
-	   Goto_XY(Graphic_X, Graphic_Y);
-	   Position_2_Coordinates(Graphic_X, Graphic_Y);
+	 Coordinates_2_Position(Graphic_X, Graphic_Y);	 
+	 Goto_XY(Graphic_X, Graphic_Y);
+	 Position_2_Coordinates(Graphic_X, Graphic_Y);
 	 Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
       end loop;
    end Move_Around_On_Game_Board;

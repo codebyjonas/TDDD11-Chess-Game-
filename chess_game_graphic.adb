@@ -380,6 +380,11 @@ package body Chess_Game_Graphic is
       else
 	 Set_Background_Colour(Colour_Contrast);
       end if;
+      if Chessman < 0 then
+         Set_Foreground_Colour(Black_Chessman);
+      elsif Chessman > 0 then
+	 Set_Foreground_Colour(White_Chessman);
+      end if;
       Coordinates_2_Position(G_X,G_Y);
       Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
       Set_Background_Colour(Background_Colour);
@@ -422,6 +427,11 @@ package body Chess_Game_Graphic is
       end if;
       Coordinates_2_Position(X,Y);
       Put_Chessman(Chessman_Number_2_Character(Chessman), X, Y);
+      if Chessman < 0 then
+         Set_Foreground_Colour(Black_Chessman);
+      elsif Chessman > 0 then
+	 Set_Foreground_Colour(White_Chessman);
+      end if;
       Position_2_Coordinates(X,Y);
    end Graphic_Unmark_Position;
    

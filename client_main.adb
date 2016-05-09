@@ -196,6 +196,7 @@ begin
 	 Get(Socket, Other_Player_Y2);
 	 Get(Socket, Choosen_Chess_Piece);
 	 Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece);
+      
       end if;
       
       -- Avgör vilket fall som ska köra 

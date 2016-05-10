@@ -89,8 +89,7 @@ package body Chess_Game_Graphic is
 	    Put("   |▣|    ");
 	    Y := Y + 1;
 	    Goto_XY(X,Y);
-	    Put("  / ▣ \    ");
-	    Y := Y + 1;
+	    Put("  / ▣ \   ");
 	 when 'Q' =>
 	    Goto_XY(X,Y);
 	    Put("   _+_    ");
@@ -106,7 +105,6 @@ package body Chess_Game_Graphic is
 	    Y := Y + 1;
 	    Goto_XY(X,Y);
 	    Put("  / ▣ \   ");
-	    Y := Y + 1;
 	 when 'R' =>
 	    Goto_XY(X,Y);
 	    Put("   ___    ");
@@ -124,10 +122,10 @@ package body Chess_Game_Graphic is
 	    Put("  / ▣ \   ");
 	 when 'B' =>
 	    Goto_XY(X,Y);
-	    Put("           ");
+	    Put("          ");
 	    Y := Y + 1;
 	    Goto_XY(X,Y);
-	    Put("   (◉)     ");
+	    Put("   (◉)    ");
 	    Y := Y + 1;
 	    Goto_XY(X,Y);
 	    Put("   |▣|    ");
@@ -378,14 +376,15 @@ package body Chess_Game_Graphic is
       else
 	 Set_Background_Colour(Colour_Contrast);
       end if;
+      Coordinates_2_Position(G_X,G_Y);
+      Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
+      Set_Background_Colour(Background_Colour);
       if Chessman < 0 then
          Set_Foreground_Colour(Black_Chessman);
       elsif Chessman > 0 then
 	 Set_Foreground_Colour(White_Chessman);
       end if;
-      Coordinates_2_Position(G_X,G_Y);
-      Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
-      Set_Background_Colour(Background_Colour);
+      
       
    end Graphic_Mark_Position;
    
@@ -424,12 +423,12 @@ package body Chess_Game_Graphic is
       end if;
       Coordinates_2_Position(X,Y);
       Put_Chessman(Chessman_Number_2_Character(Chessman), X, Y);
+      Position_2_Coordinates(X,Y);
       if Chessman < 0 then
          Set_Foreground_Colour(Black_Chessman);
       elsif Chessman > 0 then
 	 Set_Foreground_Colour(White_Chessman);
       end if;
-      Position_2_Coordinates(X,Y);
    end Graphic_Unmark_Position;
    
    

@@ -75,26 +75,28 @@ package body Chess_Game_Handling is
 	 
 	 Get_Immediate(Key);
 	 if Is_Up_Arrow(Key) then
-	     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
-		  
+	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);		  
 	   
 	    Graphic_Y := Graphic_Y - 1;
 	    if Graphic_Y < 1 then
 	       Graphic_Y := 8;
 	    end if;
-      elsif Is_Down_Arrow(Key) then
+	 elsif Is_Down_Arrow(Key) then
+	 
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 	    Graphic_Y := Graphic_Y + 1;
 	    if Graphic_Y > 8 then
 	       Graphic_Y := 1;
 	    end if;
 	 elsif Is_Right_Arrow(Key) then
+	 
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 	    Graphic_X := Graphic_X + 1;
 	    if Graphic_X > 8 then
 	       Graphic_X := 1;
 	    end if;
-	 elsif Is_Left_Arrow(Key) then   
+	 elsif Is_Left_Arrow(Key) then
+        
 	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 	    Graphic_X := Graphic_X - 1;
 	    if Graphic_X < 1 then
@@ -202,11 +204,12 @@ package body Chess_Game_Handling is
    
    procedure Choose_Your_Play(Socket         : in out Socket_Type;	   	  			  X, Y           : out Integer;					              Possible_Moves : in Cordinate_Array) is 
    begin
+      Put("HHHHHH");
       -- Center on Game Field
       X := 6;
       Y := 6;
       Move_Around_On_Game_Board(Socket, X, Y, Possible_Moves);
-      
+      Put("AAAA");
       if Move_Okey(X, Y, Possible_Moves) = False then
 	 Choose_Your_Play(Socket, X, Y, Possible_Moves);
       end if;

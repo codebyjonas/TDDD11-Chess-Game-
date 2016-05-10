@@ -61,8 +61,6 @@ package Chess_Game_Handling is
    procedure Other_Player_Locked(Socket : in Socket_Type);
    procedure Settings;
 
-   -- TMP och TEST funktioner
-   procedure Put( Item : in Cordinate_Array);
    
    
    	 

@@ -3,7 +3,7 @@ with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 package Chess_Analysis_Package is
 
-   type Coordinate_Type is    -- Var tvungen att låta dessa ligga utanför private för att få det att funka. Kan vi lösa detta? 
+   type Coordinate_Type is   -- Var tvungen att låta dessa ligga utanför private för att få det att funka. Kan vi lösa detta? 
      array(1..2) of Integer;
    
      type Height_Type is
@@ -15,11 +15,11 @@ package Chess_Analysis_Package is
    type Possible_Moves_Type is
      array(1..28) of Coordinate_Type;
    
-   type Filip_Type is
+   type Coordinate_And_Chessman_Type is
      array(1..3) of Integer; 
    
    type Return_Type is
-     array(1..28) of Filip_Type;
+     array(1..28) of Coordinate_And_Chessman_Type;
    
    
    
@@ -37,14 +37,14 @@ package Chess_Analysis_Package is
    function Final_Possible_Moves(Coordinate: in Coordinate_Type; Board : in Board_Type; Tur : in boolean) return Possible_Moves_Type;
    function Check_Mate(Board : in Board_Type; Tur : in Boolean) return Boolean;
    
-   
-   
-   -- Till Fillip o Jonas;
-   
     function  Create_Array_With_Chessman_And_Position(Moves: in Possible_Moves_Type; Board: in Board_Type) return Return_Type;
     function Check_Case(Active_Board: in Board_Type; Active_Player: in Boolean) return Integer;
     
     function Get_Choosen_Chess_Piece(In_Coordinate : in Coordinate_Type; 
 				     Board : in Board_Type) return Integer;
+    
+private
    
-   end Chess_Analysis_Package;
+   
+    
+end Chess_Analysis_Package;

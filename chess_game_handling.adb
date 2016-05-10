@@ -37,25 +37,9 @@ package body Chess_Game_Handling is
        end if;
    end Coordinates_2_Position;
    
-   
-   -- Fråga Magnus om
-   --  procedure Big_Cursor(X, Y, Chessman : in Integer := 0; Key : out Key_Type) is
-   --     X_Tmp : Integer := X;
-   --     Y_Tmp : Integer := Y;
-   --  begin
-   --     loop
-   --  	 Get_Immediate(Key);
-   --  	 Graphic_Mark_Position(X_Tmp, Y_Tmp, Chessman);
-   --  	 delay 0.5;
-   --  	 Graphic_Mark_Position(X_Tmp, Y_Tmp, Chessman, Highlight_Colour_Contrast, Highlight_Colour);
-   --  	 delay 0.5;
-   --     end loop;
-   --  end Big_Cursor;
-   
    procedure Move_Around_On_Game_Board(Socket : in out Socket_Type;
 				       X,Y : in out Integer;
                                        Possible_Moves : in Cordinate_Array) is
-                                                    
       Key       : Key_Type;
       Graphic_X : Integer := X; 
       Graphic_Y : Integer := Y;
@@ -272,6 +256,8 @@ package body Chess_Game_Handling is
       Cursor_Invisible;
    end Settings;
    
+   
+   -- Vi bör ha ett Game_Play_Paket för nu börjar det röra till sig
    procedure Other_Player_Locked(Socket : in Socket_Type) is
       
       Key: Key_Type;	
@@ -288,16 +274,5 @@ package body Chess_Game_Handling is
       end loop;
   
    end Other_Player_Locked;
-   
-   
-   
-   -- TMP och TEST funktioner
-   procedure Put( Item : in Cordinate_Array) is
-   begin
-      for I in 1..28 loop 
-	 Put(Item(I).X, 2);
-	 Put(Item(I).Y, 2);
-      end loop;
-   end Put;
    
 end Chess_Game_Handling;

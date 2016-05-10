@@ -74,8 +74,6 @@ package body Chess_Game_Graphic is
 			   F_Colour : in Colour_Type := Foreground_Colour; 
 			   B_Colour : in Colour_Type := Background_Colour) is
    begin
-      -- Set_Foreground_Colour(F_Colour);
-      -- Set_Background_Colour(B_Colour);
       case Chessman is
 	 when 'K' =>
 	    Goto_XY(X,Y);
@@ -415,7 +413,6 @@ package body Chess_Game_Graphic is
    end Graphic_Move_Chess_Piece;
    
    
-   -- SJUKT onödig funktion, samma som Mark position fast lite annorlunda
    procedure Graphic_Unmark_Position(X, Y : in out Integer;
                                      Chessman : in Integer := 0) is
       

@@ -11,20 +11,6 @@ with Chess_Game_Handling;   use Chess_Game_Handling;
 with Chess_Game_Graphic;    use Chess_Game_Graphic;
 
 procedure Client_Main is
-
-   -- TMP 
-   procedure Put_Array(Possible_Array: in Cordinate_Array) is
-      
-   begin
-      
-      for I in 1..28 loop
-	 Put(Possible_Array(I).X); 
-	 Put(Possible_Array(I).Y);
-      end loop;
-      
-   end Put_Array;
-   -- END TMP
-   
    
    procedure Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece : in out Integer) is
    begin
@@ -157,10 +143,16 @@ procedure Client_Main is
       end if;
    end Alert_Check;
    
+   -- Game Over
+   procedure Game_Over( Results : in Character) is
+   begin
+      Draw_Outer_Box;
+   end Game_Over;
+      
 
    -- TATA43 - analys
    Socket                       : Socket_Type;
-   My_Color                     : Character;
+   My_Color, Results            : Character;
    Actual_Game_Round_Case, X1, Y1, Chess_Type, Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece : Integer;
    
 begin
@@ -179,9 +171,6 @@ begin
    Draw_Complete_Info_Box;
    Message_Black_Or_White(Socket);
    
-   
-  
-   
    loop
       -- Hämta Typ av runda:
       --- 1. Schack Matt
@@ -196,17 +185,16 @@ begin
 	 Get(Socket, Other_Player_Y2);
 	 Get(Socket, Choosen_Chess_Piece);
 	 Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece);
-      
       end if;
       
       -- Avgör vilket fall som ska köra 
       case Actual_Game_Round_Case is
 	 when 1 => 
 	    Alert_Check(False);
-	    Put("Schack Matt");
 	    Put_Line(Socket, 1);
-	    -- TODO: Skapa Game_Over;
-	    -- Game_Over;
+	    -- TODO: Vem vann?
+	    Results := 'w';
+	    Game_Over(Results);
 	 when 2 =>
 	    Alert_Your_Turn(False);
 	    Alert_Check(True);

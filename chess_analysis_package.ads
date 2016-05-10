@@ -3,7 +3,7 @@ with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 package Chess_Analysis_Package is
 
-   type Coordinate_Type is    -- Var tvungen att låta dessa ligga utanför private för att få det att funka. Kan vi lösa detta? 
+   type Coordinate_Type is   -- Var tvungen att låta dessa ligga utanför private för att få det att funka. Kan vi lösa detta? 
      array(1..2) of Integer;
    
      type Height_Type is
@@ -42,5 +42,9 @@ package Chess_Analysis_Package is
     
     function Get_Choosen_Chess_Piece(In_Coordinate : in Coordinate_Type; 
 				     Board : in Board_Type) return Integer;
+    
+private
    
-   end Chess_Analysis_Package;
+   
+    
+end Chess_Analysis_Package;

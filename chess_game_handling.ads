@@ -25,13 +25,9 @@ package Chess_Game_Handling is
    --  type Cordinate_Array is private;
    --  type Cordinate_Type is private;
    
-    type Cordinate_Type is
-      record
-	 X, Y, Chess_Type : Integer;
-      end record;
+    type Cordinate_Type is private;
     
-    type Cordinate_Array is 
-      array (1..28) of Cordinate_Type;
+    type Cordinate_Array is private;
    
    -- Procedurer och Funktioner
     procedure Choose_Active_Chessman(Socket : in out Socket_Type;
@@ -61,11 +57,15 @@ package Chess_Game_Handling is
    procedure Other_Player_Locked(Socket : in Socket_Type);
    procedure Settings;
 
-   
-   
-   	 
-
   
 private   
-   
+    
+    type Cordinate_Type is
+      record
+	 X, Y, Chess_Type : Integer;
+      end record;
+    
+    type Cordinate_Array is 
+      array (1..28) of Cordinate_Type;
+
 end Chess_Game_Handling;

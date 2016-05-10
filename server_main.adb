@@ -88,24 +88,21 @@ begin
 
       -- Väntar på val av pjäs
       Possible_Move_Indicator := 0;
-      loop
-	 loop 
+      --loop
+	  loop 
 	    Get(Active_Socket, Still_Moving_Indicator);
 	    Put(Still_Moving_Indicator);
+	    Put("H");
 	    if Still_Moving_Indicator = 0 then
 	       exit;
 	    end if;
 	    Get(Active_Socket, Moving_X);
-	    Put(Moving_X);
-	    Put("H");
 	    Get(Active_Socket, Moving_Y);
-	    Put("G");
-	    Put(Moving_Y);
 	    Coordinate_1(1) := Moving_X;
 	    Coordinate_1(2) := Moving_Y;
 	    Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
-	    Put( Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
-	 end loop;
+	    Put(Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
+	  end loop;
 	 
 	 Get(Active_Socket, X); 
 	 Get(Active_Socket, Y);
@@ -119,7 +116,7 @@ begin
 	   exit;
 	 end if;
 	
-      end loop;
+      --end loop;
       Coordinate_1(1) := X;   
       Coordinate_1(2) := Y;    
       

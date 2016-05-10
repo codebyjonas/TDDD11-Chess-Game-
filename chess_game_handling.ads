@@ -44,6 +44,7 @@ package Chess_Game_Handling is
 			     Coordinates : in out Cordinate_Array);
    procedure Choose_Your_Play( Socket         : in out Socket_Type;
 			       X, Y           : out Integer;
+			       Legal_Move     : out Boolean;
 			       Possible_Moves : in Cordinate_Array);
    function Move_Okey (X, Y           : in Integer;
 		       Possible_Moves : in Cordinate_Array) return Boolean;

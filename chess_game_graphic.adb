@@ -16,9 +16,10 @@ package body Chess_Game_Graphic is
 	 Y := (Y - 1 - Offset_Y) / 5 + 1;
       end if;
    end Position_2_Coordinates;
-   
+    
    procedure Coordinates_2_Position(X , Y : in out Integer) is
    begin
+      null;
       if X = 1 and Y = 1 then
 	 X := X + Offset_X;
 	 Y := Y + Offset_Y; 
@@ -74,6 +75,8 @@ package body Chess_Game_Graphic is
 			   F_Colour : in Colour_Type := Foreground_Colour; 
 			   B_Colour : in Colour_Type := Background_Colour) is
    begin
+      -- Set_Foreground_Colour(F_Colour);
+      -- Set_Background_Colour(B_Colour);
       case Chessman is
 	 when 'K' =>
 	    Goto_XY(X,Y);
@@ -376,15 +379,14 @@ package body Chess_Game_Graphic is
       else
 	 Set_Background_Colour(Colour_Contrast);
       end if;
-      Coordinates_2_Position(G_X,G_Y);
-      Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
-      Set_Background_Colour(Background_Colour);
       if Chessman < 0 then
          Set_Foreground_Colour(Black_Chessman);
       elsif Chessman > 0 then
 	 Set_Foreground_Colour(White_Chessman);
       end if;
-      
+      Coordinates_2_Position(G_X,G_Y);
+      Put_Chessman(Chessman_Number_2_Character(Chessman), G_X, G_Y);
+      Set_Background_Colour(Background_Colour);
       
    end Graphic_Mark_Position;
    
@@ -412,6 +414,7 @@ package body Chess_Game_Graphic is
    end Graphic_Move_Chess_Piece;
    
    
+   -- SJUKT onödig funktion, samma som Mark position fast lite annorlunda
    procedure Graphic_Unmark_Position(X, Y : in out Integer;
                                      Chessman : in Integer := 0) is
       
@@ -423,12 +426,12 @@ package body Chess_Game_Graphic is
       end if;
       Coordinates_2_Position(X,Y);
       Put_Chessman(Chessman_Number_2_Character(Chessman), X, Y);
-      Position_2_Coordinates(X,Y);
       if Chessman < 0 then
          Set_Foreground_Colour(Black_Chessman);
       elsif Chessman > 0 then
 	 Set_Foreground_Colour(White_Chessman);
       end if;
+      Position_2_Coordinates(X,Y);
    end Graphic_Unmark_Position;
    
    

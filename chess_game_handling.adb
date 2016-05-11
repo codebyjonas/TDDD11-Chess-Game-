@@ -227,7 +227,7 @@ package body Chess_Game_Handling is
       Graphic_Unmark_Position(X, Y);
       for I in Coordinates'Range loop
 	 if Coordinates(I).X/=0 then
-	    Graphic_Unmark_Position(Coordinates(I).X, Coordinates(I).Y);
+	    Graphic_Unmark_Position(Coordinates(I).X, Coordinates(I).Y, Coordinates(I).Chess_Type);
 	 end if;
       end loop;
    end Unmark_Positions;

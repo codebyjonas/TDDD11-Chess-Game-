@@ -48,7 +48,8 @@ package body Chess_Game_Handling is
       Key       : Key_Type;
       Graphic_X : Integer := X1; 
       Graphic_Y : Integer := Y1;
-      Chess_Piece_On_Cursor : Integer;
+      Chess_Piece_On_Cursor, Chess_Piece_On_Cursor_2, X3, Y3 : Integer;
+      On_Cursor : Boolean := True;
    begin
       --- Tänk på Sizen sen
       
@@ -60,9 +61,12 @@ package body Chess_Game_Handling is
       Goto_XY(Graphic_X, Graphic_Y);
       Position_2_Coordinates(Graphic_X, Graphic_Y);
       Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+      if First_Time then
+         Chess_Piece_On_Cursor_2 := Chess_Piece_On_Cursor;
+      end if;
+      	 
       loop
-
-	 
+	 		 
 	 Get_Immediate(Key);
 	 if Is_Up_Arrow(Key) then
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
@@ -80,7 +84,7 @@ package body Chess_Game_Handling is
 	    if Graphic_Y < 1 then
 	       Graphic_Y := 8;
 	    end if;
-	 elsif Is_Down_Arrow(Key) then	    
+	 elsif Is_Down_Arrow(Key) then	
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 		    
@@ -147,11 +151,12 @@ package body Chess_Game_Handling is
 	 end if;
 	 
 	 if First_Time = True then
-	    X2 := 4;
-	    Y2 := 4;
-	    Graphic_Unmark_Position(X2, Y2);
+	    X3 := 4;
+	    Y3 := 4;
+	    Graphic_Unmark_Position(X3, Y3, Chess_Piece_On_Cursor_2);
 	 end if;
-	 	 
+	 
+	 
 	 Put_Line(Socket, 1);
 	 Put_Line(Socket, Graphic_X);
 	 Put_Line(Socket, Graphic_Y);

@@ -1,25 +1,21 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
+with TJa.Sockets;            use TJa.Sockets;
 
 package Chess_Analysis_Package is
 
-   type Coordinate_Type is   -- Var tvungen att låta dessa ligga utanför private för att få det att funka. Kan vi lösa detta? 
-     array(1..2) of Integer;
+   type Coordinate_Type is private;
    
-     type Height_Type is
-     array(1..8) of Integer;
+     type Height_Type is private;
    
-   type Board_Type is
-     array(1..8) of Height_Type;
+   type Board_Type is private;
    
-   type Possible_Moves_Type is
-     array(1..28) of Coordinate_Type;
+   type Possible_Moves_Type is private;
    
-   type Coordinate_And_Chessman_Type is
-     array(1..3) of Integer; 
+   type Coordinate_And_Chessman_Type is private;
+  
    
-   type Return_Type is
-     array(1..28) of Coordinate_And_Chessman_Type;
+   type Return_Type is private;
    
    
    
@@ -40,11 +36,36 @@ package Chess_Analysis_Package is
     function  Create_Array_With_Chessman_And_Position(Moves: in Possible_Moves_Type; Board: in Board_Type) return Return_Type;
     function Check_Case(Active_Board: in Board_Type; Active_Player: in Boolean) return Integer;
     
+    
+    procedure Put(Socket: in Socket_Type; Possible_Array: in Return_Type);
+    
     function Get_Choosen_Chess_Piece(In_Coordinate : in Coordinate_Type; 
 				     Board : in Board_Type) return Integer;
     
+    procedure Integers_To_Coordinate(Coordinate: out Coordinate_Type;
+				      X, Y: in Integer);
+    
+    procedure Coordinate_To_Integers(Coordinate: in Coordinate_Type;
+					X, Y: out Integer);
+    
 private
    
+    type Coordinate_Type is 
+     array(1..2) of Integer;
    
+     type Height_Type is
+     array(1..8) of Integer;
+   
+   type Board_Type is
+     array(1..8) of Height_Type;
+   
+   type Possible_Moves_Type is
+     array(1..28) of Coordinate_Type;
+   
+     type Coordinate_And_Chessman_Type is
+     array(1..3) of Integer; 
+   
+   type Return_Type is
+     array(1..28) of Coordinate_And_Chessman_Type;
     
 end Chess_Analysis_Package;

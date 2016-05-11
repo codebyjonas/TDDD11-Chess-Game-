@@ -23,12 +23,11 @@ package Chess_Analysis_Package is
    procedure Zero_Procedure(Board: in out Board_Type);
    procedure Reset(Board: in out Board_Type);
    procedure Move(Board : in out Board_Type; In_Coordinate, Out_Coordinate : in Coordinate_Type);
-   procedure Print_Board(Board: in Board_Type);
+ 
    function "="(Left, Right : in Coordinate_Type) return Boolean;
    procedure Zero_Possible(Possible : in out Possible_Moves_Type);
    procedure Search_And_Destroy(Coordinate: in Coordinate_Type; Possible_Moves : in out Possible_Moves_Type);
    function Possible_Moves(Coordinate: in Coordinate_Type; Board : in Board_Type; Tur : in boolean) return Possible_Moves_Type;
-   procedure Put_Array(A : in  Possible_Moves_Type);
    function Schack(Board : in Board_Type; Tur : in Boolean) return Boolean;
    function Final_Possible_Moves(Coordinate: in Coordinate_Type; Board : in Board_Type; Tur : in boolean) return Possible_Moves_Type;
    function Check_Mate(Board : in Board_Type; Tur : in Boolean) return Boolean;

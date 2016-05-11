@@ -82,10 +82,7 @@ package body Chess_Game_Handling is
 	 elsif Is_Down_Arrow(Key) then	    
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
-		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
-		     Put(Graphic_X);
-		     Put(Graphic_Y);
-		     Put(I);
+		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 		    
 		     exit;  		     
 	          end if;
 		  if I = Possible_Moves'Length then
@@ -102,9 +99,6 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
-		     Put(Graphic_X);
-		     Put(Graphic_Y);
-		     Put(I);
 		     exit;  		     
 	          end if;
 		  if I = Possible_Moves'Length then
@@ -122,9 +116,6 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
-		     Put(Graphic_X);
-		     Put(Graphic_Y);
-		     Put(I);
 		     exit;  		     
 	          end if;
 		  if I = Possible_Moves'Length then

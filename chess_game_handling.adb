@@ -1,4 +1,5 @@
 
+
 package body Chess_Game_Handling is
    
    --INTERNA funktioner
@@ -261,32 +262,11 @@ package body Chess_Game_Handling is
       Cursor_Invisible;
    end Settings;
    
-   procedure Other_Player_Locked(Socket : in Socket_Type) is
-      
-      Key: Key_Type;	
-      
+   procedure Offset_Input is
    begin
-      Goto_XY(10,2);
-      Put("Hallå där, Det är motspelarerna tur. Tryck enter efter motspelaren har gjort sitt drag.");
-      loop
-	 Get_Immediate(Key);
-	 
-	 if Is_Return(Key) then
-	    exit;
-	 end if;
-      end loop;
-  
-   end Other_Player_Locked;
-   
-   
-   
-   -- TMP och TEST funktioner
-   procedure Put( Item : in Cordinate_Array) is
-   begin
-      for I in 1..28 loop 
-	 Put(Item(I).X, 2);
-	 Put(Item(I).Y, 2);
-      end loop;
-   end Put;
+      Goto_XY(1, 60);
+      Set_Background_Colour(White);
+      Set_Foreground_Colour(White);
+   end Offset_Input;
    
 end Chess_Game_Handling;

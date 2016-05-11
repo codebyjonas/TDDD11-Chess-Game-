@@ -210,11 +210,10 @@ begin
 	    Alert_Check(False);
 	    Play_Round(Socket, X1, Y1);
 	 when 5 =>
-	    --Lås skärmen för den som inte spelar och fixa ett nice meddelande          
-	    Other_Player_Locked(Socket);
 	    Alert_Your_Turn(False);
 	    Alert_Check(False);
 	    Put_To_Info_Box("Waiting for opponent                 ", 2);
+	    Offset_Input;
 	 when others =>
 	    Put("Error Actual_Game_Round_Case");
 	    -- Raise Error 

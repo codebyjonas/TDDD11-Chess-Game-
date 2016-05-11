@@ -52,12 +52,18 @@ begin
    
    Actual_Game_Round_Case := 4;
    loop
-   
-  
-   
- 
-   -- Kolla Efter Schack Schack matt
-   
+      -- Döda om Schack Matt
+      if Actual_Game_Round_Case = 1 then
+	 if Active_Player then 
+	    Active_Socket := Socket_1;
+	    Put_Line(Socket_2, 6);
+	 elsif not Active_Player then
+	    Active_Socket := Socket_2;
+	    Put_Line(Socket_1, 6);	    
+	 end if;
+      end if;
+      
+      
       if Active_Player then 
 	 Active_Socket := Socket_1;
 	 Put_Line(Socket_2, 5);
@@ -65,9 +71,6 @@ begin
 	 Active_Socket := Socket_2;
 	 Put_Line(Socket_1, 5);	    
       end if;
-      
-      -- Gör draget som tidigare spelare gjorde
-     
       
       if Actual_Game_Round_Case /= 4 then
 	 Put_Line(Active_Socket, Actual_Game_Round_Case);
@@ -82,8 +85,6 @@ begin
          Put_Line(Active_Socket, Actual_Game_Round_Case);
       end if;
       
-      
-
       -- Väntar på val av pjäs
       Possible_Move_Indicator := 0;
       loop
@@ -106,7 +107,6 @@ begin
 	 Integers_To_Coordinate(Coordinate_1, X, Y);
 
 	Possible_Array :=Final_Possible_Moves(Coordinate_1, Active_Board, Active_Player);
-	 --Skickar möjliga drag tillsammans med pjäs till Filip och Co:--
  
 	Put(Active_Socket, Create_Array_With_Chessman_And_Position(Possible_Array, Active_Board));
 	Get(Active_Socket, Possible_Move_Indicator);
@@ -155,15 +155,14 @@ begin
 
       
       if Active_Player then
-
 	 Active_Player := False;
       elsif not Active_Player then
-	 
 	 Active_Player := True; 
       end if;
       Actual_Game_Round_Case := Check_Case(Active_Board, Active_Player);
-     end loop;
+      
+      
+   end loop;
 
-      delay 1000.0;
    
 end Server_Main;

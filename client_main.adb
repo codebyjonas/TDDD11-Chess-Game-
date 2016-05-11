@@ -144,11 +144,133 @@ procedure Client_Main is
    end Alert_Check;
    
    -- Game Over
-   procedure Game_Over( Results : in Character) is
+  procedure Game_Over( Results : in Character) is
+      X, Y, I : Integer := 1;
+      Colour  : Colour_Type;
    begin
+      Set_Background_Colour(White);
       Draw_Outer_Box;
-   end Game_Over;
       
+      if Results = 'w' then
+	 -- Black, Red, Green, Yellow, Blue, Magenta, Cyan, White
+	 loop
+	    case I is
+	       when 1 => Colour := Black;
+	       when 2 => Colour := Bright_Red;
+	       when 3 => Colour := Bright_Green;
+	       when 4 => Colour := Bright_Yellow;
+	       when 5 => Colour := Bright_Blue;
+	       when 6 => Colour := Bright_Cyan;
+	       when 7 => Colour := White;
+	       when others => I := 1;
+	    end case;
+	    
+	    I := I + 1;
+	    delay 0.2;
+	    
+	    Set_Foreground_Colour(Colour);
+	    X := 23;
+	    Y := 20;
+	    Goto_XY(X,Y);
+	    
+	    -- Print out "Congratulations"
+	    Put(" _____  _____  _   _  _____ ______   ___  _____  _   _  _       ___  _____  _____  _____  _   _  _____ ");
+	    Y := Y + 1;  
+	    Goto_XY(X,Y);
+	    Put("/  __ \|  _  || \ | ||  __ \| ___ \ / _ \|_   _|| | | || |     / _ \|_   _||_   _||  _  || \ | |/  ___|");
+	    Y := Y + 1;  
+	    Goto_XY(X,Y);
+	    Put("| /  \/| | | ||  \| || |  \/| |_/ // /_\ \ | |  | | | || |    / /_\ \ | |    | |  | | | ||  \| |\ `--. ");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("| |    | | | || . ` || | __ |    / |  _  | | |  | | | || |    |  _  | | |    | |  | | | || . ` | `--. \");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("| \__/\\ \_/ /| |\  || |_\ \| |\ \ | | | | | |  | |_| || |____| | | | | |   _| |_ \ \_/ /| |\  |/\__/ /");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put(" \____/ \___/ \_| \_/ \____/\_| \_|\_| |_/ \_/   \___/ \_____/\_| |_/ \_/   \___/  \___/ \_| \_/\____/ ");
+	    
+	    -- Print You Win
+	    Y := Y + 3;
+	    X := X + 25;
+	    Goto_XY(X,Y);
+	    Put("__   __ _____  _   _   _    _  _____  _   _  _  ");
+	    Y := Y + 1;  
+	    Goto_XY(X,Y);
+	    Put("\ \ / /|  _  || | | | | |  | ||_   _|| \ | || |");
+	    Y := Y + 1;  
+	    Goto_XY(X,Y);
+	    Put(" \ V / | | | || | | | | |  | |  | |  |  \| || | ");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("  \ /  | | | || | | | | |/\| |  | |  | . ` || |");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("  | |  \ \_/ /| |_| | \  /\  / _| |_ | |\  ||_|");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("  \_/   \___/  \___/   \/  \/  \___/ \_| \_/(_)");
+	 end loop;
+      else
+	 loop
+	    case I is
+	       when 1 => Colour := Black; 
+	       when 2 => Colour := Bright_Red;
+	       when 3 => Colour := Bright_Green;
+	       when 4 => Colour := Bright_Yellow;
+	       when 5 => Colour := Bright_Blue;
+	       when 6 => Colour := Bright_Cyan;
+	       when 7 => Colour := White;
+	       when others => I := 1;
+	    end case;
+	    I := I + 1;
+	    delay 0.2;
+	    Set_Foreground_Colour(Colour);
+	    X := 43;
+	    Y := 20;
+	    Goto_XY(X,Y);
+	    -- Print out "Congratulations"
+	    Put(" _____   ___  ___  ___ _____   _____  _   _  _____ ______  _");
+	    Y := Y + 1;  
+	    Goto_XY(X,Y);
+	    Put("|  __ \ / _ \ |  \/  ||  ___| |  _  || | | ||  ___|| ___ \| |");
+	    Y := Y + 1;  
+	    Goto_XY(X,Y);
+	    Put("| |  \// /_\ \| .  . || |__   | | | || | | || |__  | |_/ /| |");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("| | __ |  _  || |\/| ||  __|  | | | || | | ||  __| |    / | |");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("| |_\ \| | | || |  | || |___  \ \_/ /\ \_/ /| |___ | |\ \ |_|");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put(" \____/\_| |_/\_|  |_/\____/   \___/  \___/ \____/ \_| \_|(_) ");
+	    
+	    -- Print You Win
+	    Y := Y + 3;
+	    X := X + 5;
+	    Goto_XY(X,Y);
+	    Put("__   __ _____  _   _   _      _____  _____  _____  _ ");
+	    Y := Y + 1;  
+	    Goto_XY(X,Y);
+	    Put("\ \ / /|  _  || | | | | |    |  _  |/  ___||  ___|| |");
+	    Y := Y + 1;  
+	    Goto_XY(X,Y);
+	    Put(" \ V / | | | || | | | | |    | | | |\ `--. | |__  | |");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("  \ /  | | | || | | | | |    | | | | `--. \|  __| | |");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("  | |  \ \_/ /| |_| | | |____\ \_/ //\__/ /| |___ |_|");
+	    Y := Y + 1;
+	    Goto_XY(X,Y);
+	    Put("  \_/   \___/  \___/  \_____/ \___/ \____/ \____/ (_)");
+	 end loop;
+      end if;
+   end Game_Over;
 
    -- TATA43 - analys
    Socket                       : Socket_Type;
@@ -193,7 +315,8 @@ begin
 	    Alert_Check(False);
 	    Put_Line(Socket, 1);
 	    -- TODO: Vem vann?
-	    Results := 'w';
+	    Results := 'l';
+	    delay 1.0;
 	    Game_Over(Results);
 	 when 2 =>
 	    Alert_Your_Turn(False);
@@ -214,6 +337,10 @@ begin
 	    Alert_Check(False);
 	    Put_To_Info_Box("Waiting for opponent                 ", 2);
 	    Offset_Input;
+	 when 6 =>
+	    delay 1.0;
+	    Results := 'w';
+	    Game_Over(Results);
 	 when others =>
 	    Put("Error Actual_Game_Round_Case");
 	    -- Raise Error 

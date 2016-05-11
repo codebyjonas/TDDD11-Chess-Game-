@@ -31,8 +31,10 @@ package Chess_Game_Handling is
    
    -- Procedurer och Funktioner
     procedure Choose_Active_Chessman(Socket : in out Socket_Type;
-				     X,Y : out Integer;
-				     Possible_Moves : in Cordinate_Array);
+				     X1, Y1 : in Integer;
+				     X2, Y2 : out Integer;
+				     Possible_Moves : in Cordinate_Array;
+				     First_Time : in out Boolean);
    procedure Put_To_Socket(Socket : in Socket_Type; 
 			   X,Y    : in Integer); 
    procedure Get_From_Socket(Socket           : in Socket_Type; 
@@ -43,8 +45,10 @@ package Chess_Game_Handling is
    procedure Unmark_Positions(X, Y       :in out Integer;
 			     Coordinates : in out Cordinate_Array);
    procedure Choose_Your_Play( Socket         : in out Socket_Type;
-			       X, Y           : out Integer;
-			       Possible_Moves : in Cordinate_Array);
+			       X1, Y1         : in Integer;
+			       X2, Y2         : out Integer;
+			       Possible_Moves : in Cordinate_Array;
+			       First_Time     : in out Boolean);
    function Move_Okey (X, Y           : in Integer;
 		       Possible_Moves : in Cordinate_Array) return Boolean;
    -- procedure Any_Possible_Moves(Active_Socket  : in Socket_Type;

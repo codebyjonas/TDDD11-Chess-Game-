@@ -66,12 +66,12 @@ package body Chess_Game_Handling is
 	 if Is_Up_Arrow(Key) then
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
-		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
-		     Put(Graphic_X);
-		     Put(Graphic_Y);
-      		     exit;
+		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 		     
+		     exit;  		     
 	          end if;
-		  Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  if I = Possible_Moves'Length then
+		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  end if;
 	       end loop;
 	       
 	    end if;		  	   
@@ -83,9 +83,14 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
-      		    exit;
+		     Put(Graphic_X);
+		     Put(Graphic_Y);
+		     Put(I);
+		     exit;  		     
 	          end if;
-		  Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  if I = Possible_Moves'Length then
+		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  end if;
 	       end loop;
 	       	       
 	    end if;
@@ -97,9 +102,14 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
-      		     exit;
+		     Put(Graphic_X);
+		     Put(Graphic_Y);
+		     Put(I);
+		     exit;  		     
 	          end if;
-		  Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  if I = Possible_Moves'Length then
+		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  end if;
 	       end loop;
 
 	       
@@ -112,9 +122,14 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
-		     exit;	     
+		     Put(Graphic_X);
+		     Put(Graphic_Y);
+		     Put(I);
+		     exit;  		     
 	          end if;
-		  Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  if I = Possible_Moves'Length then
+		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  end if;
 	       end loop;
 	       
       	    end if;
@@ -143,7 +158,6 @@ package body Chess_Game_Handling is
 	    X2 := 4;
 	    Y2 := 4;
 	    Graphic_Unmark_Position(X2, Y2);
-	    --First_Time := False;
 	 end if;
 	 	 
 	 Put_Line(Socket, 1);

@@ -7,17 +7,17 @@ package body Chess_Analysis_Package is
    
    
    
-   procedure Zero_Procedure(Board: in out Board_Type) is
-      
-   begin
-      
-      for I in Board'range loop
-	 for J in Board'Range loop
-	    Board(I)(J) := 0;
-	 end loop;
+  procedure Zero_Procedure(Board: in out Board_Type) is
+   
+begin
+   
+   for I in Board'range loop
+      for J in Board'Range loop
+	 Board(I)(J) := 0;
       end loop;
-      
-      end Zero_Procedure;
+   end loop;
+   
+end Zero_Procedure;
    
    procedure Reset(Board: in out Board_Type) is
       
@@ -56,21 +56,6 @@ package body Chess_Analysis_Package is
       Board(In_Coordinate(1))(In_Coordinate(2)):= 0;
    end Move;
    
-   
-   
-   procedure Print_Board(Board: in Board_Type) is
-      
-   begin
-      
-      for I in Height_Type'Range loop
-	 for J in Board'Range loop
-	    Put(Board(J)(I), Width=>3);
-	    Put(' ');
-	 end loop;
-	 New_Line;
-      end loop;
-      
-   end Print_Board;
    
    function "="(Left, Right : in Coordinate_Type) return Boolean is
       
@@ -607,16 +592,7 @@ package body Chess_Analysis_Package is
 	 return Possible_Moves;
       end Possible_Moves;
       
-      
-      procedure Put_Array(A : in  Possible_Moves_Type) is     -- Skriver ut array med möjliga drag-- 
-      begin
-	 for I in  Possible_Moves_Type'Range loop
-	    Put(A(I)(1), 3);
-	    Put(A(I)(2), 3);
-	    New_Line;
-	 end loop;
-	 
-      end Put_Array;
+ 
       
       
       
@@ -1274,7 +1250,6 @@ begin
 	 for I in 1..Moves'Length loop
 	    Return_Array(I)(1) := Moves(I)(1);
 	    Return_Array(I)(2) := Moves(I)(2);
-	    Put(Moves(I)(1));
 	    if Moves(I)(1)= 0 then 
 	       Return_Array(I)(3) := 10; -- Helt Godtyckligt valt, koordinat utanför brädet--
 	    else 
@@ -1299,6 +1274,18 @@ begin
 	 end if;
       end Check_Case;
       
+      procedure Put(Socket: in Socket_Type; Possible_Array: in Return_Type) is
+      begin
+	 null;
+	 for I in Possible_Array'Range loop
+	    Put_Line(Socket, Possible_Array(I)(1));  -- Funkar det att använda Put_Line så här? 
+	    Put_Line(Socket, Possible_Array(I)(2));
+	    Put_Line(Socket, Possible_Array(I)(3));
+
+	 end loop;
+	 
+      end Put;
+	
       
        function Get_Choosen_Chess_Piece(In_Coordinate : in Coordinate_Type; 
 			        Board : in Board_Type) return Integer is
@@ -1308,6 +1295,22 @@ begin
 	  return Board(In_Coordinate(1))(In_Coordinate(2));
        end Get_Choosen_Chess_Piece;
        
+       
+       procedure Integers_To_Coordinate(Coordinate: out Coordinate_Type;
+					X, Y: in Integer) is
+       begin
+	  
+	  Coordinate(1):=X;
+	  Coordinate(2):= Y;
+       end Integers_To_Coordinate;
+       
+        procedure Coordinate_To_Integers(Coordinate: in Coordinate_Type;
+					X, Y: out Integer) is
+       begin
+	  
+	  X:=Coordinate(1);
+	 Y:= Coordinate(2);
+       end Coordinate_To_Integers;
 	 
       
 end Chess_Analysis_Package;

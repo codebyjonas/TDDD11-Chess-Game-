@@ -9,18 +9,6 @@ with TJa.Sockets;            use TJa.Sockets;
 
 procedure Server_Main is
    
-     procedure Put(Socket: in Socket_Type; Possible_Array: in Return_Type) is
-      
-   begin
-      null;
-      for I in Possible_Array'Range loop
-	 Put_Line(Socket, Possible_Array(I)(1));  -- Funkar det att använda Put_Line så här? 
-	 Put_Line(Socket, Possible_Array(I)(2));
-	 Put_Line(Socket, Possible_Array(I)(3));
-
-      end loop;
-      
-      end Put;
       
        
       -- #####
@@ -79,12 +67,16 @@ begin
       end if;
       
       -- Gör draget som tidigare spelare gjorde
+     
+      
       if Actual_Game_Round_Case /= 4 then
 	 Put_Line(Active_Socket, Actual_Game_Round_Case);
-         Put_Line(Active_Socket, Coordinate_1(1));
-	 Put_Line(Active_Socket, Coordinate_1(2));
-	 Put_Line(Active_Socket, Coordinate_2(1));
-	 Put_Line(Active_Socket, Coordinate_2(2));
+	  Coordinate_To_Integers(Coordinate_1, X, Y);
+         Put_Line(Active_Socket, X);
+	 Put_Line(Active_Socket, Y);
+	  Coordinate_To_Integers(Coordinate_2, X, Y);
+	 Put_Line(Active_Socket, X);
+	 Put_Line(Active_Socket, Y);
 	 Put_Line(Active_Socket, Choosen_Chess_Piece);
       else
          Put_Line(Active_Socket, Actual_Game_Round_Case);
@@ -98,27 +90,21 @@ begin
 	 
 	 loop 
 	    Get(Active_Socket, Still_Moving_Indicator);
-	    Put(Still_Moving_Indicator);
 	    if Still_Moving_Indicator = 0 then
 	       exit;
 	    end if;
 	    Get(Active_Socket, Moving_X);
-	    Put(Moving_X);
-	    Put("H");
 	    Get(Active_Socket, Moving_Y);
-	    Put("G");
-	    Put(Moving_Y);
-	    Coordinate_1(1) := Moving_X;
-	    Coordinate_1(2) := Moving_Y;
+	    Integers_To_Coordinate(Coordinate_1, Moving_X, Moving_Y);
+	 
 	    Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
-	    Put( Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
 	 end loop;
 	 
 	 
 	 Get(Active_Socket, X); 
 	 Get(Active_Socket, Y);
-	 Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för
-        Coordinate_1(2) := Y;
+	 Integers_To_Coordinate(Coordinate_1, X, Y);
+
 	Possible_Array :=Final_Possible_Moves(Coordinate_1, Active_Board, Active_Player);
 	 --Skickar möjliga drag tillsammans med pjäs till Filip och Co:--
  
@@ -129,8 +115,10 @@ begin
 	end if;
      
       end loop;
-      Coordinate_1(1) := X;   -- X och Y är koordinaten för den pjäs som spelaren vill undersöka möjliga drag för. 
-      Coordinate_1(2) := Y;    
+      
+      Integers_To_Coordinate(Coordinate_1, X, Y);
+
+   
      
       
       --Tar reda på vilken typ av pjäs spelaren har valt och skickar till socket
@@ -143,27 +131,22 @@ begin
        
       loop 
 	    Get(Active_Socket, Still_Moving_Indicator);
-	    Put(Still_Moving_Indicator);
 	    if Still_Moving_Indicator = 0 then
 	       exit;
 	    end if;
 	    Get(Active_Socket, Moving_X);
-	    Put(Moving_X);
-	    Put("H");
 	    Get(Active_Socket, Moving_Y);
-	    Put("G");
-	    Put(Moving_Y);
-	    Coordinate_2(1) := Moving_X;
-	    Coordinate_2(2) := Moving_Y;
+	    Integers_To_Coordinate(Coordinate_2, Moving_X, Moving_Y);
+	   
 	    Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_2, Active_Board));
-	    Put( Get_Choosen_Chess_Piece(Coordinate_2, Active_Board));
+
 	 end loop;  
 	 
      
             Get(Active_Socket, X);
             Get(Active_Socket, Y);
-            Coordinate_2(1) := X;
-            Coordinate_2(2) := Y;
+	    Integers_To_Coordinate(Coordinate_2, X, Y);
+       
 
      
       

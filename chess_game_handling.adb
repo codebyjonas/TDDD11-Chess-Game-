@@ -40,12 +40,14 @@ package body Chess_Game_Handling is
    end Coordinates_2_Position;
    
    procedure Move_Around_On_Game_Board(Socket : in out Socket_Type;
-				       X,Y : in out Integer;
-                                       Possible_Moves : in Cordinate_Array) is
+				       X1, Y1 : in Integer;
+				       X2, Y2 : out Integer;
+                                       Possible_Moves : in Cordinate_Array;
+				       First_Time : in out Boolean) is
                                                     
       Key       : Key_Type;
-      Graphic_X : Integer := X; 
-      Graphic_Y : Integer := Y;
+      Graphic_X : Integer := X1; 
+      Graphic_Y : Integer := Y1;
       Chess_Piece_On_Cursor : Integer;
    begin
       --- Tänk på Sizen sen
@@ -59,40 +61,104 @@ package body Chess_Game_Handling is
       Position_2_Coordinates(Graphic_X, Graphic_Y);
       Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
       loop
+
 	 
 	 Get_Immediate(Key);
 	 if Is_Up_Arrow(Key) then
-	     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
-		  
-	   
+	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
+	       for I in Possible_Moves'Range loop
+		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 		     
+		     exit;  		     
+	          end if;
+		  if I = Possible_Moves'Length then
+		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  end if;
+	       end loop;
+	       
+	    end if;		  	   
 	    Graphic_Y := Graphic_Y - 1;
 	    if Graphic_Y < 1 then
 	       Graphic_Y := 8;
 	    end if;
-      elsif Is_Down_Arrow(Key) then
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+	 elsif Is_Down_Arrow(Key) then	    
+	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
+	       for I in Possible_Moves'Range loop
+		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
+		     Put(Graphic_X);
+		     Put(Graphic_Y);
+		     Put(I);
+		     exit;  		     
+	          end if;
+		  if I = Possible_Moves'Length then
+		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  end if;
+	       end loop;
+	       	       
+	    end if;
 	    Graphic_Y := Graphic_Y + 1;
 	    if Graphic_Y > 8 then
 	       Graphic_Y := 1;
 	    end if;
 	 elsif Is_Right_Arrow(Key) then
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
+	       for I in Possible_Moves'Range loop
+		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
+		     Put(Graphic_X);
+		     Put(Graphic_Y);
+		     Put(I);
+		     exit;  		     
+	          end if;
+		  if I = Possible_Moves'Length then
+		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  end if;
+	       end loop;
+
+	       
+	    end if;
 	    Graphic_X := Graphic_X + 1;
 	    if Graphic_X > 8 then
 	       Graphic_X := 1;
 	    end if;
-	 elsif Is_Left_Arrow(Key) then   
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+	 elsif Is_Left_Arrow(Key) then 
+	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
+	       for I in Possible_Moves'Range loop
+		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
+		     Put(Graphic_X);
+		     Put(Graphic_Y);
+		     Put(I);
+		     exit;  		     
+	          end if;
+		  if I = Possible_Moves'Length then
+		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		  end if;
+	       end loop;
+	       
+      	    end if;
 	    Graphic_X := Graphic_X - 1;
 	    if Graphic_X < 1 then
 	       Graphic_X := 8;
 	    end if;
 	 elsif Is_Return(Key) then
-	    Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
-	    X := Graphic_X;
-	    Y := Graphic_Y;
-	    Put(Socket, 0);
-	    return;
+	    
+	    if Move_Okey(Graphic_X, Graphic_Y, Possible_Moves) = True and First_Time = False then
+	       Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+	       X2 := Graphic_X;
+	       Y2 := Graphic_Y;
+	       Put(Socket, 0);
+	       return;
+	    elsif First_Time = True then
+	       Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+	       X2 := Graphic_X;
+	       Y2 := Graphic_Y;
+	       Put(Socket, 0);
+	       return;
+	    end if;
+	 end if;
+	 
+	 if First_Time = True then
+	    X2 := 4;
+	    Y2 := 4;
+	    Graphic_Unmark_Position(X2, Y2);
 	 end if;
 	 	 
 	 Put_Line(Socket, 1);
@@ -110,14 +176,16 @@ package body Chess_Game_Handling is
    -- PUBLIKA Funktioner, Samma ordning som i Ads
 
    procedure Choose_Active_Chessman(Socket : in out Socket_Type;
-				    X,Y : out Integer;
-                                    Possible_Moves : in Cordinate_Array) is
+				    X1, Y1 : in Integer; 
+				    X2, Y2 : out Integer;
+                                    Possible_Moves : in Cordinate_Array;
+				    First_Time : in out Boolean) is
                                     
    begin
       -- Positonera markören 
-      X := 6;
-      Y := 6;
-      Move_Around_On_Game_Board(Socket, X, Y, Possible_Moves);
+      --  X := 6;
+      --  Y := 6;
+      Move_Around_On_Game_Board(Socket, X1, Y1, X2, Y2, Possible_Moves, First_Time);
      
    end Choose_Active_Chessman;
    
@@ -187,16 +255,18 @@ package body Chess_Game_Handling is
    end Move_Okey;
    			 			 
    
-   procedure Choose_Your_Play(Socket         : in out Socket_Type;	   	  			  X, Y           : out Integer;						      Possible_Moves : in Cordinate_Array) is 
+   procedure Choose_Your_Play(Socket         : in out Socket_Type;
+			      X1, Y1         : in Integer;
+			      X2, Y2         : out Integer;						  Possible_Moves : in Cordinate_Array;
+			      First_Time     : in out Boolean) is 
    begin
       -- Center on Game Field
-      X := 6;
-      Y := 6;
-      Move_Around_On_Game_Board(Socket, X, Y, Possible_Moves);
+      --  X := 6;
+      --  Y := 6;
+      Move_Around_On_Game_Board(Socket, X1, Y1, X2, Y2, Possible_Moves, First_Time);
       
-      if Move_Okey(X, Y, Possible_Moves) = False then
-
-	 Choose_Your_Play(Socket, X, Y, Possible_Moves);
+      if Move_Okey(X2, Y2, Possible_Moves) = False then
+	 Choose_Your_Play(Socket, X1, Y1, X2, Y2, Possible_Moves, First_Time);
       end if;
    end Choose_Your_Play;
    
@@ -221,6 +291,7 @@ package body Chess_Game_Handling is
       
       Possible_Moves                      : Cordinate_Array;
       X2, Y2, Choosen_Chess_Piece         : Integer;
+      First_Time                          : Boolean;
      
    begin
       for I in Possible_Moves'Range loop
@@ -229,7 +300,8 @@ package body Chess_Game_Handling is
 	 Possible_Moves(I).Chess_Type := 0;
       end loop;
       loop
-         Choose_Active_Chessman(Socket, X1, Y1, Possible_Moves);
+	 First_Time := True;
+         Choose_Active_Chessman(Socket, 4, 4, X1, Y1, Possible_Moves, First_Time);
 	 Put_To_Socket(Socket, X1, Y1);
          Get_Possible_Moves_From_Socket(Socket, Possible_Moves);
 	 if Check_If_Any_Possible_Moves(Socket, Possible_Moves) = True then
@@ -247,8 +319,8 @@ package body Chess_Game_Handling is
       Graphic_Mark_Position(X1, Y1, Choosen_Chess_Piece);
       Mark_Positions(Possible_Moves);
       -- Put_Chessman(Chessman_Number_2_Character(Choosen_Chess_Piece), X1, Y1); 
-    
-         Choose_Your_Play(Socket, X2, Y2, Possible_Moves);
+         First_Time := False;
+         Choose_Your_Play(Socket, X1, Y1, X2, Y2, Possible_Moves, First_Time);
 	 Unmark_Positions(X1, Y1, Possible_Moves);
          Graphic_Move_Chess_Piece(X2, Y2, Choosen_Chess_Piece);
          Put_To_Socket(Socket, X2, Y2);

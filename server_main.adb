@@ -90,20 +90,14 @@ begin
 	 
 	 loop 
 	    Get(Active_Socket, Still_Moving_Indicator);
-	    Put(Still_Moving_Indicator);
 	    if Still_Moving_Indicator = 0 then
 	       exit;
 	    end if;
 	    Get(Active_Socket, Moving_X);
-	    Put(Moving_X);
-	    Put("H");
 	    Get(Active_Socket, Moving_Y);
-	    Put("G");
-	    Put(Moving_Y);
 	    Integers_To_Coordinate(Coordinate_1, Moving_X, Moving_Y);
 	 
 	    Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
-	    Put( Get_Choosen_Chess_Piece(Coordinate_1, Active_Board));
 	 end loop;
 	 
 	 
@@ -137,20 +131,15 @@ begin
        
       loop 
 	    Get(Active_Socket, Still_Moving_Indicator);
-	    Put(Still_Moving_Indicator);
 	    if Still_Moving_Indicator = 0 then
 	       exit;
 	    end if;
 	    Get(Active_Socket, Moving_X);
-	    Put(Moving_X);
-	    Put("H");
 	    Get(Active_Socket, Moving_Y);
-	    Put("G");
-	    Put(Moving_Y);
 	    Integers_To_Coordinate(Coordinate_2, Moving_X, Moving_Y);
 	   
 	    Put_Line(Active_Socket, Get_Choosen_Chess_Piece(Coordinate_2, Active_Board));
-	    Put( Get_Choosen_Chess_Piece(Coordinate_2, Active_Board));
+
 	 end loop;  
 	 
      

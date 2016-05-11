@@ -7,17 +7,17 @@ package body Chess_Analysis_Package is
    
    
    
-   procedure Zero_Procedure(Board: in out Board_Type) is
-      
-   begin
-      
-      for I in Board'range loop
-	 for J in Board'Range loop
-	    Board(I)(J) := 0;
-	 end loop;
+  procedure Zero_Procedure(Board: in out Board_Type) is
+   
+begin
+   
+   for I in Board'range loop
+      for J in Board'Range loop
+	 Board(I)(J) := 0;
       end loop;
-      
-      end Zero_Procedure;
+   end loop;
+   
+end Zero_Procedure;
    
    procedure Reset(Board: in out Board_Type) is
       
@@ -56,21 +56,6 @@ package body Chess_Analysis_Package is
       Board(In_Coordinate(1))(In_Coordinate(2)):= 0;
    end Move;
    
-   
-   
-   procedure Print_Board(Board: in Board_Type) is
-      
-   begin
-      
-      for I in Height_Type'Range loop
-	 for J in Board'Range loop
-	    Put(Board(J)(I), Width=>3);
-	    Put(' ');
-	 end loop;
-	 New_Line;
-      end loop;
-      
-   end Print_Board;
    
    function "="(Left, Right : in Coordinate_Type) return Boolean is
       
@@ -607,17 +592,7 @@ package body Chess_Analysis_Package is
 	 return Possible_Moves;
       end Possible_Moves;
       
-      
-      procedure Put_Array(A : in  Possible_Moves_Type) is     -- Skriver ut array med möjliga drag-- 
-      begin
-	 for I in  Possible_Moves_Type'Range loop
-	    Put(A(I)(1), 3);
-	    Put(A(I)(2), 3);
-	    Put("HEEEEEEEEEEEEJ");
-	    New_Line;
-	 end loop;
-	 
-      end Put_Array;
+ 
       
       
       

@@ -203,7 +203,7 @@ begin
 	    Play_Round(Socket, X1, Y1);
 	 when 3 =>
 	    Put_To_Info_Box("Your turn                            ", 2);
-	    Alert_Your_Turn(False);
+	    Alert_Your_Turn(True);
 	    Play_Round(Socket, X1, Y1);
 	 when 4 => 
 	    Alert_Your_Turn(True);

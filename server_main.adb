@@ -54,10 +54,12 @@ begin
       if Actual_Game_Round_Case = 1 then
 	 if Active_Player then 
 	    Active_Socket := Socket_1;
+	    Put_Line(Socket_1, 1);
 	    Put_Line(Socket_2, 6);
 	 elsif not Active_Player then
 	    Active_Socket := Socket_2;
-	    Put_Line(Socket_1, 6);	    
+	    Put_Line(Socket_1, 6);
+	    Put_Line(Socket_2, 1);
 	 end if;
 	 
       end if;

@@ -21,7 +21,7 @@ package Chess_Game_Play is
    procedure Other_Player_Moves(Other_Player_X1, Other_Player_Y1, Other_Player_X2, Other_Player_Y2, Choosen_Chess_Piece : in out Integer);
    procedure Draw_Is_Size_Ok_Box;
    procedure Display_Waiting_Message;
-   procedure Message_Black_Or_White(Socket : in Socket_Type);
+   procedure Message_Black_Or_White(My_Colour : in Character);
    procedure Alert_Your_Turn( On : in Boolean);
    procedure Alert_Check( On : in Boolean);
    procedure Game_Over( Results : in Character);

@@ -74,10 +74,9 @@ package body Chess_Game_Play is
       Put("                      ");
    end Display_Waiting_Message;
    
-   procedure Message_Black_Or_White( Socket : in Socket_Type) is
-      My_Colour : Character;
+   procedure Message_Black_Or_White( My_Colour : in Character) is
+     
    begin
-      Get(Socket, My_Colour);
       if My_Colour = 'w' then
 	 Put_To_Info_Box("You play as white! Good luck!        ", 1);
 	 Put_To_Info_Box("Ps. White starts                     ", 2);

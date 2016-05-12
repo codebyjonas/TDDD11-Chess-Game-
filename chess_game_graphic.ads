@@ -11,14 +11,14 @@ with TJa.Window.Text;           use TJa.Window.Text;
 package Chess_Game_Graphic is
    
    -- Variabler, stor del färger
-   White_Chessman                      : Colour_Type := White;
-   Black_Chessman                      : Colour_Type := Black;
-   Highlight_Colour                    : Colour_Type := Bright_Yellow;
-   Highlight_Colour_Contrast           : Colour_Type := Yellow;
-   Secondary_Highlight_Colour          : Colour_Type := Bright_Magenta;
-   Secondary_Highlight_Colour_Contrast : Colour_Type := Magenta;
-   Foreground_Colour                   : Colour_Type := Light_Grey;
-   Background_Colour                   : Colour_Type := Dark_Grey;
+   White_Chessman                      : constant Colour_Type := Light_Grey;
+   Black_Chessman                      : constant Colour_Type := Black;
+   Highlight_Colour                    : constant Colour_Type := Bright_Yellow;
+   Highlight_Colour_Contrast           : constant Colour_Type := Yellow;
+   Secondary_Highlight_Colour          : constant Colour_Type := Bright_Magenta;
+   Secondary_Highlight_Colour_Contrast : constant Colour_Type := Magenta;
+   Foreground_Colour                   : constant Colour_Type := White;
+   Background_Colour                   : constant Colour_Type := Dark_Grey;
    
    Offset_X          : constant Integer := 10;
    Offset_Y          : constant Integer := 5;

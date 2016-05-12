@@ -316,21 +316,21 @@ package body Chess_Game_Graphic is
 	 Put(' ');
 	 case I is
 	    when 3 => 
-	      Put('1');
+	      Put('8');
 	    when 8 =>
-	       Put('2');
-	    when 13 =>
-	       Put('3');
-	    when 18 =>
-	       Put('4');
-	    when 23 =>
-	       Put('5');
-	    when 28 =>
-	       Put('6');
-	    when 33 =>
 	       Put('7');
+	    when 13 =>
+	       Put('6');
+	    when 18 =>
+	       Put('5');
+	    when 23 =>
+	       Put('4');
+	    when 28 =>
+	       Put('3');
+	    when 33 =>
+	       Put('2');
 	    when 38 =>
-	       Put('8');
+	       Put('1');
 	    when others =>
 	       Put(' ');
 	 end case;

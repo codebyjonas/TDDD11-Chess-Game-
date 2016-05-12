@@ -50,7 +50,6 @@ package body Chess_Game_Handling is
       Graphic_Y : Integer := Y1;
       Chess_Piece_On_Cursor : Integer;
    begin
-      --- Tänk på Sizen sen
       
       Put_Line(Socket, 1);
       Put_Line(Socket, Graphic_X);
@@ -59,7 +58,7 @@ package body Chess_Game_Handling is
       Coordinates_2_Position(Graphic_X, Graphic_Y);	 
       Goto_XY(Graphic_X, Graphic_Y);
       Position_2_Coordinates(Graphic_X, Graphic_Y);
-      Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+      Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor );
       loop
 
 	 
@@ -68,7 +67,8 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 		     
-		     exit;  		     
+		     Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+		     exit;
 	          end if;
 		  if I = Possible_Moves'Length then
 		     Graphic_Unmark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
@@ -84,6 +84,7 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 		    
+		     Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 		     exit;  		     
 	          end if;
 		  if I = Possible_Moves'Length then
@@ -100,6 +101,7 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
+		     Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 		     exit;  		     
 	          end if;
 		  if I = Possible_Moves'Length then
@@ -117,6 +119,7 @@ package body Chess_Game_Handling is
 	    if (Graphic_X /= X1) or (Graphic_Y /= Y1) then
 	       for I in Possible_Moves'Range loop
 		  if Graphic_X = Possible_Moves(I).X and Graphic_Y = Possible_Moves(I).Y then 
+		     Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
 		     exit;  		     
 	          end if;
 		  if I = Possible_Moves'Length then
@@ -159,7 +162,7 @@ package body Chess_Game_Handling is
 	 Coordinates_2_Position(Graphic_X, Graphic_Y);	 
 	 Goto_XY(Graphic_X, Graphic_Y);
 	 Position_2_Coordinates(Graphic_X, Graphic_Y);
-	 Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+	 Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor, Secondary_Highlight_Colour, Secondary_Highlight_Colour_Contrast);
       end loop;
    end Move_Around_On_Game_Board;
    

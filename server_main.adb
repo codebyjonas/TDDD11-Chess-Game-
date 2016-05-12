@@ -31,7 +31,7 @@ begin
    
    
    -- Start Server with two sockets
-   Initiate(Listner, Natural'Value(Argument(1)), Localhost => True);
+   Initiate(Listner, Natural'Value(Argument(1)), Localhost => False);
    
    Wait_For_Connection(Listner, Socket_1); 
    Put_Line("Klient 1 ansluten");
@@ -59,7 +59,7 @@ begin
 	    Active_Socket := Socket_2;
 	    Put_Line(Socket_1, 6);	    
 	 end if;
-	 exit;
+	 
       end if;
       
       

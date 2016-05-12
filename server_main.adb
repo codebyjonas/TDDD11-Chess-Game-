@@ -31,7 +31,7 @@ begin
    
    
    -- Start Server with two sockets
-   Initiate(Listner, Natural'Value(Argument(1)), Localhost => True);
+   Initiate(Listner, Natural'Value(Argument(1)), Localhost => False);
    
    Wait_For_Connection(Listner, Socket_1); 
    Put_Line("Klient 1 ansluten");

@@ -59,7 +59,7 @@ package body Chess_Game_Handling is
       Coordinates_2_Position(Graphic_X, Graphic_Y);	 
       Goto_XY(Graphic_X, Graphic_Y);
       Position_2_Coordinates(Graphic_X, Graphic_Y);
-      Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor);
+      Graphic_Mark_Position(Graphic_X, Graphic_Y, Chess_Piece_On_Cursor, Secondary_Highlight_Colour, Secondary_Highlight_Colour_Contrast);
       if First_Time then
          Chess_Piece_On_Cursor_2 := Chess_Piece_On_Cursor;
       end if;   

@@ -61,7 +61,7 @@ begin
 	    Put_Line(Socket_1, 6);
 	    Put_Line(Socket_2, 1);
 	 end if;
-	 
+	
       end if;
       
       
